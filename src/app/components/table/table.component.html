@@ -5,7 +5,9 @@
 </div>
 
 <div *ngIf="containsValue(0)">
-  <button (click)="createCertainElement()" type="button" class="btn btn-warning">Crea nuovo elemento</button>
+  <button (click)="createCertainElement()" type="button" class="btn btn-warning">
+    Crea nuovo {{tableConfig.type}}
+  </button>
 </div>
 
 
