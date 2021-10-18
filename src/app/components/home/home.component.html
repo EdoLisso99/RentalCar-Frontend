@@ -1,0 +1,26 @@
+
+<h1>Utenti</h1>
+<app-table
+  [tableConfig]="userConfig"
+  [mockData]="users"
+  (updateElement)="updateUtente($event)"
+  (createElement)="createUtente()"
+  (deleteElement)="deleteUtente($event)"
+></app-table>
+
+<h1>Mezzi</h1>
+<app-table
+  [tableConfig]="mezziConfig"
+  [mockData]="mezzi"
+  (updateElement)="updateMezzo($event)"
+  (createElement)="createMezzo()"
+  (deleteElement)="deleteMezzo($event)"
+></app-table>
+
+<h1>Prenotazioni</h1>
+<!--<app-table-->
+<!--  [tableConfig]="prenotazioniConfig"-->
+<!--  (updateElement)="updatePrenotazione($event)"-->
+<!--  (createElement)="createPrenotazione()"-->
+<!--  (deleteElement)="deletePrenotazione($event)"-->
+<!--&gt;</app-table>-->

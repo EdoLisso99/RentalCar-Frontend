@@ -1,0 +1,31 @@
+.outside-table{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2%;
+}
+
+.dropdown{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2%;
+}
+
+.selection{
+  display: flex;
+  flex-direction: column;
+}
+
+.filter{
+  padding-top: 15px;
+}
+
+.btn{
+  margin: 2px;
+}
+
+.btn-action{
+  margin: 5px;
+}
+
+

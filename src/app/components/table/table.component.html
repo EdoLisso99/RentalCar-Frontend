@@ -1,0 +1,62 @@
+
+<div class="col-12 form-group filter">
+  <input type="text" class="form-control" placeholder="Insert filter here" [(ngModel)]="filter"
+         (keyup.enter)="filterData(filter)"/>
+</div>
+
+<div *ngIf="containsValue(0)">
+  <button (click)="createCertainElement()" type="button" class="btn btn-warning">Crea nuovo elemento</button>
+</div>
+
+
+<div class="dropdown col-4">
+  <button [hidden]="!isFilterApplied"
+          (click)="resetFilters()"
+          class="btn btn-danger" type="button" id="resetFilterBtn">Reset Filters</button>
+</div>
+
+<table class="table">
+  <tr>
+    <th (click)="changeColumn(columnNames.key, tableConfig.order.orderType, mockData)" scope="col"
+        *ngFor="let columnNames of tableConfig.headers">
+      <div class="d-flex flex-row">
+        {{columnNames.label}}
+
+        <div *ngIf="tableConfig.order.defaultColumn == columnNames.key">
+          <div *ngIf="tableConfig.order.orderType == 'up'">
+            <i class="fas fa-sort-amount-up fa-2x"></i>
+          </div>
+          <div *ngIf="tableConfig.order.orderType == 'down'">
+            <i class="fas fa-sort-amount-down fa-2x" ></i>
+          </div>
+        </div>
+
+      </div>
+    </th>
+
+  </tr>
+  <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
+        (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
+    <td *ngFor="let dataNames of getKey(backupData)">
+      {{getValuesFromParameter(data, dataNames)}}</td>
+    <td>
+      <span *ngIf="containsValue(1)">
+        <button class="btn btn-light" style="color: mediumslateblue"
+                (click)="updateCertainElement(data)">
+          <i class="fas fa-pencil-alt btn-action"></i>
+        </button>
+      </span>
+      <span *ngIf="containsValue(2)">
+        <button class="btn btn-light" style="color: tomato"
+                (click)="deleteCertainElement(data)">
+          <i class="fas fa-trash btn-action"></i>
+        </button>
+      </span>
+    </td>
+  </tr>
+</table>
+
+<button *ngFor="let page of tableConfig.pagination.itemPerPageOptions"
+        (click)="pageSelected = page"
+        type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}</button>
+
