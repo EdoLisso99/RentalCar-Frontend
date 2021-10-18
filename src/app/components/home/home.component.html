@@ -2,7 +2,7 @@
 <h1>Utenti</h1>
 <app-table
   [tableConfig]="userConfig"
-  [mockData]="users"
+
   (updateElement)="updateUtente($event)"
   (createElement)="createUtente()"
   (deleteElement)="deleteUtente($event)"
@@ -11,7 +11,7 @@
 <h1>Mezzi</h1>
 <app-table
   [tableConfig]="mezziConfig"
-  [mockData]="mezzi"
+
   (updateElement)="updateMezzo($event)"
   (createElement)="createMezzo()"
   (deleteElement)="deleteMezzo($event)"

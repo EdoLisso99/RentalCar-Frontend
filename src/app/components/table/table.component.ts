@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MyTableConfig} from "../../config/MyTableConfig";
 import { Output, EventEmitter } from '@angular/core';
 import {mockAuto, mockUser} from "../../util/MockData";
+import {MockDataService} from "../../services/mock-data.service";
 
 import * as _ from 'lodash-es';
 
@@ -13,7 +14,6 @@ import * as _ from 'lodash-es';
 export class TableComponent implements OnInit {
 
   @Input () tableConfig !: MyTableConfig ;
-  @Input () mockData !: any[] ;
   @Output() updateElement = new EventEmitter<any>();
   @Output() deleteElement = new EventEmitter<any>();
   @Output() createElement = new EventEmitter<any>();
@@ -35,6 +35,7 @@ export class TableComponent implements OnInit {
   pageSelected = 0;
 
   // mockData : any[] = this.tableConfig.type == 'Utente' ? mockUser : mockAuto ;
+  mockData : any[] = [];
 
   backupData = this.mockData;
 
@@ -93,11 +94,17 @@ export class TableComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(private mockService : MockDataService) {
   }
 
   ngOnInit(): void {
     this.changePages();
+    if(this.tableConfig.type == 'Utente'){
+      this.getUtenti();
+    }
+    else {
+      this.getMezzi();
+    }
   }
 
   contains(array:any[], value:any) : boolean{
@@ -115,6 +122,22 @@ export class TableComponent implements OnInit {
     this.isFilterApplied = false;
     this.filter = '';
     this.changePages();
+  }
+
+  getUtenti(){
+    // this.mockService.getMockUsers().subscribe(user => this.mockData = user);
+    this.mockData = mockUser;
+    this.backupData = mockUser;
+
+    let x = '';
+  }
+
+  getMezzi(){
+    // this.mockService.getMockMezzi().subscribe(mezzo => this.mockData = mezzo);
+    this.mockData = mockAuto;
+    this.backupData = mockAuto;
+    let x = '';
+
   }
 
   containsValue(cmd: any) : boolean {
