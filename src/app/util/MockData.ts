@@ -36,7 +36,7 @@ export const mockUser  = [
     cognome: 'D\'Amato',
     dataDiNascita: '1994/02/04',
     ruolo: 'Customer'
-  },
+  }
 ];
 
 export  const mockAuto = [

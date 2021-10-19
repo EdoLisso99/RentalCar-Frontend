@@ -4,17 +4,23 @@
          (keyup.enter)="filterData(filter)"/>
 </div>
 
-<div *ngIf="containsValue(0)">
-  <button (click)="createCertainElement()" type="button" class="btn btn-warning">
-    Crea nuovo {{tableConfig.type}}
-  </button>
-</div>
-
-
 <div class="dropdown col-4">
   <button [hidden]="!isFilterApplied"
           (click)="resetFilters()"
           class="btn btn-danger" type="button" id="resetFilterBtn">Reset Filters</button>
+</div>
+
+
+<div class="col-4">
+  <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden">
+    Item per page: {{tableConfig.pagination.itemPerPage}}
+  </button>
+  <div class="" [hidden]="dropdownHidden">
+    <div class="text-black-50 align-content-center col-4" *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
+      <button class="btn btn-light"
+              (click)="showItem(option)">{{option}}</button>
+    </div>
+  </div>
 </div>
 
 <table class="table">
@@ -42,23 +48,15 @@
     <td *ngFor="let dataNames of getKey(backupData)">
       {{getValuesFromParameter(data, dataNames)}}</td>
     <td>
-      <span *ngIf="containsValue(1)">
-        <button class="btn btn-light" style="color: mediumslateblue"
-                (click)="updateCertainElement(data)">
-          <i class="fas fa-pencil-alt btn-action"></i>
-        </button>
-      </span>
-      <span *ngIf="containsValue(2)">
-        <button class="btn btn-light" style="color: tomato"
-                (click)="deleteCertainElement(data)">
-          <i class="fas fa-trash btn-action"></i>
-        </button>
+      <span *ngFor="let action of tableConfig.actions">
+        <app-button [buttonConfig]="getBtnConfigFromAction(action)" (click)="sendOnClickEvent(data, action)"></app-button>
       </span>
     </td>
   </tr>
 </table>
 
-<button *ngFor="let page of tableConfig.pagination.itemPerPageOptions"
+<button *ngFor="let page of pageArrayOptions"
         (click)="pageSelected = page"
-        type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}</button>
+        type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}
+</button>
 

@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MyTableConfig} from "../../config/MyTableConfig";
-import { Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 import {mockAuto, mockUser} from "../../util/MockData";
 import {MockDataService} from "../../services/mock-data.service";
 
 import * as _ from 'lodash-es';
+import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, updateBtn} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-table',
@@ -14,29 +14,23 @@ import * as _ from 'lodash-es';
 export class TableComponent implements OnInit {
 
   @Input () tableConfig !: MyTableConfig ;
-  @Output() updateElement = new EventEmitter<any>();
-  @Output() deleteElement = new EventEmitter<any>();
-  @Output() createElement = new EventEmitter<any>();
+  @Output() onClickEvent = new EventEmitter<any>();
 
-  updateCertainElement(value: any){
-    this.updateElement.emit(value);
-  }
-  deleteCertainElement(value: any){
-    this.deleteElement.emit(value);
-  }
-
-  createCertainElement(){
-    this.createElement.emit();
+  sendOnClickEvent(data:any, action: MyTableActionEnum){
+    this.onClickEvent.emit({data: data, action:action});
   }
 
   isColumnSelected = false;
   filter = '';
   isFilterApplied = false;
   pageSelected = 0;
+  dropdownHidden = true;
+  updateBtnConfig = updateBtn;
+  deleteBtnConfig = deleteBtn;
+  pageArrayOptions : number[] = [];
 
   // mockData : any[] = this.tableConfig.type == 'Utente' ? mockUser : mockAuto ;
-  mockData : any[] = [];
-
+  mockData : any[] = mockUser;
   backupData = this.mockData;
 
   //Restituisce i nomi dei parametri di un array di oggetti
@@ -86,12 +80,8 @@ export class TableComponent implements OnInit {
   }
 
   changePages(){
-    if(this.mockData.length % this.tableConfig.pagination.itemPerPage !== 0 ){
-      this.tableConfig.pagination.itemPerPageOptions = [...Array(Math.round(this.mockData.length / this.tableConfig.pagination.itemPerPage) + 1).keys()];
-    }
-    else {
-      this.tableConfig.pagination.itemPerPageOptions = [...Array(this.mockData.length / this.tableConfig.pagination.itemPerPage).keys()];
-    }
+    this.pageArrayOptions = [...Array(Math.ceil(this.mockData.length / this.tableConfig.pagination.itemPerPage)).keys()];
+    this.pageSelected = 0;
   }
 
   constructor(private mockService : MockDataService) {
@@ -99,12 +89,6 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePages();
-    if(this.tableConfig.type == 'Utente'){
-      this.getUtenti();
-    }
-    else {
-      this.getMezzi();
-    }
   }
 
   contains(array:any[], value:any) : boolean{
@@ -124,24 +108,26 @@ export class TableComponent implements OnInit {
     this.changePages();
   }
 
-  getUtenti(){
-    // this.mockService.getMockUsers().subscribe(user => this.mockData = user);
-    this.mockData = mockUser;
-    this.backupData = mockUser;
-
-    let x = '';
+  getBtnConfigFromAction(action: MyTableActionEnum) : MyButtonConfig {
+        switch (action){
+          case MyTableActionEnum.EDIT:
+            return updateBtn;
+            break;
+          case MyTableActionEnum.DELETE:
+            return deleteBtn;
+            break;
+          case MyTableActionEnum.NEW_ROW:
+            return createBtn;
+            break;
+          default:
+            return emptyBtn;
+            break;
+        }
   }
 
-  getMezzi(){
-    // this.mockService.getMockMezzi().subscribe(mezzo => this.mockData = mezzo);
-    this.mockData = mockAuto;
-    this.backupData = mockAuto;
-    let x = '';
-
+  showItem(option: number) {
+    this.tableConfig.pagination.itemPerPage = option;
+    this.dropdownHidden = !this.dropdownHidden;
+    this.changePages();
   }
-
-  containsValue(cmd: any) : boolean {
-    return Object.values(this.tableConfig.actions).includes(cmd);
-  }
-
 }

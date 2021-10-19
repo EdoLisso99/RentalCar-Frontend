@@ -18,40 +18,8 @@ export class HomeComponent implements OnInit {
   mezziConfig = mezziTableConfig;
   prenotazioniConfig = prenotazioniTableConfig;
 
-  updateUtente(updateElement:any){
-    alert("Update " + updateElement.nome)
-  }
-
-  updateMezzo(updateElement:any){
-    alert("Update " + updateElement.nome)
-  }
-
-  updatePrenotazione(updateElement:any){
-    alert("Update " + updateElement.nome)
-  }
-
-  deleteUtente(deleteElement:any){
-    alert("Cancellazione " + deleteElement.nome)
-  }
-
-  deleteMezzo(deleteElement:any){
-    alert("Cancellazione " + deleteElement.nome)
-  }
-
-  deletePrenotazione(deleteElement:any){
-    alert("Cancellazione " + deleteElement.nome)
-  }
-
-  createUtente(){
-    alert("Creazione utente");
-  }
-
-  createMezzo(){
-    alert("Creazione utente");
-  }
-
-  createPrenotazione(){
-    alert("Creazione utente");
+  doActionOnElement(obj:any){
+    alert("Azione: " + obj.action + " -Value: " + obj.data);
   }
 
   constructor(private mockService : MockDataService) { }

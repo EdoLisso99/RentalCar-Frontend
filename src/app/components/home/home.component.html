@@ -2,19 +2,14 @@
 <h1>Utenti</h1>
 <app-table
   [tableConfig]="userConfig"
-
-  (updateElement)="updateUtente($event)"
-  (createElement)="createUtente()"
-  (deleteElement)="deleteUtente($event)"
+  (onClickEvent)="doActionOnElement($event)"
 ></app-table>
 
 <h1>Mezzi</h1>
 <app-table
   [tableConfig]="mezziConfig"
 
-  (updateElement)="updateMezzo($event)"
-  (createElement)="createMezzo()"
-  (deleteElement)="deleteMezzo($event)"
+
 ></app-table>
 
 <h1>Prenotazioni</h1>

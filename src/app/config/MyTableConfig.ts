@@ -49,7 +49,7 @@ export const  userTableConfig : MyTableConfig = {
   pagination:
     {
       itemPerPage: 3,
-      itemPerPageOptions: [0]
+      itemPerPageOptions: [3, 5, 10, 15]
     },
   actions:[
     MyTableActionEnum.EDIT,
@@ -80,7 +80,7 @@ export const  mezziTableConfig : MyTableConfig = {
   pagination:
     {
       itemPerPage: 3,
-      itemPerPageOptions: [0]
+      itemPerPageOptions: [3, 5, 10, 15]
     },
   actions:[
     MyTableActionEnum.EDIT,
@@ -110,7 +110,7 @@ export const  prenotazioniTableConfig : MyTableConfig = {
   pagination:
     {
       itemPerPage: 3,
-      itemPerPageOptions: [0]
+      itemPerPageOptions: [3, 5, 10, 15]
     },
   actions:[
     MyTableActionEnum.EDIT,
