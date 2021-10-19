@@ -1,4 +1,5 @@
 export interface Utente {
+  id: number,
   nome: string,
   cognome: string,
   dataDiNascita: string,
@@ -6,6 +7,7 @@ export interface Utente {
 }
 
 export interface Mezzo {
+  id: number,
   annoDiImmatricolazione: string,
   casaCostruttrice: string,
   modello: string,
@@ -14,10 +16,11 @@ export interface Mezzo {
 }
 
 export interface Prenotazione {
+  id: number,
   dataDiInizio: string,
   dataDiFine: string,
   accettata: Boolean,
-  auto: string,
-  utente: string
+  auto: number,
+  utente: number
 
 }

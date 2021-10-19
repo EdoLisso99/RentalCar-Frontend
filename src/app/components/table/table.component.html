@@ -49,7 +49,7 @@
   <tbody>
     <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
           (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
-      <td *ngFor="let dataNames of getKey(backupData)">
+      <td *ngFor="let dataNames of getKey(tableConfig.headers)">
         {{getValuesFromParameter(data, dataNames)}}</td>
       <td>
         <span *ngFor="let action of tableConfig.actions">

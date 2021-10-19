@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
+import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 
 import * as _ from 'lodash-es';
-import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, updateBtn} from "../../config/MyButtonConfig";
+import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, selectBtn, updateBtn} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-table',
@@ -31,12 +31,12 @@ export class TableComponent implements OnInit {
   backupData: any[] = [];
 
   //Restituisce i nomi dei parametri di un array di oggetti
-  getKey(data: any[]) : string[]{
+  getKey(data: MyHeaders[]) : string[]{
     if(data.length == 0){
       return [];
     }
     else {
-      return Object.keys(data[0]);
+      return data.map(element => element.key);
     }
   }
 
@@ -118,6 +118,8 @@ export class TableComponent implements OnInit {
             return deleteBtn;
           case MyTableActionEnum.NEW_ROW:
             return createBtn;
+            case MyTableActionEnum.SELECT:
+            return selectBtn;
           default:
             return emptyBtn;
         }

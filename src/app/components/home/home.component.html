@@ -1,25 +1,28 @@
-
-<div class="container">
-  <br />
-  <h1>Utenti</h1>
-  <app-table
-    [tableConfig]="userConfig"
-    [mockData]="users"
-    (onClickEvent)="doActionOnElement($event)"
-  ></app-table>
-  <hr />
-  <br />
-  <h1>Mezzi</h1>
-  <app-table
-    [tableConfig]="mezziConfig"
-    [mockData]="mezzi"
-  ></app-table>
-  <hr />
-  <br />
-  <h1>Prenotazioni</h1>
-  <app-table
-    [tableConfig]="prenotazioniConfig"
-    [mockData]="prenotazioni"
-  ></app-table>
+<div class="home">
+  <app-button (click)="logout()" class="d-flex justify-content-end" [buttonConfig]="logoutBtnConfig"></app-button>
+  <h2 class="card-title text-center">Benvenuto, {{loggedUser.nome}} {{loggedUser.cognome}}!</h2>
+  <div class="container">
+    <br />
+    <h1>Utenti</h1>
+    <app-table
+      [tableConfig]="userConfig"
+      [mockData]="users"
+      (onClickEvent)="doActionOnElement($event)"
+    ></app-table>
+    <hr />
+    <br />
+    <h1>Mezzi</h1>
+    <app-table
+      [tableConfig]="mezziConfig"
+      [mockData]="mezzi"
+    ></app-table>
+    <hr />
+    <br />
+    <h1>Prenotazioni</h1>
+    <app-table
+      [tableConfig]="prenotazioniConfig"
+      [mockData]="prenotazioni"
+    ></app-table>
+  </div>
 
 </div>

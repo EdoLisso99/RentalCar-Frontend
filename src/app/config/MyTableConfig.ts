@@ -8,7 +8,7 @@ export interface MyTableConfig {
 }
 
 export enum MyTableActionEnum{
-  NEW_ROW, EDIT, DELETE
+  NEW_ROW, EDIT, DELETE, SELECT
 }
 
 export interface MyHeaders {
@@ -28,6 +28,34 @@ export interface MySearch {
 export interface MyPagination {
   itemPerPage: number;
   itemPerPageOptions: number[];
+}
+
+export const  loginTableConfig : MyTableConfig = {
+  headers: [
+    {key: 'nome', label: 'Nome'},
+    {key: 'cognome', label: 'Cognome'},
+    {key: 'dataDiNascita', label: 'Data di Nascita'},
+    {key: 'ruolo', label: 'Ruolo'},
+  ],
+  order:
+    {
+      defaultColumn: 'nome',
+      orderType: 'up'
+    },
+  search:
+    {
+      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
+    },
+  pagination:
+    {
+      itemPerPage: 3,
+      itemPerPageOptions: [3, 5, 10, 15]
+    },
+  actions:[
+    MyTableActionEnum.SELECT
+  ],
+  type: 'Utente'
+
 }
 
 export const  userTableConfig : MyTableConfig = {
@@ -54,10 +82,37 @@ export const  userTableConfig : MyTableConfig = {
   actions:[
     MyTableActionEnum.EDIT,
     MyTableActionEnum.DELETE,
-    MyTableActionEnum.NEW_ROW
+    MyTableActionEnum.NEW_ROW,
+
   ],
   type: 'Utente'
+}
 
+export const  userTableConfigCustomer : MyTableConfig = {
+  headers: [
+    {key: 'nome', label: 'Nome'},
+    {key: 'cognome', label: 'Cognome'},
+    {key: 'dataDiNascita', label: 'Data di Nascita'},
+    {key: 'ruolo', label: 'Ruolo'},
+  ],
+  order:
+    {
+      defaultColumn: 'nome',
+      orderType: 'up'
+    },
+  search:
+    {
+      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
+    },
+  pagination:
+    {
+      itemPerPage: 3,
+      itemPerPageOptions: [3, 5, 10, 15]
+    },
+  actions:[
+    MyTableActionEnum.EDIT
+  ],
+  type: 'Utente'
 }
 
 export const  mezziTableConfig : MyTableConfig = {
@@ -91,6 +146,33 @@ export const  mezziTableConfig : MyTableConfig = {
 
 }
 
+export const  mezziTableConfigUser : MyTableConfig = {
+  headers: [
+    {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
+    {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
+    {key: 'modello', label: 'Modello'},
+    {key: 'targa', label: 'Targa'},
+    {key: 'tipo', label: 'Tipo'},
+  ],
+  order:
+    {
+      defaultColumn: 'nome',
+      orderType: 'up'
+    },
+  search:
+    {
+      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione']
+    },
+  pagination:
+    {
+      itemPerPage: 3,
+      itemPerPageOptions: [3, 5, 10, 15]
+    },
+  actions:[],
+  type: 'Mezzo'
+
+}
+
 export const  prenotazioniTableConfig : MyTableConfig = {
   headers: [
     {key: 'dataDiInizio', label: 'Data di Inizio'},
@@ -119,5 +201,30 @@ export const  prenotazioniTableConfig : MyTableConfig = {
     MyTableActionEnum.NEW_ROW
   ],
   type: 'Prenotazione'
+}
 
+export const  prenotazioniTableConfigUser : MyTableConfig = {
+  headers: [
+    {key: 'dataDiInizio', label: 'Data di Inizio'},
+    {key: 'dataDiFine', label: 'Data di Fine'},
+    {key: 'accettata', label: 'Accettata'},
+    {key: 'auto', label: 'Auto'},
+    {key: 'utente', label: 'Utente'},
+  ],
+  order:
+    {
+      defaultColumn: 'nome',
+      orderType: 'up'
+    },
+  search:
+    {
+      columns: ['dataDiInizio', 'dataDiFine', 'accettata', 'auto', 'utente']
+    },
+  pagination:
+    {
+      itemPerPage: 3,
+      itemPerPageOptions: [3, 5, 10, 15]
+    },
+  actions:[MyTableActionEnum.EDIT],
+  type: 'Prenotazione'
 }

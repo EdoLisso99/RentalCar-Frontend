@@ -25,10 +25,22 @@ export const createBtn : MyButtonConfig = {
   icon : '',
   color: "",
 }
+
+export const selectBtn : MyButtonConfig = {
+  customCssClass : 'btn-success',
+  text : 'Sono io! ',
+  icon : 'fas fa-check',
+  color: "",
+}
+export const logoutBtn : MyButtonConfig = {
+  customCssClass : 'btn-danger',
+  text : 'Logout ',
+  icon : 'fas fa-sign-out-alt',
+  color: "",
+}
 export const emptyBtn : MyButtonConfig = {
   customCssClass : '',
   text : '',
   icon : '',
   color: "",
 }
-
