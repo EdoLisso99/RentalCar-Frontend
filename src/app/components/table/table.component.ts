@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
-import {mockAuto, mockUser} from "../../util/MockData";
-import {MockDataService} from "../../services/mock-data.service";
 
 import * as _ from 'lodash-es';
 import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, updateBtn} from "../../config/MyButtonConfig";
@@ -83,7 +81,7 @@ export class TableComponent implements OnInit {
     this.pageSelected = 0;
   }
 
-  constructor(private mockService : MockDataService) {
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -116,16 +114,12 @@ export class TableComponent implements OnInit {
         switch (action){
           case MyTableActionEnum.EDIT:
             return updateBtn;
-            break;
           case MyTableActionEnum.DELETE:
             return deleteBtn;
-            break;
           case MyTableActionEnum.NEW_ROW:
             return createBtn;
-            break;
           default:
             return emptyBtn;
-            break;
         }
   }
 

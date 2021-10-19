@@ -3,7 +3,7 @@ export interface Utente {
   cognome: string,
   dataDiNascita: string,
   ruolo: string
-};
+}
 
 export interface Mezzo {
   annoDiImmatricolazione: string,

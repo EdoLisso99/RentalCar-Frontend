@@ -1,8 +1,7 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {userTableConfig, mezziTableConfig, prenotazioniTableConfig} from "../../config/MyTableConfig";
 import {MockDataService} from "../../services/mock-data.service";
 import {Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
-import {mockUser, mockAuto} from "../../util/MockData";
 
 @Component({
   selector: 'app-home',

@@ -58,12 +58,15 @@
       </td>
     </tr>
   </tbody>
-
-  <button *ngFor="let page of pageArrayOptions"
-          (click)="pageSelected = page"
-          type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}
-  </button>
+  <tr>
+    <td *ngFor="let page of pageArrayOptions"
+        (click)="pageSelected = page"
+        [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}
+    </td>
+  </tr>
 </table>
+
+
 
 
 

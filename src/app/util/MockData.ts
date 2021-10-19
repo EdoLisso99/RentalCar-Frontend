@@ -1,4 +1,3 @@
-import {Mezzo, Utente} from "./Interfaces";
 
 export const mockUser  = [
   {
