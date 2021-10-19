@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 import {mockAuto, mockUser} from "../../util/MockData";
 import {MockDataService} from "../../services/mock-data.service";
@@ -14,6 +14,7 @@ import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, updateBtn} from "../../c
 export class TableComponent implements OnInit {
 
   @Input () tableConfig !: MyTableConfig ;
+  @Input() mockData !: any[];
   @Output() onClickEvent = new EventEmitter<any>();
 
   sendOnClickEvent(data:any, action: MyTableActionEnum){
@@ -25,13 +26,11 @@ export class TableComponent implements OnInit {
   isFilterApplied = false;
   pageSelected = 0;
   dropdownHidden = true;
-  updateBtnConfig = updateBtn;
-  deleteBtnConfig = deleteBtn;
   pageArrayOptions : number[] = [];
 
   // mockData : any[] = this.tableConfig.type == 'Utente' ? mockUser : mockAuto ;
-  mockData : any[] = mockUser;
-  backupData = this.mockData;
+
+  backupData: any[] = [];
 
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: any[]) : string[]{
@@ -89,6 +88,11 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePages();
+  }
+
+  ngOnChanges(changes:SimpleChanges): void{
+    this.mockData = changes.mockData.currentValue;
+    this.backupData = this.mockData;
   }
 
   contains(array:any[], value:any) : boolean{

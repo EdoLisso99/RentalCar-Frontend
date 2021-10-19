@@ -85,5 +85,36 @@ export  const mockAuto = [
 ];
 
 export const mockPrenotazioni = [
-
+  {
+    dataDiInizio: '19/10/2021',
+    dataDiFine: '20/10/2021',
+    accettata: true,
+    auto: 'Kia Rio',
+    utente: 'Ajeje Brazorf'
+  },{
+    dataDiInizio: '31/10/2021',
+    dataDiFine: '03/11/2021',
+    accettata: false,
+    auto: 'Opel Astra',
+    utente: 'Damiano Caruso'
+  },{
+    dataDiInizio: '08/09/2021',
+    dataDiFine: '16/09/2021',
+    accettata: true,
+    auto: 'Subaru Baracca',
+    utente: 'Fausto Masnada'
+  },{
+    dataDiInizio: '16/10/2021',
+    dataDiFine: '17/10/2021',
+    accettata: false,
+    auto: 'Fiat Panda',
+    utente: 'Silvio Berlusconi'
+  },{
+    dataDiInizio: '24/12/2021',
+    dataDiFine: '26/12/2021',
+    accettata: false,
+    auto: 'Audi A4',
+    utente: 'Ciro Esposito'
+  }
 ];
+

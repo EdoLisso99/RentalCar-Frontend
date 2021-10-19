@@ -1,21 +1,25 @@
 
-<h1>Utenti</h1>
-<app-table
-  [tableConfig]="userConfig"
-  (onClickEvent)="doActionOnElement($event)"
-></app-table>
+<div class="container">
+  <br />
+  <h1>Utenti</h1>
+  <app-table
+    [tableConfig]="userConfig"
+    [mockData]="users"
+    (onClickEvent)="doActionOnElement($event)"
+  ></app-table>
+  <hr />
+  <br />
+  <h1>Mezzi</h1>
+  <app-table
+    [tableConfig]="mezziConfig"
+    [mockData]="mezzi"
+  ></app-table>
+  <hr />
+  <br />
+  <h1>Prenotazioni</h1>
+  <app-table
+    [tableConfig]="prenotazioniConfig"
+    [mockData]="prenotazioni"
+  ></app-table>
 
-<h1>Mezzi</h1>
-<app-table
-  [tableConfig]="mezziConfig"
-
-
-></app-table>
-
-<h1>Prenotazioni</h1>
-<!--<app-table-->
-<!--  [tableConfig]="prenotazioniConfig"-->
-<!--  (updateElement)="updatePrenotazione($event)"-->
-<!--  (createElement)="createPrenotazione()"-->
-<!--  (deleteElement)="deletePrenotazione($event)"-->
-<!--&gt;</app-table>-->
+</div>

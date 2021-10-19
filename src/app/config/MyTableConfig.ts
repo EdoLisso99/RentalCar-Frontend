@@ -93,10 +93,11 @@ export const  mezziTableConfig : MyTableConfig = {
 
 export const  prenotazioniTableConfig : MyTableConfig = {
   headers: [
-    {key: 'nome', label: 'Nome'},
-    {key: 'cognome', label: 'Cognome'},
-    {key: 'dataDiNascita', label: 'Data di Nascita'},
-    {key: 'ruolo', label: 'Ruolo'},
+    {key: 'dataDiInizio', label: 'Data di Inizio'},
+    {key: 'dataDiFine', label: 'Data di Fine'},
+    {key: 'accettata', label: 'Accettata'},
+    {key: 'auto', label: 'Auto'},
+    {key: 'utente', label: 'Utente'},
   ],
   order:
     {
@@ -105,7 +106,7 @@ export const  prenotazioniTableConfig : MyTableConfig = {
     },
   search:
     {
-      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
+      columns: ['dataDiInizio', 'dataDiFine', 'accettata', 'auto', 'utente']
     },
   pagination:
     {

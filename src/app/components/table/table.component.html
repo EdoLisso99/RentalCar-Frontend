@@ -4,26 +4,29 @@
          (keyup.enter)="filterData(filter)"/>
 </div>
 
-<div class="dropdown col-4">
-  <button [hidden]="!isFilterApplied"
-          (click)="resetFilters()"
-          class="btn btn-danger" type="button" id="resetFilterBtn">Reset Filters</button>
-</div>
-
-
-<div class="col-4">
-  <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden">
-    Item per page: {{tableConfig.pagination.itemPerPage}}
-  </button>
-  <div class="" [hidden]="dropdownHidden">
-    <div class="text-black-50 align-content-center col-4" *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
-      <button class="btn btn-light"
-              (click)="showItem(option)">{{option}}</button>
+<div class="col-12 d-flex flex-row">
+  <div class="col-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden">
+      Item per page: {{tableConfig.pagination.itemPerPage}}
+    </button>
+    <div class="" [hidden]="dropdownHidden">
+        <button *ngFor="let option of tableConfig.pagination.itemPerPageOptions" class="btn btn-light"
+                (click)="showItem(option)">{{option}}</button>
     </div>
+  </div>
+
+  <div class="col-2">
+    <button [hidden]="!isFilterApplied"
+            (click)="resetFilters()"
+            class="btn btn-danger" type="button" id="resetFilterBtn">Reset Filters</button>
   </div>
 </div>
 
-<table class="table">
+<br />
+
+
+<table class="table table-hover" >
+  <thead>
   <tr>
     <th (click)="changeColumn(columnNames.key, tableConfig.order.orderType, mockData)" scope="col"
         *ngFor="let columnNames of tableConfig.headers">
@@ -41,22 +44,26 @@
 
       </div>
     </th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
+          (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
+      <td *ngFor="let dataNames of getKey(backupData)">
+        {{getValuesFromParameter(data, dataNames)}}</td>
+      <td>
+        <span *ngFor="let action of tableConfig.actions">
+          <app-button [buttonConfig]="getBtnConfigFromAction(action)" (click)="sendOnClickEvent(data, action)"></app-button>
+        </span>
+      </td>
+    </tr>
+  </tbody>
 
-  </tr>
-  <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
-        (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
-    <td *ngFor="let dataNames of getKey(backupData)">
-      {{getValuesFromParameter(data, dataNames)}}</td>
-    <td>
-      <span *ngFor="let action of tableConfig.actions">
-        <app-button [buttonConfig]="getBtnConfigFromAction(action)" (click)="sendOnClickEvent(data, action)"></app-button>
-      </span>
-    </td>
-  </tr>
+  <button *ngFor="let page of pageArrayOptions"
+          (click)="pageSelected = page"
+          type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}
+  </button>
 </table>
 
-<button *ngFor="let page of pageArrayOptions"
-        (click)="pageSelected = page"
-        type="button" [ngClass]="page == pageSelected ? 'btn btn-info' : 'btn btn-secondary'">{{page + 1}}
-</button>
+
 

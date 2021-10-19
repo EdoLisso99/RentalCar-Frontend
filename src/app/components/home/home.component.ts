@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {userTableConfig, mezziTableConfig, prenotazioniTableConfig} from "../../config/MyTableConfig";
 import {MockDataService} from "../../services/mock-data.service";
-import {Mezzo, Utente} from "../../util/Interfaces";
+import {Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
 import {mockUser, mockAuto} from "../../util/MockData";
 
 @Component({
@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   users: Utente[] = [];
   mezzi: Mezzo[] = [];
+  prenotazioni : Prenotazione[] = [];
 
   userConfig = userTableConfig;
   mezziConfig = mezziTableConfig;
@@ -26,18 +27,20 @@ export class HomeComponent implements OnInit {
 
   getUtenti(){
     this.mockService.getMockUsers().subscribe(user => this.users = user);
-    let x = '';
   }
 
   getMezzi(){
     this.mockService.getMockMezzi().subscribe(mezzo => this.mezzi = mezzo);
-    let x = '';
+  }
 
+  getPrenotazioni(){
+    this.mockService.getMockPrenotazioni().subscribe(prenotazione => this.prenotazioni = prenotazione);
   }
 
   ngOnInit(): void {
     this.getUtenti();
     this.getMezzi();
+    this.getPrenotazioni();
   }
 
 }

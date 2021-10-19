@@ -12,3 +12,12 @@ export interface Mezzo {
   targa: string,
   tipo: string
 }
+
+export interface Prenotazione {
+  dataDiInizio: string,
+  dataDiFine: string,
+  accettata: Boolean,
+  auto: string,
+  utente: string
+
+}

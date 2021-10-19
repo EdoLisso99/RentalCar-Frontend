@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {mockUser, mockAuto} from "../util/MockData";
+import {mockUser, mockAuto, mockPrenotazioni} from "../util/MockData";
 import { Observable, of } from 'rxjs';
-import {Mezzo, Utente} from "../util/Interfaces";
+import {Mezzo, Prenotazione, Utente} from "../util/Interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,11 @@ export class MockDataService {
   getMockMezzi(): Observable<Mezzo[]>{
     const mezzi = of(mockAuto);
     return mezzi;
+  }
+
+  getMockPrenotazioni(): Observable<Prenotazione[]>{
+    const prenotazioni = of(mockPrenotazioni);
+    return prenotazioni;
   }
 
   constructor() { }
