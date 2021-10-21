@@ -39,9 +39,28 @@ export class MockDataService {
     return of(mockUser);
   }
 
-  getMockMezzi(): Observable<Mezzo[]>{
-    // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
+  updateMockMezzo(mezzo: Mezzo) {
+    if(mezzo.id !== null && mezzo.id !== -1){
+      let index = _.findIndex(mockAuto, function (o) {return o.id == mezzo.id});
+      mockAuto[index] = mezzo;
+    }
+    else {
+      mezzo.id = mockAuto[mockAuto.length-1].id + 1;
+      mockAuto.push(mezzo);
+    }
     return of(mockAuto);
+  }
+
+  removeMockMezzo(mezzo: Mezzo): Observable<any>{
+    _.remove(mockAuto, function (o) {return o.id == mezzo.id});
+    return of(mockAuto);
+  }
+
+  getMockMezzi(): Observable<Mezzo[]>{
+    const tempData:any[] = [];
+    mockAuto.forEach(elem => tempData.push(elem));
+    return of(tempData);
+    // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
   }
 
   getMockPrenotazioni(): Observable<Prenotazione[]>{
@@ -62,5 +81,6 @@ export class MockDataService {
   //     catchError(this.handleError<any>('updateHero'))
   //   );
   // }
+
 
 }

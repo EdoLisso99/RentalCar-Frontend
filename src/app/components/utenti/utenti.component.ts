@@ -38,8 +38,6 @@ export class UtentiComponent implements OnInit {
 
   sendTableAction(data: any) {
     switch (data.action) {
-      case MyTableActionEnum.SELECT:
-        break;
       case MyTableActionEnum.EDIT:
         this.setSession(data.data, 'Edit');
         this.router.navigate(["home/utenti/edit"]);

@@ -8,6 +8,15 @@ export const emptyUser  = [
   },
 ]
 
+export const emptyMezzo = {
+  id: -1,
+  annoDiImmatricolazione: '',
+  casaCostruttrice: '',
+  modello: '',
+  targa: '',
+  tipo: ''
+}
+
 export const mockUser  = [
   {
     id: 1,

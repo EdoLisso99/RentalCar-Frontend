@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Utente} from "../../../util/Interfaces";
 import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class FormUtentiComponent implements OnInit {
   formGroup: any;
 
   constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
-              private readonly router : Router) { }
+              private readonly router : Router, private location: Location) { }
 
   ngOnInit(): void {
     this.data = JSON.parse(sessionStorage.getItem('data')!);
@@ -59,4 +60,8 @@ export class FormUtentiComponent implements OnInit {
   }
 
 
+  goBack() {
+    this.clearSession();
+    this.location.back();
+  }
 }

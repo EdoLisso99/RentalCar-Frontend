@@ -52,7 +52,7 @@
       <td *ngFor="let dataNames of getKey(tableConfig.headers)">
         {{data[dataNames]}}</td>
       <td>
-        <span *ngFor="let action of tableConfig.actions">
+        <span class="ml-2" *ngFor="let action of tableConfig.actions">
           <app-button [buttonConfig]="getBtnConfigFromAction(action)" (click)="sendOnClickEvent(data, action)"></app-button>
         </span>
       </td>
