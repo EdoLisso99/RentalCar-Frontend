@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
-
 import * as _ from 'lodash-es';
 import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, selectBtn, updateBtn} from "../../config/MyButtonConfig";
 
@@ -15,33 +14,25 @@ export class TableComponent implements OnInit {
   @Input() mockData !: any[];
   @Output() onClickEvent = new EventEmitter<any>();
 
-  sendOnClickEvent(data:any, action: MyTableActionEnum){
-    this.onClickEvent.emit({data: data, action:action});
-  }
-
   isColumnSelected = false;
   filter = '';
   isFilterApplied = false;
   pageSelected = 0;
   dropdownHidden = true;
   pageArrayOptions : number[] = [];
-
-  // mockData : any[] = this.tableConfig.type == 'Utente' ? mockUser : mockAuto ;
-
   backupData: any[] = [];
 
-  //Restituisce i nomi dei parametri di un array di oggetti
-  getKey(data: MyHeaders[]) : string[]{
-    if(data.length == 0){
-      return [];
-    }
-    else {
-      return data.map(element => element.key);
-    }
+  constructor() {
   }
 
-  getValuesFromParameter(data: any, params : string) : string[] {
-    return data[params];
+  ngOnInit(): void {
+    this.changePages();
+  }
+
+  ngOnChanges(changes:SimpleChanges): void{
+    this.mockData = changes.mockData.currentValue;
+    this.backupData = this.mockData;
+    this.changePages();
   }
 
   //Cambia l'icona e la sua posizione in base alla colonna e all'ordine selezionati
@@ -57,6 +48,21 @@ export class TableComponent implements OnInit {
       multiplier = 1;
     }
     return  data.sort((a,b) => (a[colName] > b[colName]) ? multiplier : ((b[colName] > a[colName]) ? -(multiplier) : 0))
+  }
+
+  changePages(){
+    this.pageArrayOptions = [...Array(Math.ceil(this.mockData.length / this.tableConfig.pagination.itemPerPage)).keys()];
+    this.pageSelected = 0;
+  }
+
+  contains(array:any[], value:any) : boolean{
+    let flag = false;
+    array.map(element => {
+      if(element == value){
+        flag = true;
+      }
+    })
+    return flag;
   }
 
   filterData(appliedFilter : string){
@@ -76,31 +82,29 @@ export class TableComponent implements OnInit {
     this.changePages();
   }
 
-  changePages(){
-    this.pageArrayOptions = [...Array(Math.ceil(this.mockData.length / this.tableConfig.pagination.itemPerPage)).keys()];
-    this.pageSelected = 0;
+  getBtnConfigFromAction(action: MyTableActionEnum) : MyButtonConfig {
+    switch (action){
+      case MyTableActionEnum.EDIT:
+        return updateBtn;
+      case MyTableActionEnum.DELETE:
+        return deleteBtn;
+      case MyTableActionEnum.NEW_ROW:
+        return createBtn;
+      case MyTableActionEnum.SELECT:
+        return selectBtn;
+      default:
+        return emptyBtn;
+    }
   }
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-    this.changePages();
-  }
-
-  ngOnChanges(changes:SimpleChanges): void{
-    this.mockData = changes.mockData.currentValue;
-    this.backupData = this.mockData;
-  }
-
-  contains(array:any[], value:any) : boolean{
-    let flag = false;
-    array.map(element => {
-      if(element == value){
-        flag = true;
-      }
-    })
-    return flag;
+  //Restituisce i nomi dei parametri di un array di oggetti
+  getKey(data: MyHeaders[]) : string[]{
+    if(data.length == 0){
+      return [];
+    }
+    else {
+      return data.map(element => element.key);
+    }
   }
 
   resetFilters(){
@@ -110,19 +114,8 @@ export class TableComponent implements OnInit {
     this.changePages();
   }
 
-  getBtnConfigFromAction(action: MyTableActionEnum) : MyButtonConfig {
-        switch (action){
-          case MyTableActionEnum.EDIT:
-            return updateBtn;
-          case MyTableActionEnum.DELETE:
-            return deleteBtn;
-          case MyTableActionEnum.NEW_ROW:
-            return createBtn;
-            case MyTableActionEnum.SELECT:
-            return selectBtn;
-          default:
-            return emptyBtn;
-        }
+  sendOnClickEvent(data:any, action: MyTableActionEnum){
+    this.onClickEvent.emit({data: data, action:action});
   }
 
   showItem(option: number) {

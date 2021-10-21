@@ -1,3 +1,12 @@
+export const emptyUser  = [
+  {
+    id: -1,
+    nome: '',
+    cognome: '',
+    dataDiNascita: '',
+    ruolo: ''
+  },
+]
 
 export const mockUser  = [
   {
@@ -6,13 +15,6 @@ export const mockUser  = [
     cognome: 'Lissoni',
     dataDiNascita: '1999/04/12',
     ruolo: 'SuperUser'
-  },
-  {
-    id: 2,
-    nome: 'Mattia',
-    cognome: 'Cattaneo',
-    dataDiNascita: '1995/11/01',
-    ruolo: 'Customer'
   },
   {
     id: 3,
@@ -40,6 +42,13 @@ export const mockUser  = [
     nome: 'Carlo',
     cognome: 'D\'Amato',
     dataDiNascita: '1994/02/04',
+    ruolo: 'Customer'
+  },
+  {
+    id: 2,
+    nome: 'Giulia',
+    cognome: 'Bellinzona',
+    dataDiNascita: '1995/11/01',
     ruolo: 'Customer'
   }
 ];

@@ -6,7 +6,7 @@
 
 <div class="col-12 d-flex flex-row">
   <div class="col-4">
-    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden">
+    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden" style="z-index: 1">
       Item per page: {{tableConfig.pagination.itemPerPage}}
     </button>
     <div class="" [hidden]="dropdownHidden">
@@ -50,7 +50,7 @@
     <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
           (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
       <td *ngFor="let dataNames of getKey(tableConfig.headers)">
-        {{getValuesFromParameter(data, dataNames)}}</td>
+        {{data[dataNames]}}</td>
       <td>
         <span *ngFor="let action of tableConfig.actions">
           <app-button [buttonConfig]="getBtnConfigFromAction(action)" (click)="sendOnClickEvent(data, action)"></app-button>

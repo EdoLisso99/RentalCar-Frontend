@@ -1,28 +1,10 @@
 <div class="home">
   <app-button (click)="logout()" class="d-flex justify-content-end" [buttonConfig]="logoutBtnConfig"></app-button>
   <h2 class="card-title text-center">Benvenuto, {{loggedUser.nome}} {{loggedUser.cognome}}!</h2>
-  <div class="container">
-    <br />
-    <h1>Utenti</h1>
-    <app-table
-      [tableConfig]="userConfig"
-      [mockData]="users"
-      (onClickEvent)="doActionOnElement($event)"
-    ></app-table>
-    <hr />
-    <br />
-    <h1>Mezzi</h1>
-    <app-table
-      [tableConfig]="mezziConfig"
-      [mockData]="mezzi"
-    ></app-table>
-    <hr />
-    <br />
-    <h1>Prenotazioni</h1>
-    <app-table
-      [tableConfig]="prenotazioniConfig"
-      [mockData]="prenotazioni"
-    ></app-table>
-  </div>
-
+  <nav class="d-flex flex-row justify-content-around">
+    <button (click)="changePath('utenti')" class="btn btn-primary">Utenti</button>
+    <button (click)="changePath('mezzi')" class="btn btn-primary">Mezzi</button>
+    <button (click)="changePath('prenotazioni')" class="btn btn-primary">Prenotazioni</button>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
