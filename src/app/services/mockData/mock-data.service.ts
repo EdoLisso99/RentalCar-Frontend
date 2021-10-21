@@ -5,24 +5,24 @@ import {Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
 import {HttpClient} from "@angular/common/http";
 import * as _ from 'lodash';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class MockDataService {
-    private formHidden: boolean = true;
   // private userUrl = 'api/users';
   // private mezziUrl = 'api/mezzi';
   // private prenotazioniUrl = 'api/prenotazioni';
 
-  constructor(private  http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getMockUsers(): Observable<Utente[]>{
     // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
-    return of(mockUser);
+    const tempData:any[] = [];
+    mockUser.forEach(elem => tempData.push(elem));
+    return of(tempData);
   }
 
-  updateMockUser(user: Utente){
+  updateMockUser(user: Utente): Observable<any>{
     if(user.id !== null){
       let index = _.findIndex(mockUser, function (o) {return o.id == user.id});
       mockUser[index] = user;
@@ -31,19 +31,13 @@ export class MockDataService {
       user.id = mockUser[mockUser.length-1].id + 1;
       mockUser.push(user);
     }
-
+    return of(mockUser);
   }
 
-  removeMockUser(user: Utente){
+  removeMockUser(user: Utente): Observable<any>{
     _.remove(mockUser, function (o) {return o.id == user.id});
+    return of(mockUser);
   }
-
-  // updateUtente(utente: Utente): Observable<any> {
-  //   return this.http.put(this.userUrl, utente, this.httpOptions).pipe(
-  //     tap(_ => this.log(`updated hero id=${utente.id}`)),
-  //     catchError(this.handleError<any>('updateHero'))
-  //   );
-  // }
 
   getMockMezzi(): Observable<Mezzo[]>{
     // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
@@ -55,10 +49,6 @@ export class MockDataService {
     return of(mockPrenotazioni);
   }
 
-  toogleFormHidden(){
-    this.formHidden = !this.formHidden;
-  }
-
   // private handleError<T>(operation = 'operation', result?: T) {
   //   return (error: any): Observable<T> => {
   //     console.error(error);
@@ -66,7 +56,11 @@ export class MockDataService {
   //   };
   // }
 
-  getFormHidden() {
-    return this.formHidden;
-  }
+  // updateUtente(utente: Utente): Observable<any> {
+  //   return this.http.put(this.userUrl, utente, this.httpOptions).pipe(
+  //     tap(_ => this.log(`updated hero id=${utente.id}`)),
+  //     catchError(this.handleError<any>('updateHero'))
+  //   );
+  // }
+
 }

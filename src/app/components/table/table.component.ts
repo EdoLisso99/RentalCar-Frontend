@@ -30,6 +30,9 @@ export class TableComponent implements OnInit {
   }
 
   ngOnChanges(changes:SimpleChanges): void{
+    console.log("Utenti Tabella:");
+    console.log(this.mockData);
+    console.log("=========================");
     this.mockData = changes.mockData.currentValue;
     this.backupData = this.mockData;
     this.changePages();

@@ -34,8 +34,17 @@ export class FormUtentiComponent implements OnInit {
   }
 
   onSubmit(formData:Utente) {
-    this.mockService.updateMockUser(formData);
-    this.router.navigate(['home/utenti']);
+    this.mockService.updateMockUser(formData).subscribe((x) => {
+      this.clearSession();
+      this.router.navigate(['home/utenti']);
+    });
+  }
+
+  clearSession(){
+    sessionStorage.removeItem('data');
+    sessionStorage.removeItem('type');
+    sessionStorage.removeItem('action');
+    sessionStorage.removeItem('keys');
   }
 
 
