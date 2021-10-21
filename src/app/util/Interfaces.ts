@@ -19,7 +19,7 @@ export interface Prenotazione {
   id: number,
   dataDiInizio: string,
   dataDiFine: string,
-  accettata: Boolean,
+  accettata: boolean,
   auto: number,
   utente: number
 

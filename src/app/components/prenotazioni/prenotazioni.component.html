@@ -1,5 +1,8 @@
+<br />
 <h1>Prenotazioni</h1>
+<app-button [buttonConfig]="btnConfig"></app-button>
 <app-table
   [tableConfig]="prenotazioniConfig"
   [mockData]="prenotazioni"
+  (onClickEvent)="sendTableAction($event)"
 ></app-table>

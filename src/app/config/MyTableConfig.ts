@@ -8,7 +8,7 @@ export interface MyTableConfig {
 }
 
 export enum MyTableActionEnum{
-  NEW_ROW, EDIT, DELETE, SELECT
+  NEW_ROW, EDIT, DELETE, SELECT, APPROVE, REJECT, BOOK
 }
 
 export interface MyHeaders {
@@ -82,8 +82,6 @@ export const  userTableConfig : MyTableConfig = {
   actions:[
     MyTableActionEnum.EDIT,
     MyTableActionEnum.DELETE,
-    MyTableActionEnum.NEW_ROW,
-
   ],
   type: 'Utente'
 }
@@ -140,7 +138,6 @@ export const  mezziTableConfig : MyTableConfig = {
   actions:[
     MyTableActionEnum.EDIT,
     MyTableActionEnum.DELETE,
-    MyTableActionEnum.NEW_ROW
   ],
   type: 'Mezzo'
 
@@ -168,7 +165,7 @@ export const  mezziTableConfigUser : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[],
+  actions:[MyTableActionEnum.BOOK],
   type: 'Mezzo'
 
 }
@@ -195,11 +192,7 @@ export const  prenotazioniTableConfig : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[
-    MyTableActionEnum.EDIT,
-    MyTableActionEnum.DELETE,
-    MyTableActionEnum.NEW_ROW
-  ],
+  actions:[MyTableActionEnum.APPROVE, MyTableActionEnum.REJECT, MyTableActionEnum.DELETE],
   type: 'Prenotazione'
 }
 
@@ -225,6 +218,6 @@ export const  prenotazioniTableConfigUser : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[MyTableActionEnum.EDIT],
+  actions:[MyTableActionEnum.EDIT, MyTableActionEnum.DELETE],
   type: 'Prenotazione'
 }

@@ -1,4 +1,6 @@
+<br />
 <h1>Mezzi</h1>
+<app-button [buttonConfig]="btnConfig" (click)="sendTableAction({data: '', action:'new'})"></app-button>
 <app-table
   [tableConfig]="mezziConfig"
   [mockData]="mezzi"

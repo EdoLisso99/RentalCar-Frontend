@@ -17,6 +17,15 @@ export const emptyMezzo = {
   tipo: ''
 }
 
+export const emptyPrenotazione = {
+    id: -1,
+    dataDiInizio: '',
+    dataDiFine: '',
+    accettata: false,
+    auto: -1,
+    utente: -1
+}
+
 export const mockUser  = [
   {
     id: 1,

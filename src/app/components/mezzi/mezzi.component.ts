@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {Mezzo, Utente} from "../../util/Interfaces";
-import {mezziTableConfig, mezziTableConfigUser, MyTableActionEnum} from "../../config/MyTableConfig";
+import {
+  mezziTableConfig,
+  mezziTableConfigUser,
+  MyTableActionEnum, prenotazioniTableConfig,
+  prenotazioniTableConfigUser
+} from "../../config/MyTableConfig";
 import {MockDataService} from "../../services/mockData/mock-data.service";
-import {emptyMezzo} from "../../util/MockData";
+import {emptyMezzo, emptyPrenotazione} from "../../util/MockData";
 import {Router} from "@angular/router";
+import {createBtn, emptyBtn} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-mezzi',
@@ -13,9 +19,10 @@ import {Router} from "@angular/router";
 export class MezziComponent implements OnInit {
 
   loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
-
+  btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
   mezzi: Mezzo[] = [];
   mezziConfig = this.loggedUser.ruolo == 'Customer' ? mezziTableConfigUser :mezziTableConfig;
+  prenotazioniConfig = this.loggedUser.ruolo == 'Customer' ?  prenotazioniTableConfigUser : prenotazioniTableConfig;
 
   constructor(private mockService : MockDataService, private readonly router : Router) { }
 
@@ -36,9 +43,14 @@ export class MezziComponent implements OnInit {
       case MyTableActionEnum.DELETE:
         this.mockService.removeMockMezzo(data.data).subscribe((x) => this.getMezzi());
         break;
+      case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.setSession(emptyMezzo, "Create");
         this.router.navigate(["home/mezzi/new"]);
+        break;
+      case MyTableActionEnum.BOOK:
+        this.setPrenotazioneSession(data.data.id, this.loggedUser.id);
+        this.router.navigate(["home/prenotazioni/new"]);
         break;
       default:
         break;
@@ -53,4 +65,14 @@ export class MezziComponent implements OnInit {
   }
 
 
+  private setPrenotazioneSession(mezzoId: number, utenteId: number) {
+    let tempPrenotazione = emptyPrenotazione;
+    tempPrenotazione.auto = mezzoId;
+    tempPrenotazione.utente = utenteId;
+    tempPrenotazione.accettata = false; //TODO Settare a null quando ce la si farà
+    sessionStorage.setItem('data', JSON.stringify(tempPrenotazione));
+    sessionStorage.setItem('type', 'Prenotazioni');
+    sessionStorage.setItem('action', 'Create');
+    sessionStorage.setItem('keys', JSON.stringify(this.prenotazioniConfig.headers));
+  }
 }

@@ -1,1 +1,10 @@
-<p>form-prenotazioni works!</p>
+<h2 class="card-title">{{action}} Prenotazione</h2>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+  <div class="form-group col-12" *ngFor="let dataNames of getKey(keyObj); let i = index" >
+    <label for="{{dataNames}}">{{keyObj[i].label}}</label>
+    <input type="text" class="form-control" id="{{dataNames}}" formControlName="{{dataNames}}"
+           placeholder="Enter {{keyObj[i].label}}" value="{{data[dataNames]}}">
+  </div>
+  <button class="btn btn-success" type="submit">Submit</button>
+</form>
+<button class="btn btn-warning mt-2" (click)="goBack()">Go Back</button>

@@ -4,6 +4,7 @@ import {Utente} from "../../util/Interfaces";
 import {Router} from "@angular/router";
 import {MockDataService} from "../../services/mockData/mock-data.service";
 import {emptyUser} from "../../util/MockData";
+import {createBtn, emptyBtn} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-utenti',
@@ -17,6 +18,7 @@ export class UtentiComponent implements OnInit {
   loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   userConfig = this.loggedUser.ruolo == 'Customer' ? userTableConfigCustomer : userTableConfig;
   users: Utente[] = [];
+  btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
 
   constructor(private readonly router : Router, private mockService : MockDataService) { }
 
@@ -45,6 +47,7 @@ export class UtentiComponent implements OnInit {
       case MyTableActionEnum.DELETE:
         this.mockService.removeMockUser(data.data).subscribe((x) => this.getUtenti());
         break;
+      case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.setSession(emptyUser, "Create");
         this.router.navigate(["home/utenti/new"]);

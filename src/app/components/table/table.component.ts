@@ -1,7 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 import * as _ from 'lodash-es';
-import {createBtn, deleteBtn, emptyBtn, MyButtonConfig, selectBtn, updateBtn} from "../../config/MyButtonConfig";
+import {
+  approveBtn, bookBtn,
+  createBtn,
+  deleteBtn,
+  emptyBtn,
+  MyButtonConfig,
+  rejectBtn,
+  selectBtn,
+  updateBtn
+} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-table',
@@ -95,6 +104,12 @@ export class TableComponent implements OnInit {
         return createBtn;
       case MyTableActionEnum.SELECT:
         return selectBtn;
+      case MyTableActionEnum.REJECT:
+        return rejectBtn;
+      case MyTableActionEnum.APPROVE:
+        return approveBtn;
+      case MyTableActionEnum.BOOK:
+        return bookBtn;
       default:
         return emptyBtn;
     }

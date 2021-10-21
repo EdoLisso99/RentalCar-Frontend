@@ -1,6 +1,7 @@
 <br />
 <div>
   <h1>Utenti</h1>
+  <app-button [buttonConfig]="btnConfig" (click)="sendTableAction({data: '', action:'new'})"></app-button>
   <app-table
     [tableConfig]="userConfig"
     [mockData]="users"

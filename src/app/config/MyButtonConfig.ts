@@ -12,6 +12,28 @@ export const updateBtn : MyButtonConfig = {
   icon : 'fas fa-pencil-alt',
   color: "mediumslateblue",
 }
+
+export const approveBtn : MyButtonConfig = {
+  customCssClass : 'btn-success',
+  text : 'Approve',
+  icon : 'fas fa-heart',
+  color: "",
+}
+
+export const bookBtn : MyButtonConfig = {
+  customCssClass : 'btn-info',
+  text : 'Book',
+  icon : 'fas fa-car',
+  color: "",
+}
+
+export const rejectBtn : MyButtonConfig = {
+  customCssClass : 'btn-danger',
+  text : 'Decline',
+  icon : 'fas fa-skull',
+  color: "",
+}
+
 export const deleteBtn : MyButtonConfig = {
   customCssClass : 'btn-light',
   text : '',
@@ -21,7 +43,7 @@ export const deleteBtn : MyButtonConfig = {
 
 export const createBtn : MyButtonConfig = {
   customCssClass : 'btn-warning',
-  text : 'Crea nuovo elemento',
+  text : 'Create new element',
   icon : '',
   color: "",
 }
