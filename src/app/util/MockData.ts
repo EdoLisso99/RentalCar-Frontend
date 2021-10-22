@@ -1,3 +1,7 @@
+import {formatDate} from '@angular/common';
+
+
+
 export const emptyUser  = [
   {
     id: -1,
@@ -31,42 +35,42 @@ export const mockUser  = [
     id: 1,
     nome: 'Edoardo',
     cognome: 'Lissoni',
-    dataDiNascita: '1999/04/12',
+    dataDiNascita: formatDate(new Date('1999/04/12'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'SuperUser'
   },
   {
     id: 3,
     nome: 'Fabio',
     cognome: 'Yong',
-    dataDiNascita: '1998/07/27',
+    dataDiNascita: formatDate(new Date('1998/07/27'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'Customer'
   },
   {
     id: 4,
     nome: 'Manuel',
     cognome: 'Tocchi',
-    dataDiNascita: '1996/06/19',
+    dataDiNascita: formatDate(new Date('1996/06/19'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'Customer'
   },
   {
     id: 5,
     nome: 'Alessio',
     cognome: 'Popolo',
-    dataDiNascita: '1997/02/11',
+    dataDiNascita: formatDate(new Date('1997/02/11'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'Customer'
   },
   {
     id: 6,
     nome: 'Carlo',
     cognome: 'D\'Amato',
-    dataDiNascita: '1994/02/04',
+    dataDiNascita: formatDate(new Date('1994/02/04'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'Customer'
   },
   {
     id: 2,
     nome: 'Giulia',
     cognome: 'Bellinzona',
-    dataDiNascita: '1995/11/01',
+    dataDiNascita: formatDate(new Date('1995/11/01'),  'yyyy/MM/dd',"en-US"),
     ruolo: 'Customer'
   }
 ];
@@ -74,7 +78,7 @@ export const mockUser  = [
 export  const mockAuto = [
   {
     id: 1,
-    annoDiImmatricolazione: '2018/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2018/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Fiat',
     modello: 'Panda',
     targa: 'TF847JY',
@@ -82,7 +86,7 @@ export  const mockAuto = [
   },
   {
     id: 2,
-    annoDiImmatricolazione: '2015/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2015/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Ford',
     modello: 'Fiesta',
     targa: 'SY877ZX',
@@ -90,7 +94,7 @@ export  const mockAuto = [
   },
   {
     id: 3,
-    annoDiImmatricolazione: '2001/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2001/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Subaru',
     modello: 'Baracca',
     targa: 'AM766QC',
@@ -98,7 +102,7 @@ export  const mockAuto = [
   },
   {
     id: 4,
-    annoDiImmatricolazione: '2012/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2012/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Hyundai',
     modello: 'i10',
     targa: 'KE341NF',
@@ -106,7 +110,7 @@ export  const mockAuto = [
   },
   {
     id: 5,
-    annoDiImmatricolazione: '2013/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2013/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Opel',
     modello: 'Astra',
     targa: 'PW017VB',
@@ -114,7 +118,7 @@ export  const mockAuto = [
   },
   {
     id: 6,
-    annoDiImmatricolazione: '2000/01/01',
+    annoDiImmatricolazione: formatDate(new Date('2000/01/01'),  'yyyy/MM/dd',"en-US"),
     casaCostruttrice: 'Kia',
     modello: 'Picanto',
     targa: 'RF633GF',
@@ -125,40 +129,40 @@ export  const mockAuto = [
 export const mockPrenotazioni = [
   {
     id: 1,
-    dataDiInizio: '19/10/2021',
-    dataDiFine: '20/10/2021',
+    dataDiInizio: formatDate(new Date('2021/10/19'),  'yyyy/MM/dd',"en-US"),
+    dataDiFine: formatDate(new Date('2021/10/20'),  'yyyy/MM/dd',"en-US"),
     accettata: true,
     auto: 2,
     utente: 3
   },
   {
     id: 2,
-    dataDiInizio: '31/10/2021',
-    dataDiFine: '03/11/2021',
+    dataDiInizio: formatDate(new Date('2021/10/31'),  'yyyy/MM/dd',"en-US"),
+    dataDiFine: formatDate(new Date('2021/11/03'),  'yyyy/MM/dd',"en-US"),
     accettata: null,
     auto: 4,
     utente: 1
   },
   {
     id: 3,
-    dataDiInizio: '08/09/2021',
-    dataDiFine: '16/09/2021',
+    dataDiInizio: formatDate(new Date('2021/09/08'),  'yyyy/MM/dd',"en-US"),
+    dataDiFine: formatDate(new Date('2021/09/16'),  'yyyy/MM/dd',"en-US"),
     accettata: true,
     auto: 1,
     utente: 6
   },
   {
     id: 4,
-    dataDiInizio: '16/10/2021',
-    dataDiFine: '17/10/2021',
+    dataDiInizio: formatDate(new Date('2021/10/16'),  'yyyy/MM/dd',"en-US"),
+    dataDiFine: formatDate(new Date('2021/10/17'),  'yyyy/MM/dd',"en-US"),
     accettata: null,
     auto: 5,
     utente: 5
   },
   {
     id: 5,
-    dataDiInizio: '24/12/2021',
-    dataDiFine: '26/12/2021',
+    dataDiInizio: formatDate(new Date('2021/12/24'),  'yyyy/MM/dd',"en-US"),
+    dataDiFine: formatDate(new Date('2021/12/26'),  'yyyy/MM/dd',"en-US"),
     accettata: false,
     auto: 3,
     utente: 2

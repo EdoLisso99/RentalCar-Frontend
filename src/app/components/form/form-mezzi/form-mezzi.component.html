@@ -3,7 +3,7 @@
   <div class="form-group col-12" *ngFor="let dataNames of getKey(keyObj); let i = index" >
     <label for="{{dataNames}}">{{keyObj[i].label}}</label>
     <input type="text" class="form-control" id="{{dataNames}}" formControlName="{{dataNames}}"
-           placeholder="Enter {{keyObj[i].label}}" value="{{data[dataNames]}}">
+           placeholder="Enter {{keyObj[i].label}}" value="{{data[dataNames] | showData}}">
   </div>
   <button class="btn btn-success" type="submit">Submit</button>
 </form>

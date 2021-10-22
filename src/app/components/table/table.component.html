@@ -50,7 +50,7 @@
     <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
           (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
       <td *ngFor="let dataNames of getKey(tableConfig.headers)">
-        {{data[dataNames]}}</td>
+        {{data[dataNames] | showData}}</td>
       <td>
         <span *ngIf="loggedUser !== null && loggedUser.ruolo !== 'Customer' && data['accettata'] !== undefined && data['accettata'] == null">
           <app-button class="ml-2" [buttonConfig]="approveBtnConfig" (click)="sendOnClickEvent(data, approveBtnConfig.action)"></app-button>

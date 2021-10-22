@@ -16,7 +16,6 @@ export class FormPrenotazioniComponent implements OnInit {
   data: any = sessionStorage.getItem('data')!;
   type: string = sessionStorage.getItem('type')!;
   action: string = sessionStorage.getItem('action')!;
-  keyObj : MyHeaders[] = JSON.parse(sessionStorage.getItem('keys')!);
   formGroup: any;
 
   constructor(private formBuilder: FormBuilder, private mockService: MockDataService,

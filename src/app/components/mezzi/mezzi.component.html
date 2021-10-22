@@ -1,6 +1,11 @@
 <br />
 <h1>Mezzi</h1>
 <app-button [buttonConfig]="btnConfig" (click)="sendTableAction({data: '', action:'new'})"></app-button>
+<div class="col-12 form-group filter d-flex flex-row">
+  <input type="text" class="form-control col-3 ml-2" placeholder="Inserisci data di inizio" />
+  <input type="text" class="form-control col-3 ml-2" placeholder="Inserisci data di fine" />
+  <button class="btn btn-secondary col-3 ml-2">Filtra mezzo per data disponibile</button>
+</div>
 <app-table
   [tableConfig]="mezziConfig"
   [mockData]="mezzi"
