@@ -21,7 +21,7 @@ export const emptyPrenotazione = {
     id: -1,
     dataDiInizio: '',
     dataDiFine: '',
-    accettata: false,
+    accettata: null,
     auto: -1,
     utente: -1
 }
@@ -135,7 +135,7 @@ export const mockPrenotazioni = [
     id: 2,
     dataDiInizio: '31/10/2021',
     dataDiFine: '03/11/2021',
-    accettata: false,
+    accettata: null,
     auto: 4,
     utente: 1
   },
@@ -151,7 +151,7 @@ export const mockPrenotazioni = [
     id: 4,
     dataDiInizio: '16/10/2021',
     dataDiFine: '17/10/2021',
-    accettata: false,
+    accettata: null,
     auto: 5,
     utente: 5
   },

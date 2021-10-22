@@ -45,7 +45,9 @@ export class UtentiComponent implements OnInit {
         this.router.navigate(["home/utenti/edit"]);
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.removeMockUser(data.data).subscribe((x) => this.getUtenti());
+        this.mockService.removePrenotazioniFromUtenti(data.data.id).subscribe((x) => {
+          this.mockService.removeMockUser(data.data).subscribe((y) => this.getUtenti());
+        })
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:

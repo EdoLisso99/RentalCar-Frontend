@@ -24,7 +24,7 @@ export class MockDataService {
   }
 
   updateMockUser(user: Utente): Observable<any> {
-    if (user.id !== null) {
+    if (user.id !== null && user.id !== -1) {
       let index = _.findIndex(mockUser, function (o) {
         return o.id == user.id
       });
@@ -41,6 +41,13 @@ export class MockDataService {
       return o.id == user.id
     });
     return of(mockUser);
+  }
+
+  getMockMezzi(): Observable<Mezzo[]> {
+    const tempData: any[] = [];
+    mockAuto.forEach(elem => tempData.push(elem));
+    return of(tempData);
+    // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
   }
 
   updateMockMezzo(mezzo: Mezzo) {
@@ -63,6 +70,13 @@ export class MockDataService {
     return of(mockAuto);
   }
 
+  getMockPrenotazioni(): Observable<Prenotazione[]> {
+    // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
+    const tempData: any[] = [];
+    mockPrenotazioni.forEach(elem => tempData.push(elem));
+    return of(tempData);
+  }
+
   updateMockPrenotazione(prenotazione: Prenotazione) {
     if (prenotazione.id !== null && prenotazione.id !== -1) {
       let index = _.findIndex(mockPrenotazioni, function (o) {
@@ -83,18 +97,18 @@ export class MockDataService {
     return of(mockPrenotazioni);
   }
 
-  getMockMezzi(): Observable<Mezzo[]> {
-    const tempData: any[] = [];
-    mockAuto.forEach(elem => tempData.push(elem));
-    return of(tempData);
-    // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
+  removePrenotazioniFromMezzi(mezzoId: number){
+    _.remove(mockPrenotazioni, function (o) {
+      return o.auto == mezzoId
+    });
+    return of(mockPrenotazioni);
   }
 
-  getMockPrenotazioni(): Observable<Prenotazione[]> {
-    // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
-    const tempData: any[] = [];
-    mockPrenotazioni.forEach(elem => tempData.push(elem));
-    return of(tempData);
+  removePrenotazioniFromUtenti(utenteId: number){
+    _.remove(mockPrenotazioni, function (o) {
+      return o.utente == utenteId
+    });
+    return of(mockPrenotazioni);
   }
 
   // private handleError<T>(operation = 'operation', result?: T) {

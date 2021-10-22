@@ -41,7 +41,11 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/edit"]);
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.removeMockMezzo(data.data).subscribe((x) => this.getMezzi());
+        this.mockService.removePrenotazioniFromMezzi(data.data.id).subscribe((x => {
+          this.mockService.removeMockMezzo(data.data).subscribe((y) => {
+            this.getMezzi();
+          });
+        }));
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
@@ -69,7 +73,7 @@ export class MezziComponent implements OnInit {
     let tempPrenotazione = emptyPrenotazione;
     tempPrenotazione.auto = mezzoId;
     tempPrenotazione.utente = utenteId;
-    tempPrenotazione.accettata = false; //TODO Settare a null quando ce la si farà
+    tempPrenotazione.accettata = null; 
     sessionStorage.setItem('data', JSON.stringify(tempPrenotazione));
     sessionStorage.setItem('type', 'Prenotazioni');
     sessionStorage.setItem('action', 'Create');

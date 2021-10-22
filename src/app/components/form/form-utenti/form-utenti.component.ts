@@ -37,6 +37,13 @@ export class FormUtentiComponent implements OnInit {
   onSubmit(formData:Utente) {
     this.mockService.updateMockUser(formData).subscribe((x) => {
       this.clearSession();
+      //Se un customer si modifica devo aggiornare i suoi valori, dato che nella
+      //tabella prendo i suoi valori direttamente dalla session storage
+      if (formData.ruolo == 'Customer' &&
+        JSON.parse(sessionStorage.getItem('loggedUser')!).id == formData.id){
+        sessionStorage.removeItem('loggedUser');
+        sessionStorage.setItem('loggedUser', JSON.stringify(formData));
+      }
       this.router.navigate(['home/utenti']);
     });
   }
