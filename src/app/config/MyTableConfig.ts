@@ -3,11 +3,11 @@ export interface MyTableConfig {
   order: MyOrder;
   search: MySearch;
   pagination: MyPagination;
-  actions: MyTableActionEnum[];
+  actions: Array<Actions>;
   type: string;
 }
 
-export enum MyTableActionEnum{
+export enum MyTableActionEnum {
   NEW_ROW, EDIT, DELETE, SELECT, APPROVE, REJECT, BOOK
 }
 
@@ -21,6 +21,14 @@ export interface MyOrder {
   orderType: string;
 }
 
+export interface Actions {
+  icon?: string,
+  action: MyTableActionEnum,
+  text?: string,
+  color?: string,
+  customCssClass?: string
+}
+
 export interface MySearch {
   columns: string[];
 }
@@ -30,7 +38,7 @@ export interface MyPagination {
   itemPerPageOptions: number[];
 }
 
-export const  loginTableConfig : MyTableConfig = {
+export const loginTableConfig: MyTableConfig = {
   headers: [
     {key: 'nome', label: 'Nome'},
     {key: 'cognome', label: 'Cognome'},
@@ -51,14 +59,20 @@ export const  loginTableConfig : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[
-    MyTableActionEnum.SELECT
+  actions: [
+    {
+      action: MyTableActionEnum.SELECT,
+      customCssClass : 'btn-success',
+      text : 'Sono io! ',
+      icon : 'fas fa-check',
+      color: "",
+    }
   ],
   type: 'Utente'
 
 }
 
-export const  userTableConfig : MyTableConfig = {
+export const userTableConfig: MyTableConfig = {
   headers: [
     {key: 'nome', label: 'Nome'},
     {key: 'cognome', label: 'Cognome'},
@@ -79,14 +93,26 @@ export const  userTableConfig : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[
-    MyTableActionEnum.EDIT,
-    MyTableActionEnum.DELETE,
+  actions: [    {
+    action: MyTableActionEnum.EDIT,
+    customCssClass : 'btn-light',
+    text : '',
+    icon : 'fas fa-pencil-alt',
+    color: "mediumslateblue",
+  },
+    {
+      action: MyTableActionEnum.DELETE,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-trash',
+      color: "tomato",
+    }
+
   ],
   type: 'Utente'
 }
 
-export const  userTableConfigCustomer : MyTableConfig = {
+export const userTableConfigCustomer: MyTableConfig = {
   headers: [
     {key: 'nome', label: 'Nome'},
     {key: 'cognome', label: 'Cognome'},
@@ -107,13 +133,19 @@ export const  userTableConfigCustomer : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[
-    MyTableActionEnum.EDIT
+  actions: [
+    {
+      action: MyTableActionEnum.EDIT,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-pencil-alt',
+      color: "mediumslateblue",
+    }
   ],
   type: 'Utente'
 }
 
-export const  mezziTableConfig : MyTableConfig = {
+export const mezziTableConfig: MyTableConfig = {
   headers: [
     {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
     {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
@@ -135,15 +167,27 @@ export const  mezziTableConfig : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[
-    MyTableActionEnum.EDIT,
-    MyTableActionEnum.DELETE,
+  actions: [
+    {
+      action: MyTableActionEnum.EDIT,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-pencil-alt',
+      color: "mediumslateblue",
+    },
+    {
+      action: MyTableActionEnum.DELETE,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-trash',
+      color: "tomato",
+    }
   ],
   type: 'Mezzo'
 
 }
 
-export const  mezziTableConfigUser : MyTableConfig = {
+export const mezziTableConfigUser: MyTableConfig = {
   headers: [
     {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
     {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
@@ -165,12 +209,18 @@ export const  mezziTableConfigUser : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[MyTableActionEnum.BOOK],
+  actions: [{
+    action: MyTableActionEnum.BOOK,
+    customCssClass : 'btn-info',
+    text : 'Book',
+    icon : 'fas fa-car',
+    color: "",
+  }],
   type: 'Mezzo'
 
 }
 
-export const  prenotazioniTableConfig : MyTableConfig = {
+export const prenotazioniTableConfig: MyTableConfig = {
   headers: [
     {key: 'dataDiInizio', label: 'Data di Inizio'},
     {key: 'dataDiFine', label: 'Data di Fine'},
@@ -192,11 +242,17 @@ export const  prenotazioniTableConfig : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[MyTableActionEnum.APPROVE, MyTableActionEnum.REJECT, MyTableActionEnum.DELETE],
+  actions: [{
+    action: MyTableActionEnum.DELETE,
+    customCssClass : 'btn-light',
+    text : '',
+    icon : 'fas fa-trash',
+    color: "tomato",
+  }],
   type: 'Prenotazione'
 }
 
-export const  prenotazioniTableConfigUser : MyTableConfig = {
+export const prenotazioniTableConfigUser: MyTableConfig = {
   headers: [
     {key: 'dataDiInizio', label: 'Data di Inizio'},
     {key: 'dataDiFine', label: 'Data di Fine'},
@@ -218,6 +274,18 @@ export const  prenotazioniTableConfigUser : MyTableConfig = {
       itemPerPage: 3,
       itemPerPageOptions: [3, 5, 10, 15]
     },
-  actions:[MyTableActionEnum.EDIT, MyTableActionEnum.DELETE],
+  actions: [{
+    action: MyTableActionEnum.EDIT,
+    customCssClass : 'btn-light',
+    text : '',
+    icon : 'fas fa-pencil-alt',
+    color: "mediumslateblue",
+  }, {
+    action: MyTableActionEnum.DELETE,
+    customCssClass : 'btn-light',
+    text : '',
+    icon : 'fas fa-trash',
+    color: "tomato",
+  }],
   type: 'Prenotazione'
 }

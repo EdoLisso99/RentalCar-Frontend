@@ -1,16 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
-import * as _ from 'lodash-es';
-import {
-  approveBtn, bookBtn,
-  createBtn,
-  deleteBtn,
-  emptyBtn,
-  MyButtonConfig,
-  rejectBtn,
-  selectBtn,
-  updateBtn
-} from "../../config/MyButtonConfig";
+import * as _ from 'lodash';
+import {Utente} from "../../util/Interfaces";
 
 @Component({
   selector: 'app-table',
@@ -30,6 +21,21 @@ export class TableComponent implements OnInit {
   dropdownHidden = true;
   pageArrayOptions : number[] = [];
   backupData: any[] = [];
+  approveBtnConfig = {
+    action: MyTableActionEnum.APPROVE,
+    customCssClass : 'btn-success',
+    text : 'Approve',
+    icon : 'fas fa-heart',
+    color: "",
+  };
+  rejectBtnConfig = {
+    action: MyTableActionEnum.REJECT,
+    customCssClass : 'btn-danger',
+    text : 'Decline',
+    icon : 'fas fa-skull',
+    color: "",
+  };
+  loggedUser: Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
 
   constructor() {
   }
@@ -39,9 +45,6 @@ export class TableComponent implements OnInit {
   }
 
   ngOnChanges(changes:SimpleChanges): void{
-    console.log("Utenti Tabella:");
-    console.log(this.mockData);
-    console.log("=========================");
     this.mockData = changes.mockData.currentValue;
     this.backupData = this.mockData;
     this.changePages();
@@ -64,7 +67,9 @@ export class TableComponent implements OnInit {
 
   changePages(){
     this.pageArrayOptions = [...Array(Math.ceil(this.mockData.length / this.tableConfig.pagination.itemPerPage)).keys()];
-    this.pageSelected = 0;
+    if(this.pageArrayOptions.length < (this.pageSelected + 1)){
+      this.pageSelected = 0;
+    }
   }
 
   contains(array:any[], value:any) : boolean{
@@ -94,27 +99,6 @@ export class TableComponent implements OnInit {
     this.changePages();
   }
 
-  getBtnConfigFromAction(action: MyTableActionEnum) : MyButtonConfig {
-    switch (action){
-      case MyTableActionEnum.EDIT:
-        return updateBtn;
-      case MyTableActionEnum.DELETE:
-        return deleteBtn;
-      case MyTableActionEnum.NEW_ROW:
-        return createBtn;
-      case MyTableActionEnum.SELECT:
-        return selectBtn;
-      case MyTableActionEnum.REJECT:
-        return rejectBtn;
-      case MyTableActionEnum.APPROVE:
-        return approveBtn;
-      case MyTableActionEnum.BOOK:
-        return bookBtn;
-      default:
-        return emptyBtn;
-    }
-  }
-
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: MyHeaders[]) : string[]{
     if(data.length == 0){
@@ -140,5 +124,9 @@ export class TableComponent implements OnInit {
     this.tableConfig.pagination.itemPerPage = option;
     this.dropdownHidden = !this.dropdownHidden;
     this.changePages();
+  }
+
+  getCustomerFromId(userId: number) {
+
   }
 }

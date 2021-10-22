@@ -8,7 +8,7 @@ import {MyButtonConfig} from "../../config/MyButtonConfig";
 })
 export class ButtonComponent implements OnInit {
 
-  @Input() buttonConfig !: MyButtonConfig;
+  @Input() buttonConfig !: any;
 
   constructor() { }
 

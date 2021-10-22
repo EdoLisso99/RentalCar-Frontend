@@ -3,42 +3,8 @@ export interface MyButtonConfig{
   text : string,
   icon : string,
   color: string,
+  action?: any
 
-}
-
-export const updateBtn : MyButtonConfig = {
-  customCssClass : 'btn-light',
-  text : '',
-  icon : 'fas fa-pencil-alt',
-  color: "mediumslateblue",
-}
-
-export const approveBtn : MyButtonConfig = {
-  customCssClass : 'btn-success',
-  text : 'Approve',
-  icon : 'fas fa-heart',
-  color: "",
-}
-
-export const bookBtn : MyButtonConfig = {
-  customCssClass : 'btn-info',
-  text : 'Book',
-  icon : 'fas fa-car',
-  color: "",
-}
-
-export const rejectBtn : MyButtonConfig = {
-  customCssClass : 'btn-danger',
-  text : 'Decline',
-  icon : 'fas fa-skull',
-  color: "",
-}
-
-export const deleteBtn : MyButtonConfig = {
-  customCssClass : 'btn-light',
-  text : '',
-  icon : 'fas fa-trash',
-  color: "tomato",
 }
 
 export const createBtn : MyButtonConfig = {

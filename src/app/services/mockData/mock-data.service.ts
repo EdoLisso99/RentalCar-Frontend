@@ -9,6 +9,7 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class MockDataService {
+  //Decommentare quando si avranno richieste HTTP al posto di dati mock
   // private userUrl = 'api/users';
   // private mezziUrl = 'api/mezzi';
   // private prenotazioniUrl = 'api/prenotazioni';
@@ -17,6 +18,7 @@ export class MockDataService {
   }
 
   getMockUsers(): Observable<Utente[]> {
+    //Decommentare quando si avranno richieste HTTP al posto di dati mock
     // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
     const tempData: any[] = [];
     mockUser.forEach(elem => tempData.push(elem));
@@ -47,6 +49,7 @@ export class MockDataService {
     const tempData: any[] = [];
     mockAuto.forEach(elem => tempData.push(elem));
     return of(tempData);
+    //Decommentare quando si avranno richieste HTTP al posto di dati mock
     // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
   }
 
@@ -71,6 +74,7 @@ export class MockDataService {
   }
 
   getMockPrenotazioni(): Observable<Prenotazione[]> {
+    //Decommentare quando si avranno richieste HTTP al posto di dati mock
     // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
     const tempData: any[] = [];
     mockPrenotazioni.forEach(elem => tempData.push(elem));
@@ -111,6 +115,7 @@ export class MockDataService {
     return of(mockPrenotazioni);
   }
 
+  //Decommentare quando si avranno richieste HTTP al posto di dati mock
   // private handleError<T>(operation = 'operation', result?: T) {
   //   return (error: any): Observable<T> => {
   //     console.error(error);
@@ -118,6 +123,7 @@ export class MockDataService {
   //   };
   // }
 
+  //Decommentare quando si avranno richieste HTTP al posto di dati mock
   // updateUtente(utente: Utente): Observable<any> {
   //   return this.http.put(this.userUrl, utente, this.httpOptions).pipe(
   //     tap(_ => this.log(`updated hero id=${utente.id}`)),
