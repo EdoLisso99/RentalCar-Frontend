@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Mezzo} from "../../../util/Interfaces";
 
@@ -13,24 +13,30 @@ import {Mezzo} from "../../../util/Interfaces";
 })
 export class FormMezziComponent implements OnInit {
 
+  //TODO Cercare un modo alternativo per passare il type, action e keyObj senza usare sessionStorage
   data: any = sessionStorage.getItem('data')!;
   type: string = sessionStorage.getItem('type')!;
   action: string = sessionStorage.getItem('action')!;
   keyObj : MyHeaders[] = JSON.parse(sessionStorage.getItem('keys')!);
   formGroup: any;
+  mezzoId : number = -1;
 
   constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
-              private readonly router : Router, private location: Location) { }
+              private readonly router : Router, private location: Location,
+              private route : ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.data = JSON.parse(sessionStorage.getItem('data')!);
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
-      casaCostruttrice: this.data['casaCostruttrice'],
-      modello: this.data['modello'],
-      targa: this.data['targa'],
-      tipo: this.data['tipo'],
+    this.mezzoId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.mockService.getMockMezzoFromId(this.mezzoId).subscribe(mezzo => {
+      this.data = mezzo;
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
+        casaCostruttrice: this.data['casaCostruttrice'],
+        modello: this.data['modello'],
+        targa: this.data['targa'],
+        tipo: this.data['tipo'],
+      });
     });
   }
 
@@ -40,14 +46,6 @@ export class FormMezziComponent implements OnInit {
       this.router.navigate(['home/mezzi']);
     });
   }
-
-  clearSession(){
-    sessionStorage.removeItem('data');
-    sessionStorage.removeItem('type');
-    sessionStorage.removeItem('action');
-    sessionStorage.removeItem('keys');
-  }
-
 
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: MyHeaders[]) : string[]{
@@ -59,6 +57,12 @@ export class FormMezziComponent implements OnInit {
     }
   }
 
+  clearSession(){
+    sessionStorage.removeItem('data');
+    sessionStorage.removeItem('type');
+    sessionStorage.removeItem('action');
+    sessionStorage.removeItem('keys');
+  }
 
   goBack() {
     this.clearSession();

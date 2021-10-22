@@ -3,7 +3,7 @@ import {MyHeaders} from "../../../config/MyTableConfig";
 import { FormBuilder } from '@angular/forms';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Utente} from "../../../util/Interfaces";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 
 
@@ -19,18 +19,23 @@ export class FormUtentiComponent implements OnInit {
   action: string = sessionStorage.getItem('action')!;
   keyObj : MyHeaders[] = JSON.parse(sessionStorage.getItem('keys')!);
   formGroup: any;
+  userId : number = -1;
 
   constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
-              private readonly router : Router, private location: Location) { }
+              private readonly router : Router, private location: Location,
+              private route : ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.data = JSON.parse(sessionStorage.getItem('data')!);
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      nome: this.data['nome'],
-      cognome: this.data['cognome'],
-      dataDiNascita: this.data['dataDiNascita'],
-      ruolo: this.data['ruolo']
+    this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.mockService.getMockUserFromId(this.userId).subscribe(user => {
+      this.data = user;
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        nome: this.data['nome'],
+        cognome: this.data['cognome'],
+        dataDiNascita: this.data['dataDiNascita'],
+        ruolo: this.data['ruolo']
+      });
     });
   }
 
@@ -55,7 +60,6 @@ export class FormUtentiComponent implements OnInit {
     sessionStorage.removeItem('keys');
   }
 
-
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: MyHeaders[]) : string[]{
     if(data.length == 0){
@@ -65,7 +69,6 @@ export class FormUtentiComponent implements OnInit {
       return data.map(element => element.key);
     }
   }
-
 
   goBack() {
     this.clearSession();

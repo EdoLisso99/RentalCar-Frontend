@@ -38,6 +38,28 @@ export class MockDataService {
     return of(mockUser);
   }
 
+  getMockUserFromId(userId: number): Observable<Utente> {
+    let index = _.findIndex(mockUser,function (o) {
+      return o.id == userId;
+    });
+    return of(mockUser[index]);
+  }
+
+  getMockMezzoFromId(mezzoId: number): Observable<Mezzo> {
+    let index = _.findIndex(mockAuto,function (o) {
+      return o.id == mezzoId;
+    });
+    return of(mockAuto[index]);
+  }
+
+  //TODO Forse può dare problemi col null
+  getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
+    let index = _.findIndex(mockPrenotazioni,function (o) {
+      return o.id == prenotazioneId;
+    });
+    return of(mockPrenotazioni[index]);
+  }
+
   removeMockUser(user: Utente): Observable<any> {
     _.remove(mockUser, function (o) {
       return o.id == user.id
@@ -130,4 +152,5 @@ export class MockDataService {
   //     catchError(this.handleError<any>('updateHero'))
   //   );
   // }
+
 }

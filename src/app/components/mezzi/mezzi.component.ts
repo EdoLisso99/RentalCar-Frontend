@@ -38,7 +38,7 @@ export class MezziComponent implements OnInit {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         this.setSession(data.data, 'Edit');
-        this.router.navigate(["home/mezzi/edit"]);
+        this.router.navigate(["home/mezzi/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removePrenotazioniFromMezzi(data.data.id).subscribe((x => {
@@ -50,11 +50,11 @@ export class MezziComponent implements OnInit {
       case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.setSession(emptyMezzo, "Create");
-        this.router.navigate(["home/mezzi/new"]);
+        this.router.navigate(["home/mezzi/new/"+ data.data.id]);
         break;
       case MyTableActionEnum.BOOK:
         this.setPrenotazioneSession(data.data.id, this.loggedUser.id);
-        this.router.navigate(["home/prenotazioni/new"]);
+        this.router.navigate(["home/prenotazioni/new/" + data.data.id]);
         break;
       default:
         break;

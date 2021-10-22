@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Prenotazione} from "../../../util/Interfaces";
+import {parse} from "@fortawesome/fontawesome-svg-core";
 
 @Component({
   selector: 'app-form-prenotazioni',
@@ -17,19 +18,24 @@ export class FormPrenotazioniComponent implements OnInit {
   type: string = sessionStorage.getItem('type')!;
   action: string = sessionStorage.getItem('action')!;
   formGroup: any;
+  prenotazioneId: number = -1;
 
   constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
-              private readonly router : Router, private location: Location) { }
+              private readonly router : Router, private location: Location,
+              private route : ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.data = JSON.parse(sessionStorage.getItem('data')!);
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      dataDiInizio: this.data['dataDiInizio'],
-      dataDiFine: this.data['dataDiFine'],
-      accettata: this.data['accettata'],
-      auto: this.data['auto'],
-      utente: this.data['utente']
+    this.prenotazioneId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.mockService.getMockPrenotazioneFromId(this.prenotazioneId).subscribe(prenotazione => {
+      this.data = prenotazione;
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        dataDiInizio: this.data['dataDiInizio'],
+        dataDiFine: this.data['dataDiFine'],
+        accettata: this.data['accettata'],
+        auto: this.data['auto'],
+        utente: this.data['utente']
+      });
     });
   }
 

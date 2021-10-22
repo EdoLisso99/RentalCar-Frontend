@@ -42,7 +42,7 @@ export class UtentiComponent implements OnInit {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         this.setSession(data.data, 'Edit');
-        this.router.navigate(["home/utenti/edit"]);
+        this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removePrenotazioniFromUtenti(data.data.id).subscribe((x) => {
@@ -52,7 +52,7 @@ export class UtentiComponent implements OnInit {
       case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.setSession(emptyUser, "Create");
-        this.router.navigate(["home/utenti/new"]);
+        this.router.navigate(["home/utenti/new/" + data.data.id]);
         break;
       default:
         break;

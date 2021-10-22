@@ -40,7 +40,7 @@ export class PrenotazioniComponent implements OnInit {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         this.setSession(data.data, 'Edit');
-        this.router.navigate(["home/prenotazioni/edit"]);
+        this.router.navigate(["home/prenotazioni/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removeMockPrenotazione(data.data).subscribe((x) => this.getPrenotazioni());
