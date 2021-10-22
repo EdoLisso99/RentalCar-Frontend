@@ -73,7 +73,7 @@ export class MezziComponent implements OnInit {
     let tempPrenotazione = emptyPrenotazione;
     tempPrenotazione.auto = mezzoId;
     tempPrenotazione.utente = utenteId;
-    tempPrenotazione.accettata = null; 
+    tempPrenotazione.accettata = null;
     sessionStorage.setItem('data', JSON.stringify(tempPrenotazione));
     sessionStorage.setItem('type', 'Prenotazioni');
     sessionStorage.setItem('action', 'Create');
