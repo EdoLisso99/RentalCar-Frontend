@@ -14,6 +14,13 @@ export const createBtn : MyButtonConfig = {
   color: "",
 }
 
+export const restoreBtn : MyButtonConfig = {
+  customCssClass : 'btn-danger',
+  text : '',
+  icon : 'fas fa-undo',
+  color: "",
+}
+
 export const filterBtn : MyButtonConfig = {
   customCssClass : 'btn-info',
   text : 'Filter available vehicles',

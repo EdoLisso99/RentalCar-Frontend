@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
 import {LoginComponent} from "./pages/login/login.component";
-import {UtentiComponent} from "./pages/utenti/utenti.component";
-import {MezziComponent} from "./pages/mezzi/mezzi.component";
-import {PrenotazioniComponent} from "./pages/prenotazioni/prenotazioni.component";
-import {FormUtentiComponent} from "./components/form/form-utenti/form-utenti.component";
-import {FormMezziComponent} from "./components/form/form-mezzi/form-mezzi.component";
-import {FormPrenotazioniComponent} from "./components/form/form-prenotazioni/form-prenotazioni.component";
+import {UtentiComponent} from "./pages/utenti/component/utenti.component";
+import {MezziComponent} from "./pages/mezzi/component/mezzi.component";
+import {PrenotazioniComponent} from "./pages/prenotazioni/component/prenotazioni.component";
+import {FormUtentiComponent} from "./pages/utenti/form-utenti/form-utenti.component";
+import {FormMezziComponent} from "./pages/mezzi/form-mezzi/form-mezzi.component";
+import {FormPrenotazioniComponent} from "./pages/prenotazioni/form-prenotazioni/form-prenotazioni.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MyTableActionEnum, userTableConfig, userTableConfigCustomer} from "../../config/MyTableConfig";
-import {Utente} from "../../util/Interfaces";
+import {MyTableActionEnum, userTableConfig, userTableConfigCustomer} from "../../../config/MyTableConfig";
+import {Utente} from "../../../util/Interfaces";
 import {Router} from "@angular/router";
-import {MockDataService} from "../../services/mockData/mock-data.service";
-import {createBtn, emptyBtn} from "../../config/MyButtonConfig";
+import {MockDataService} from "../../../services/mockData/mock-data.service";
+import {createBtn, emptyBtn} from "../../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-utenti',

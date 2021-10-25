@@ -12,15 +12,12 @@ import { LoginComponent} from "./pages/login/login.component";
 import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
 import { InMemoryDataService } from "./services/inMemoryData/in-memory-data.service";
 import {HttpClientModule} from "@angular/common/http";
-import { UpdateMezziComponent } from './components/update/update-mezzi/update-mezzi.component';
-import { UpdateUtentiComponent } from './components/update/update-utenti/update-utenti.component';
-import { UpdatePrenotazioniComponent } from './components/update/update-prenotazioni/update-prenotazioni.component';
-import { UtentiComponent} from "./pages/utenti/utenti.component";
-import { MezziComponent} from "./pages/mezzi/mezzi.component";
-import { PrenotazioniComponent} from "./pages/prenotazioni/prenotazioni.component";
-import { FormMezziComponent } from './components/form/form-mezzi/form-mezzi.component';
-import { FormUtentiComponent } from './components/form/form-utenti/form-utenti.component';
-import { FormPrenotazioniComponent } from './components/form/form-prenotazioni/form-prenotazioni.component';
+import { UtentiComponent} from "./pages/utenti/component/utenti.component";
+import { MezziComponent} from "./pages/mezzi/component/mezzi.component";
+import { PrenotazioniComponent} from "./pages/prenotazioni/component/prenotazioni.component";
+import { FormMezziComponent } from './pages/mezzi/form-mezzi/form-mezzi.component';
+import { FormUtentiComponent } from './pages/utenti/form-utenti/form-utenti.component';
+import { FormPrenotazioniComponent } from './pages/prenotazioni/form-prenotazioni/form-prenotazioni.component';
 import {DatePipe} from "./pipes/DatePipe";
 
 @NgModule({
@@ -30,9 +27,6 @@ import {DatePipe} from "./pipes/DatePipe";
     ButtonComponent,
     TableComponent,
     LoginComponent,
-    UpdateMezziComponent,
-    UpdateUtentiComponent,
-    UpdatePrenotazioniComponent,
     UtentiComponent,
     MezziComponent,
     PrenotazioniComponent,

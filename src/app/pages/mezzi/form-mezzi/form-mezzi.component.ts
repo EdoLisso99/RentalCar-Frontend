@@ -3,7 +3,7 @@ import {mezziTableConfig, MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Location} from "@angular/common";
+import {formatDate, Location} from "@angular/common";
 import {Mezzo} from "../../../util/Interfaces";
 import {emptyMezzo} from "../../../util/MockData";
 
@@ -14,7 +14,6 @@ import {emptyMezzo} from "../../../util/MockData";
 })
 export class FormMezziComponent implements OnInit {
 
-  //TODO Cercare un modo alternativo per passare il type, action e keyObj senza usare sessionStorage
   data: any;
   action !: string | null;
   keyObj : MyHeaders[] = mezziTableConfig.headers;
@@ -46,12 +45,6 @@ export class FormMezziComponent implements OnInit {
     });
   }
 
-  onSubmit(formData:Mezzo) {
-    this.mockService.updateMockMezzo(formData).subscribe((x) => {
-      this.router.navigate(['home/mezzi']);
-    });
-  }
-
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: MyHeaders[]) : string[]{
     if(data.length == 0){
@@ -65,4 +58,12 @@ export class FormMezziComponent implements OnInit {
   goBack() {
     this.location.back();
   }
+
+  onSubmit(formData:Mezzo) {
+    formData.annoDiImmatricolazione = formatDate(new Date(formData.annoDiImmatricolazione),  'yyyy/MM/dd',"en-US");
+    this.mockService.updateMockMezzo(formData).subscribe((x) => {
+      this.router.navigate(['home/mezzi']);
+    });
+  }
+
 }

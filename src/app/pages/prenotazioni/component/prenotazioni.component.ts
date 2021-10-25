@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MockDataService} from "../../services/mockData/mock-data.service";
-import {Prenotazione, Utente} from "../../util/Interfaces";
-import {MyTableActionEnum, prenotazioniTableConfig, prenotazioniTableConfigUser} from "../../config/MyTableConfig";
+import {MockDataService} from "../../../services/mockData/mock-data.service";
+import {Prenotazione, Utente} from "../../../util/Interfaces";
+import {MyTableActionEnum, prenotazioniTableConfig, prenotazioniTableConfigUser} from "../../../config/MyTableConfig";
 import * as _ from 'lodash';
-import {emptyBtn} from "../../config/MyButtonConfig";
+import {emptyBtn} from "../../../config/MyButtonConfig";
 import {Router} from "@angular/router";
 
 @Component({

@@ -48,14 +48,6 @@ export class FormPrenotazioniComponent implements OnInit {
     });
   }
 
-  onSubmit(formData: Prenotazione) {
-    formData.auto = this.vehicleId;
-    formData.utente = this.userId;
-    this.mockService.updateMockPrenotazione(formData).subscribe((x) => {
-      this.router.navigate(['home/prenotazioni']);
-    });
-  }
-
   //Restituisce i nomi dei parametri di un array di oggetti
   getKey(data: MyHeaders[]) : string[]{
     if(data.length == 0){
@@ -68,6 +60,14 @@ export class FormPrenotazioniComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  onSubmit(formData: Prenotazione) {
+    formData.auto = this.vehicleId;
+    formData.utente = this.userId;
+    this.mockService.updateMockPrenotazione(formData).subscribe((x) => {
+      this.router.navigate(['home/prenotazioni']);
+    });
   }
 
 }
