@@ -52,7 +52,6 @@ export class MockDataService {
     return of(mockAuto[index]);
   }
 
-  //TODO Forse può dare problemi col null
   getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
     let index = _.findIndex(mockPrenotazioni,function (o) {
       return o.id == prenotazioneId;
@@ -93,6 +92,10 @@ export class MockDataService {
       return o.id == mezzo.id
     });
     return of(mockAuto);
+  }
+
+  getAvailableMezzi(inizio: Date, fine: Date){
+
   }
 
   getMockPrenotazioni(): Observable<Prenotazione[]> {

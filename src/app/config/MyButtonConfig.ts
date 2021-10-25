@@ -14,6 +14,13 @@ export const createBtn : MyButtonConfig = {
   color: "",
 }
 
+export const filterBtn : MyButtonConfig = {
+  customCssClass : 'btn-info',
+  text : 'Filter available vehicles',
+  icon : 'fas fa-calendar-day',
+  color: "",
+}
+
 export const selectBtn : MyButtonConfig = {
   customCssClass : 'btn-success',
   text : 'Sono io! ',

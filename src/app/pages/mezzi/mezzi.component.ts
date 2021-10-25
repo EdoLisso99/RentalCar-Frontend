@@ -8,7 +8,7 @@ import {
 } from "../../config/MyTableConfig";
 import {MockDataService} from "../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
-import {createBtn, emptyBtn} from "../../config/MyButtonConfig";
+import {createBtn, emptyBtn, filterBtn} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-mezzi',
@@ -22,6 +22,9 @@ export class MezziComponent implements OnInit {
   mezzi: Mezzo[] = [];
   mezziConfig = this.loggedUser.ruolo == 'Customer' ? mezziTableConfigUser :mezziTableConfig;
   prenotazioniConfig = this.loggedUser.ruolo == 'Customer' ?  prenotazioniTableConfigUser : prenotazioniTableConfig;
+  filterBtnConfig: any = filterBtn;
+  inizio: any;
+  fine: any;
 
   constructor(private mockService : MockDataService, private readonly router : Router) { }
 
@@ -61,4 +64,7 @@ export class MezziComponent implements OnInit {
     }
   }
 
+  filterMezzi() {
+
+  }
 }
