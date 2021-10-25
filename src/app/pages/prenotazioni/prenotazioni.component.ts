@@ -39,8 +39,11 @@ export class PrenotazioniComponent implements OnInit {
   sendTableAction(data: any) {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
-        this.setSession(data.data, 'Edit');
-        this.router.navigate(["home/prenotazioni/edit/" + data.data.id]);
+        let mezzoId = -1;
+        this.mockService.getMockPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
+          mezzoId = prenotazione.auto;
+          this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/edit/" + data.data.id]);
+        });
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removeMockPrenotazione(data.data).subscribe((x) => this.getPrenotazioni());
@@ -56,13 +59,6 @@ export class PrenotazioniComponent implements OnInit {
       default:
         break;
     }
-  }
-
-  setSession(data: any, action: string) {
-    sessionStorage.setItem('data', JSON.stringify(data));
-    sessionStorage.setItem('type', 'Prenotazioni');
-    sessionStorage.setItem('action', action);
-    sessionStorage.setItem('keys', JSON.stringify(this.prenotazioniConfig.headers));
   }
 
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {MyHeaders} from "../../../config/MyTableConfig";
+import { MyHeaders, userTableConfig} from "../../../config/MyTableConfig";
 import { FormBuilder } from '@angular/forms';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Utente} from "../../../util/Interfaces";
 import {Router, ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
+import {emptyUser} from "../../../util/MockData";
 
 
 @Component({
@@ -14,10 +15,9 @@ import {Location} from "@angular/common";
 })
 export class FormUtentiComponent implements OnInit {
 
-  data: any = sessionStorage.getItem('data')!;
-  type: string = sessionStorage.getItem('type')!;
-  action: string = sessionStorage.getItem('action')!;
-  keyObj : MyHeaders[] = JSON.parse(sessionStorage.getItem('keys')!);
+  data: any;
+  action !: string | null;
+  keyObj : MyHeaders[] = userTableConfig.headers;
   formGroup: any;
   userId : number = -1;
 
@@ -27,21 +27,26 @@ export class FormUtentiComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
-    this.mockService.getMockUserFromId(this.userId).subscribe(user => {
-      this.data = user;
-      this.formGroup = this.formBuilder.group({
-        id: this.data['id'],
-        nome: this.data['nome'],
-        cognome: this.data['cognome'],
-        dataDiNascita: this.data['dataDiNascita'],
-        ruolo: this.data['ruolo']
+    this.action = this.route.snapshot.paramMap.get('action');
+    if(this.userId !== -1){
+      this.mockService.getMockUserFromId(this.userId).subscribe(user => {
+        this.data = user;
       });
+    }
+    else {
+      this.data = emptyUser;
+    }
+    this.formGroup = this.formBuilder.group({
+      id: this.data['id'],
+      nome: this.data['nome'],
+      cognome: this.data['cognome'],
+      dataDiNascita: this.data['dataDiNascita'],
+      ruolo: this.data['ruolo']
     });
   }
 
   onSubmit(formData:Utente) {
     this.mockService.updateMockUser(formData).subscribe((x) => {
-      this.clearSession();
       //Se un customer si modifica devo aggiornare i suoi valori, dato che nella
       //tabella prendo i suoi valori direttamente dalla session storage
       if (formData.ruolo == 'Customer' &&
@@ -51,13 +56,6 @@ export class FormUtentiComponent implements OnInit {
       }
       this.router.navigate(['home/utenti']);
     });
-  }
-
-  clearSession(){
-    sessionStorage.removeItem('data');
-    sessionStorage.removeItem('type');
-    sessionStorage.removeItem('action');
-    sessionStorage.removeItem('keys');
   }
 
   //Restituisce i nomi dei parametri di un array di oggetti
@@ -71,7 +69,6 @@ export class FormUtentiComponent implements OnInit {
   }
 
   goBack() {
-    this.clearSession();
     this.location.back();
   }
 }

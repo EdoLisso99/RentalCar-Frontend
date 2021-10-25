@@ -3,7 +3,6 @@ import {MyTableActionEnum, userTableConfig, userTableConfigCustomer} from "../..
 import {Utente} from "../../util/Interfaces";
 import {Router} from "@angular/router";
 import {MockDataService} from "../../services/mockData/mock-data.service";
-import {emptyUser} from "../../util/MockData";
 import {createBtn, emptyBtn} from "../../config/MyButtonConfig";
 
 @Component({
@@ -41,7 +40,6 @@ export class UtentiComponent implements OnInit {
   sendTableAction(data: any) {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
-        this.setSession(data.data, 'Edit');
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
@@ -51,18 +49,11 @@ export class UtentiComponent implements OnInit {
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
-        this.setSession(emptyUser, "Create");
-        this.router.navigate(["home/utenti/new/" + data.data.id]);
+        this.router.navigate(["home/utenti/create/-1"]);
         break;
       default:
         break;
     }
   }
 
-  setSession(data: any, action: string){
-    sessionStorage.setItem('data', JSON.stringify(data));
-    sessionStorage.setItem('type', 'Utente');
-    sessionStorage.setItem('action', action);
-    sessionStorage.setItem('keys', JSON.stringify(this.userConfig.headers));
-  }
 }

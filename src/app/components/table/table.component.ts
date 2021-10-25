@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 import * as _ from 'lodash';
 import {Utente} from "../../util/Interfaces";
@@ -8,7 +8,7 @@ import {Utente} from "../../util/Interfaces";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
 
   @Input () tableConfig !: MyTableConfig ;
   @Input() mockData !: any[];
@@ -21,6 +21,7 @@ export class TableComponent implements OnInit {
   dropdownHidden = true;
   pageArrayOptions : number[] = [];
   backupData: any[] = [];
+
   approveBtnConfig = {
     action: MyTableActionEnum.APPROVE,
     customCssClass : 'btn-success',
@@ -45,9 +46,11 @@ export class TableComponent implements OnInit {
   }
 
   ngOnChanges(changes:SimpleChanges): void{
-    this.mockData = changes.mockData.currentValue;
-    this.backupData = this.mockData;
-    this.changePages();
+    if(changes.mockData){
+      this.mockData = changes.mockData.currentValue;
+      this.backupData = this.mockData;
+      this.changePages();
+    }
   }
 
   //Cambia l'icona e la sua posizione in base alla colonna e all'ordine selezionati
@@ -126,7 +129,4 @@ export class TableComponent implements OnInit {
     this.changePages();
   }
 
-  getCustomerFromId(userId: number) {
-
-  }
 }

@@ -1,4 +1,4 @@
-<h2 class="card-title">{{action}} Utente</h2>
+<h2 class="card-title">{{action}} utente</h2>
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
   <div class="form-group col-12" *ngFor="let dataNames of getKey(keyObj); let i = index" >
     <label for="{{dataNames}}">{{keyObj[i].label}}</label>
