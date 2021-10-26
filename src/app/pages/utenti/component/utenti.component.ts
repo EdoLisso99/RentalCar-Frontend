@@ -4,6 +4,7 @@ import {Utente} from "../../../util/Interfaces";
 import {Router} from "@angular/router";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {createBtn, emptyBtn} from "../../../config/MyButtonConfig";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-utenti',
@@ -27,10 +28,11 @@ export class UtentiComponent implements OnInit {
 
   getUtenti(){
     if(this.loggedUser.ruolo == 'SuperUser'){
-      this.mockService.getMockUsers().subscribe(user => this.users = user);
-      console.log("Utenti Aggiornati:");
-      console.log(this.users);
-      console.log("=========================");
+      this.mockService.getUtenti().subscribe(user => {
+        this.users = user
+      }, ((error : HttpErrorResponse) => {
+        alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
+      }));
     }
     else {
       this.users = [this.loggedUser];
@@ -38,14 +40,18 @@ export class UtentiComponent implements OnInit {
   }
 
   sendTableAction(data: any) {
+    // data.data.dataDiNascita = new Date(data.data.dataDiNascita);
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removePrenotazioniFromUtenti(data.data.id).subscribe((x) => {
-          this.mockService.removeMockUser(data.data).subscribe((y) => this.getUtenti());
-        })
+          this.mockService.deleteUtente(data.data.id).subscribe((y) => this.getUtenti());
+        }, (error => {
+          alert("Si è verificato un errore nella rimozione dell'utente " + data.data.nome + " " + data.data.cognome);
+          console.log(error);
+        }))
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:

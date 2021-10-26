@@ -21,7 +21,12 @@ export class LoginComponent implements OnInit {
   }
 
   getUtenti(){
-    this.mockService.getMockUsers().subscribe(user => this.users = user);
+    this.mockService.getUtenti().subscribe((user: Utente[]) => {
+      this.users = user
+    }, ((error : any) => {
+      alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
+      console.log(error);
+      }));
   }
 
   login(obj:any){

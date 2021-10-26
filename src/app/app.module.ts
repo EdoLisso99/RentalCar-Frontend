@@ -9,8 +9,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TableComponent } from './components/table/table.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent} from "./pages/login/login.component";
-import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
-import { InMemoryDataService } from "./services/inMemoryData/in-memory-data.service";
 import {HttpClientModule} from "@angular/common/http";
 import { UtentiComponent} from "./pages/utenti/component/utenti.component";
 import { MezziComponent} from "./pages/mezzi/component/mezzi.component";
@@ -42,9 +40,6 @@ import {DatePipe} from "./pipes/DatePipe";
     FormsModule,
     FontAwesomeModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ),
     ReactiveFormsModule
   ],
   providers: [],

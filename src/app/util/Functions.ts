@@ -7,3 +7,8 @@ export function dateOverlaps (inizio: Date, fine : Date, inizioO: Date, fineO: D
    let x = '';
    return  flag;
 }
+
+export function isValidDate(d: any) {
+  // @ts-ignore
+  return d instanceof Date && !isNaN(d);
+}

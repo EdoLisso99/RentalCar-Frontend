@@ -1,19 +1,20 @@
 import {Injectable} from '@angular/core';
-import {mockAuto, mockPrenotazioni, mockUser} from "../../util/MockData";
+import {mockAuto, mockPrenotazioni} from "../../util/MockData";
 import {Observable, of} from 'rxjs';
 import {Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
 import {HttpClient} from "@angular/common/http";
 import * as _ from 'lodash';
 import {dateOverlaps} from "../../util/Functions";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MockDataService {
   //Decommentare quando si avranno richieste HTTP al posto di dati mock
-  // private userUrl = 'api/users';
-  // private mezziUrl = 'api/mezzi';
-  // private prenotazioniUrl = 'api/prenotazioni';
+  private userUrl = environment.apiBaseUrl;
+  private mezziUrl = environment.apiBaseUrl;
+  private prenotazioniUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {
   }
@@ -38,21 +39,6 @@ export class MockDataService {
     return of(avaibleVehicles);
   }
 
-  getMockMezzi(): Observable<Mezzo[]> {
-    const tempData: any[] = [];
-    mockAuto.forEach(elem => tempData.push(elem));
-    return of(tempData);
-    //Decommentare quando si avranno richieste HTTP al posto di dati mock
-    // return this.http.get<Mezzo[]>(this.mezziUrl).pipe(catchError(this.handleError<Mezzo[]>('getMockMezzi', [])));
-  }
-
-  getMockMezzoFromId(mezzoId: number): Observable<Mezzo> {
-    let index = _.findIndex(mockAuto,function (o) {
-      return o.id == mezzoId;
-    });
-    return of(mockAuto[index]);
-  }
-
   getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
     let index = _.findIndex(mockPrenotazioni,function (o) {
       return o.id == prenotazioneId;
@@ -62,45 +48,43 @@ export class MockDataService {
 
   getMockPrenotazioni(): Observable<Prenotazione[]> {
     //Decommentare quando si avranno richieste HTTP al posto di dati mock
-    // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
     const tempData: any[] = [];
     mockPrenotazioni.forEach(elem => tempData.push(elem));
     return of(tempData);
   }
 
-  getMockUsers(): Observable<Utente[]> {
-    //Decommentare quando si avranno richieste HTTP al posto di dati mock
-    // return this.http.get<Utente[]>(this.userUrl).pipe(catchError(this.handleError<Utente[]>('getMockUsers', [])));
-    const tempData: any[] = [];
-    mockUser.forEach(elem => tempData.push(elem));
-    return of(tempData);
+  getUtenti() : Observable<Utente[]>{
+    return this.http.get<Utente[]>(`${this.userUrl}/utente/all`);
   }
 
-  getMockUserFromId(userId: number): Observable<Utente> {
-    let index = _.findIndex(mockUser,function (o) {
-      return o.id == userId;
-    });
-    return of(mockUser[index]);
+  updateUtente(utente : Utente) : Observable<Utente>{
+    return this.http.post<Utente>(`${this.userUrl}/utente/update`, utente);
   }
 
-  updateMockUser(user: Utente): Observable<any> {
-    if (user.id !== null && user.id !== -1) {
-      let index = _.findIndex(mockUser, function (o) {
-        return o.id == user.id
-      });
-      mockUser[index] = user;
-    } else {
-      user.id = mockUser[mockUser.length - 1].id + 1;
-      mockUser.push(user);
-    }
-    return of(mockUser);
+  updateMezzo(mezzo : Mezzo) : Observable<Mezzo>{
+    return this.http.post<Mezzo>(`${this.mezziUrl}/mezzo/update`, mezzo);
   }
 
-  removeMockMezzo(mezzo: Mezzo): Observable<any> {
-    _.remove(mockAuto, function (o) {
-      return o.id == mezzo.id
-    });
-    return of(mockAuto);
+  deleteUtente(utenteId : number) : Observable<Utente>{
+    // @ts-ignore
+    return this.http.post<Utente>(`${this.userUrl}/utente/delete/${utenteId}`);
+  }
+
+  deleteMezzo(mezzoId : number) : Observable<Mezzo>{
+    // @ts-ignore
+    return this.http.post<Mezzo>(`${this.mezziUrl}/mezzo/delete/${mezzoId}`);
+  }
+
+  getUtenteFromId(utenteId: number) : Observable<Utente> {
+    return this.http.get<Utente>(`${this.userUrl}/utente/${utenteId}`);
+  }
+
+  getMezzi() : Observable<Mezzo[]>{
+    return this.http.get<Mezzo[]>(`${this.mezziUrl}/mezzo/all`);
+  }
+
+  getMezzoFromId(mezzoId: number) : Observable<Mezzo> {
+    return this.http.get<Mezzo>(`${this.mezziUrl}/mezzo/${mezzoId}`);
   }
 
   removeMockPrenotazione(prenotazione: Prenotazione): Observable<any> {
@@ -108,13 +92,6 @@ export class MockDataService {
       return o.id == prenotazione.id
     });
     return of(mockPrenotazioni);
-  }
-
-  removeMockUser(user: Utente): Observable<any> {
-    _.remove(mockUser, function (o) {
-      return o.id == user.id
-    });
-    return of(mockUser);
   }
 
   removePrenotazioniFromMezzi(mezzoId: number){
@@ -129,19 +106,6 @@ export class MockDataService {
       return o.utente == utenteId
     });
     return of(mockPrenotazioni);
-  }
-
-  updateMockMezzo(mezzo: Mezzo) {
-    if (mezzo.id !== null && mezzo.id !== -1) {
-      let index = _.findIndex(mockAuto, function (o) {
-        return o.id == mezzo.id
-      });
-      mockAuto[index] = mezzo;
-    } else {
-      mezzo.id = mockAuto[mockAuto.length - 1].id + 1;
-      mockAuto.push(mezzo);
-    }
-    return of(mockAuto);
   }
 
   updateMockPrenotazione(prenotazione: Prenotazione) {

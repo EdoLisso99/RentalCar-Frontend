@@ -40,14 +40,22 @@ export class MezziComponent implements OnInit {
   }
 
   getMezzi(){
-    this.mockService.getMockMezzi().subscribe(mezzo => this.mezzi = mezzo);
+    this.mockService.getMezzi().subscribe(mezzo => {
+      this.mezzi = mezzo
+    }, (error => {
+      alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
+      console.log(error);
+    }));
   }
 
   restoreMezzi() {
     this.filteredMezzi = true;
-    this.mockService.getMockMezzi().subscribe(mezzi => {
+    this.mockService.getMezzi().subscribe(mezzi => {
       this.mezzi = mezzi;
-    });
+    }, (error => {
+      alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
+      console.log(error);
+    }));
   }
 
   sendTableAction(data: any) {
@@ -57,9 +65,12 @@ export class MezziComponent implements OnInit {
         break;
       case MyTableActionEnum.DELETE:
         this.mockService.removePrenotazioniFromMezzi(data.data.id).subscribe((x => {
-          this.mockService.removeMockMezzo(data.data).subscribe((y) => {
+          this.mockService.deleteMezzo(data.data.id).subscribe((y) => {
             this.getMezzi();
-          });
+          }, (error => {
+            alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
+            console.log(error);
+          }));
         }));
         break;
       case 'new':

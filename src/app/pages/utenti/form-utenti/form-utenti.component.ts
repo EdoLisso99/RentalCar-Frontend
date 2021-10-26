@@ -29,24 +29,33 @@ export class FormUtentiComponent implements OnInit {
     this.userId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.action = this.route.snapshot.paramMap.get('action');
     if(this.userId !== -1){
-      this.mockService.getMockUserFromId(this.userId).subscribe(user => {
+      this.mockService.getUtenteFromId(this.userId).subscribe((user : Utente  ) => {
         this.data = user;
+        this.formGroup = this.formBuilder.group({
+          id: this.data['id'],
+          nome: this.data['nome'],
+          cognome: this.data['cognome'],
+          dataDiNascita: this.data['dataDiNascita'],
+          ruolo: this.data['ruolo']
+        });
       });
     }
     else {
       this.data = emptyUser;
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        nome: this.data['nome'],
+        cognome: this.data['cognome'],
+        dataDiNascita: this.data['dataDiNascita'],
+        ruolo: this.data['ruolo']
+      });
     }
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      nome: this.data['nome'],
-      cognome: this.data['cognome'],
-      dataDiNascita: this.data['dataDiNascita'],
-      ruolo: this.data['ruolo']
-    });
   }
 
   onSubmit(formData:Utente) {
-    this.mockService.updateMockUser(formData).subscribe((x) => {
+    //Devo convertire esplicitamente la data, altrimenti mi da Bad Request nella chiamata
+    formData.dataDiNascita = new Date(formData.dataDiNascita);
+    this.mockService.updateUtente(formData).subscribe((x) => {
       //Se un customer si modifica devo aggiornare i suoi valori, dato che nella
       //tabella prendo i suoi valori direttamente dalla session storage
       if (formData.ruolo == 'Customer' &&
@@ -55,7 +64,11 @@ export class FormUtentiComponent implements OnInit {
         sessionStorage.setItem('loggedUser', JSON.stringify(formData));
       }
       this.router.navigate(['home/utenti']);
-    });
+    }, (error => {
+        alert("Errore! C'è stato qualche problema con il " + this.action + " dell' Utente");
+        console.log(error);
+      }
+    ));
   }
 
   //Restituisce i nomi dei parametri di un array di oggetti

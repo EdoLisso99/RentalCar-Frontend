@@ -3,7 +3,7 @@ import {mezziTableConfig, MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {formatDate, Location} from "@angular/common";
+import {Location} from "@angular/common";
 import {Mezzo} from "../../../util/Interfaces";
 import {emptyMezzo} from "../../../util/MockData";
 
@@ -28,21 +28,32 @@ export class FormMezziComponent implements OnInit {
     this.mezzoId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.action = this.route.snapshot.paramMap.get('action');
     if(this.mezzoId !== -1){
-      this.mockService.getMockMezzoFromId(this.mezzoId).subscribe(mezzo => {
+      this.mockService.getMezzoFromId(this.mezzoId).subscribe(mezzo => {
         this.data = mezzo;
-      });
+        this.formGroup = this.formBuilder.group({
+          id: this.data['id'],
+          annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
+          casaCostruttrice: this.data['casaCostruttrice'],
+          modello: this.data['modello'],
+          targa: this.data['targa'],
+          tipo: this.data['tipo'],
+        });
+      }, (error => {
+        alert("Si è verificato un errore nel recuperare il Mezzo dal DB!");
+        console.log(error);
+      }));
     }
     else {
       this.data = emptyMezzo;
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
+        casaCostruttrice: this.data['casaCostruttrice'],
+        modello: this.data['modello'],
+        targa: this.data['targa'],
+        tipo: this.data['tipo'],
+      });
     }
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
-      casaCostruttrice: this.data['casaCostruttrice'],
-      modello: this.data['modello'],
-      targa: this.data['targa'],
-      tipo: this.data['tipo'],
-    });
   }
 
   //Restituisce i nomi dei parametri di un array di oggetti
@@ -60,10 +71,13 @@ export class FormMezziComponent implements OnInit {
   }
 
   onSubmit(formData:Mezzo) {
-    formData.annoDiImmatricolazione = formatDate(new Date(formData.annoDiImmatricolazione),  'yyyy/MM/dd',"en-US");
-    this.mockService.updateMockMezzo(formData).subscribe((x) => {
+    formData.annoDiImmatricolazione = new Date(formData.annoDiImmatricolazione);
+    this.mockService.updateMezzo(formData).subscribe((x) => {
       this.router.navigate(['home/mezzi']);
-    });
+    }, (error => {
+      alert("Si è verificato un errore nel " + this.action + " del Mezzo");
+      console.log(error);
+    }));
   }
 
 }

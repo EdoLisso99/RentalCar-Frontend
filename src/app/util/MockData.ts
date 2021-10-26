@@ -1,7 +1,5 @@
 import {formatDate} from '@angular/common';
 
-
-
 export const emptyUser  = [
   {
     id: -1,
