@@ -39,20 +39,6 @@ export class MockDataService {
     return of(avaibleVehicles);
   }
 
-  getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
-    let index = _.findIndex(mockPrenotazioni,function (o) {
-      return o.id == prenotazioneId;
-    });
-    return of(mockPrenotazioni[index]);
-  }
-
-  getMockPrenotazioni(): Observable<Prenotazione[]> {
-    //Decommentare quando si avranno richieste HTTP al posto di dati mock
-    const tempData: any[] = [];
-    mockPrenotazioni.forEach(elem => tempData.push(elem));
-    return of(tempData);
-  }
-
   getUtenti() : Observable<Utente[]>{
     return this.http.get<Utente[]>(`${this.userUrl}/utente/all`);
   }
@@ -87,11 +73,39 @@ export class MockDataService {
     return this.http.get<Mezzo>(`${this.mezziUrl}/mezzo/${mezzoId}`);
   }
 
-  removeMockPrenotazione(prenotazione: Prenotazione): Observable<any> {
-    _.remove(mockPrenotazioni, function (o) {
-      return o.id == prenotazione.id
+  getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
+    let index = _.findIndex(mockPrenotazioni,function (o) {
+      return o.id == prenotazioneId;
     });
-    return of(mockPrenotazioni);
+    return of(mockPrenotazioni[index]);
+  }
+
+  getPrenotazioni() : Observable<Prenotazione[]>{
+    return this.http.get<Prenotazione[]>(`${this.prenotazioniUrl}/prenotazione/all`);
+  }
+
+  deletePrenotazione(prenotazioneId : number) : Observable<Prenotazione>{
+    // @ts-ignore
+    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
+  }
+
+  deletePrenotazioneFromMezzoId(mezzoId : number) : Observable<Prenotazione>{
+    // @ts-ignore
+    //TODO Da fare
+    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
+  }
+
+  deletePrenotazioneFromUtenteId(utenteId : number) : Observable<Prenotazione>{
+    // @ts-ignore
+    //TODO Da fare
+    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
+  }
+
+  updatePrenotazione(prenotazione : Prenotazione) : Observable<Prenotazione>{
+    console.log("Prenotazione da aggiungere: ");
+    console.log(prenotazione);
+    console.log("=================================");
+    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/update`, prenotazione);
   }
 
   removePrenotazioniFromMezzi(mezzoId: number){
@@ -108,18 +122,18 @@ export class MockDataService {
     return of(mockPrenotazioni);
   }
 
-  updateMockPrenotazione(prenotazione: Prenotazione) {
-    if (prenotazione.id !== null && prenotazione.id !== -1) {
-      let index = _.findIndex(mockPrenotazioni, function (o) {
-        return o.id == prenotazione.id
-      });
-      mockPrenotazioni[index] = prenotazione;
-    } else {
-      prenotazione.id = mockPrenotazioni[mockPrenotazioni.length - 1].id + 1;
-      mockPrenotazioni.push(prenotazione);
-    }
-    return of(mockPrenotazioni);
-  }
+  // updateMockPrenotazione(prenotazione: Prenotazione) {
+  //   if (prenotazione.id !== null && prenotazione.id !== -1) {
+  //     let index = _.findIndex(mockPrenotazioni, function (o) {
+  //       return o.id == prenotazione.id
+  //     });
+  //     mockPrenotazioni[index] = prenotazione;
+  //   } else {
+  //     prenotazione.id = mockPrenotazioni[mockPrenotazioni.length - 1].id + 1;
+  //     mockPrenotazioni.push(prenotazione);
+  //   }
+  //   return of(mockPrenotazioni);
+  // }
 
   //Decommentare quando si avranno richieste HTTP al posto di dati mock
   // private handleError<T>(operation = 'operation', result?: T) {

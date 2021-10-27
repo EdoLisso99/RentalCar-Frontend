@@ -46,12 +46,12 @@ export class UtentiComponent implements OnInit {
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.removePrenotazioniFromUtenti(data.data.id).subscribe((x) => {
+        // this.mockService.removePrenotazioniFromUtenti(data.data.id).subscribe((x) => {
           this.mockService.deleteUtente(data.data.id).subscribe((y) => this.getUtenti());
-        }, (error => {
-          alert("Si è verificato un errore nella rimozione dell'utente " + data.data.nome + " " + data.data.cognome);
-          console.log(error);
-        }))
+        // }, (error => {
+        //   alert("Si è verificato un errore nella rimozione dell'utente " + data.data.nome + " " + data.data.cognome);
+        //   console.log(error);
+        // }));
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:

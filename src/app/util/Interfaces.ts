@@ -12,7 +12,7 @@ export interface Mezzo {
   casaCostruttrice: string,
   modello: string,
   targa: string,
-  tipo: string
+  tipo: string,
 }
 
 export interface Prenotazione {
@@ -20,7 +20,7 @@ export interface Prenotazione {
   dataDiInizio: any,
   dataDiFine: any,
   accettata: boolean,
-  auto: number,
-  utente: number
+  auto: any,
+  utente: any
 
 }

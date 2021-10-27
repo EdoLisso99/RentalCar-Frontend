@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Prenotazione} from "../../../util/Interfaces";
 import {emptyPrenotazione} from "../../../util/MockData";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-form-prenotazioni',
@@ -63,11 +64,34 @@ export class FormPrenotazioniComponent implements OnInit {
   }
 
   onSubmit(formData: Prenotazione) {
-    formData.auto = this.vehicleId;
-    formData.utente = this.userId;
-    this.mockService.updateMockPrenotazione(formData).subscribe((x) => {
-      this.router.navigate(['home/prenotazioni']);
-    });
+    // formData.auto = this.vehicleId;
+    // formData.utente = this.userId;
+    // this.mockService.updatePrenotazione(formData).subscribe((x) => {
+    //   this.router.navigate(['home/prenotazioni']);
+    // }, (error => {
+    //   alert("Si è verificato un errore con " + this.action + " della Prenotazione");
+    //   console.log(error);
+    // }));
+
+    //Decommentare quando si sarà risolto il problema della visualizzazione delle prenotazioni
+    this.mockService.getMezzoFromId(this.vehicleId).subscribe(mezzo => {
+      formData.auto = mezzo;
+      this.mockService.getUtenteFromId(this.userId).subscribe(utente => {
+        formData.utente = utente;
+        this.mockService.updatePrenotazione(formData).subscribe((x) => {
+          this.router.navigate(['home/prenotazioni']);
+        }, (error => {
+          alert("Si è verificato un errore con " + this.action + " della Prenotazione");
+          console.log(error);
+        }));
+      },(error => {
+        alert("Si è verifcato un errore nel recuperare l'Utente dal DB!");
+        console.log(error);
+      }));
+    }, (error => {
+      alert("Si è verifcato un errore nel recuperare il Mezzo dal DB!");
+      console.log(error);
+    }));
   }
 
 }

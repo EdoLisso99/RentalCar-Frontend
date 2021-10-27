@@ -5,6 +5,7 @@ import {MyTableActionEnum, prenotazioniTableConfig, prenotazioniTableConfigUser}
 import * as _ from 'lodash';
 import {emptyBtn} from "../../../config/MyButtonConfig";
 import {Router} from "@angular/router";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-prenotazioni',
@@ -26,14 +27,30 @@ export class PrenotazioniComponent implements OnInit {
   }
 
   getPrenotazioni() {
-    if (this.loggedUser.ruolo == 'SuperUser') {
-      this.mockService.getMockPrenotazioni().subscribe(prenotazione => this.prenotazioni = prenotazione);
-    } else {
-      this.mockService.getMockPrenotazioni()
-        .subscribe(object => this.prenotazioni = _.filter(object, (obj) => {
-          return obj.utente == this.loggedUser.id
+    // if (this.loggedUser.ruolo == 'SuperUser') {
+    //   this.mockService.getPrenotazioni().subscribe(prenotazione => {
+    //     this.prenotazioni = prenotazione
+    //   }, (error => {
+    //     alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
+    //     console.log(error);
+    //   }));
+    // } else {
+    //   this.mockService.getPrenotazioni()
+    //     .subscribe(object => {
+    //       this.prenotazioni = _.filter(object, (obj) => {
+    //         return obj.utente == this.loggedUser.id
+    //       })
+    //     }, (error => {
+    //       alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
+    //       console.log(error);
+    //     }));
+    // }
+    this.mockService.getPrenotazioni().subscribe(prenotazione => {
+          this.prenotazioni = prenotazione
+        }, (error => {
+          alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
+          console.log(error);
         }));
-    }
   }
 
   sendTableAction(data: any) {
@@ -46,15 +63,30 @@ export class PrenotazioniComponent implements OnInit {
         });
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.removeMockPrenotazione(data.data).subscribe((x) => this.getPrenotazioni());
+        this.mockService.deletePrenotazione(data.data.id).subscribe((x) => {
+          this.getPrenotazioni()
+        }, (error => {
+          alert("Si è verificato un errore con l'eliminazione della Prenotazione");
+          console.log(error);
+        }));
         break;
       case MyTableActionEnum.APPROVE:
         data.data.accettata = true;
-        this.mockService.updateMockPrenotazione(data.data).subscribe((x) => this.getPrenotazioni());
+        this.mockService.updatePrenotazione(data.data).subscribe((x) => {
+          this.getPrenotazioni();
+        }, (error => {
+          alert("Si è verificato un errore con l'approvazione della Prenotazione!");
+          console.log(error);
+        }));
         break;
       case MyTableActionEnum.REJECT:
         data.data.accettata = false;
-        this.mockService.updateMockPrenotazione(data.data).subscribe((x) => this.getPrenotazioni());
+        this.mockService.updatePrenotazione(data.data).subscribe((x) => {
+          this.getPrenotazioni();
+        }, (error => {
+          alert("Si è verificato un errore con il rifiuto della Prenotazione!");
+          console.log(error);
+        }));
         break;
       default:
         break;

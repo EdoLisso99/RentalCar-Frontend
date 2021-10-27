@@ -8,6 +8,7 @@ import {
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
 import {createBtn, emptyBtn, filterBtn, restoreBtn} from "../../../config/MyButtonConfig";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-mezzi',
@@ -64,14 +65,19 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/Edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.removePrenotazioniFromMezzi(data.data.id).subscribe((x => {
+        //TODO da implementare
+
+        // this.mockService.deletePrenotazioneFromMezzoId(data.data.id).subscribe((x) => {
           this.mockService.deleteMezzo(data.data.id).subscribe((y) => {
             this.getMezzi();
           }, (error => {
             alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
             console.log(error);
           }));
-        }));
+        // }, ((error) => {
+        //   alert("Si è verificato un errore nella rimozione della Prenotazione");
+        //   console.log(error);
+        // }));
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
