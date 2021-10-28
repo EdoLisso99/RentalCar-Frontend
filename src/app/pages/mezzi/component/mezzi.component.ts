@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Mezzo, Utente} from "../../../util/Interfaces";
+import {DateExample, Mezzo, Utente} from "../../../util/Interfaces";
 import {
   mezziTableConfig,
   mezziTableConfigUser,
@@ -8,7 +8,6 @@ import {
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
 import {createBtn, emptyBtn, filterBtn, restoreBtn} from "../../../config/MyButtonConfig";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-mezzi',
@@ -34,7 +33,7 @@ export class MezziComponent implements OnInit {
   }
 
   filterMezzi() {
-    this.mockService.getAvailableMezzi(this.inizio, this.fine).subscribe(mezziDisponibili => {
+    this.mockService.getAvailableMezzi(new DateExample(this.inizio, this.fine)).subscribe(mezziDisponibili => {
       this.mezzi = mezziDisponibili;
       this.filteredMezzi = false;
     })
@@ -62,33 +61,23 @@ export class MezziComponent implements OnInit {
   sendTableAction(data: any) {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
-        this.router.navigate(["home/mezzi/Edit/" + data.data.id]);
+        this.router.navigate(["home/mezzi/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-        //TODO da implementare
-
-        // this.mockService.deletePrenotazioneFromMezzoId(data.data.id).subscribe((x) => {
           this.mockService.deleteMezzo(data.data.id).subscribe((y) => {
             this.getMezzi();
           }, (error => {
             alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
             console.log(error);
           }));
-        // }, ((error) => {
-        //   alert("Si è verificato un errore nella rimozione della Prenotazione");
-        //   console.log(error);
-        // }));
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.router.navigate(["home/mezzi/create/-1"]);
         break;
       case MyTableActionEnum.BOOK:
-        let mezzoId = -1;
-        this.mockService.getMockPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
-          mezzoId = prenotazione.auto;
-          this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/create/-1"]);
-        });
+        let mezzoId = data.data.id;
+        this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/create/-1"]);
         break;
       default:
         break;

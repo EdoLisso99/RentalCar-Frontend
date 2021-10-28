@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {mockAuto, mockPrenotazioni} from "../../util/MockData";
 import {Observable, of} from 'rxjs';
-import {Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
+import {DateExample, Mezzo, Prenotazione, Utente} from "../../util/Interfaces";
 import {HttpClient} from "@angular/common/http";
 import * as _ from 'lodash';
-import {dateOverlaps} from "../../util/Functions";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -19,28 +18,12 @@ export class MockDataService {
   constructor(private http: HttpClient) {
   }
 
-  getAvailableMezzi(inizio: Date, fine: Date) : Observable<Mezzo[]>{
-    let avaibleVehicles : Mezzo [] = [];
-    let x: any[] = [];
-    x = _.filter(mockPrenotazioni, function (o) {
-      return (o.accettata == true && !dateOverlaps(new Date(inizio), new Date(fine), new Date(o.dataDiInizio), new Date(o.dataDiFine)));
-    });
-    mockAuto.forEach(auto => {
-      let flag = false;
-      x.forEach(mezzoDaEliminare => {
-        if(auto.id === mezzoDaEliminare.auto){
-          flag = true;
-        }
-      });
-      if(!flag){
-        avaibleVehicles.push(auto);
-      }
-    });
-    return of(avaibleVehicles);
-  }
-
   getUtenti() : Observable<Utente[]>{
     return this.http.get<Utente[]>(`${this.userUrl}/utente/all`);
+  }
+
+  getAvailableMezzi(dateExample: DateExample) : Observable<Mezzo[]>{
+    return this.http.post<Mezzo[]>(`${this.userUrl}/mezzo/available`, dateExample);
   }
 
   updateUtente(utente : Utente) : Observable<Utente>{
@@ -71,13 +54,6 @@ export class MockDataService {
 
   getMezzoFromId(mezzoId: number) : Observable<Mezzo> {
     return this.http.get<Mezzo>(`${this.mezziUrl}/mezzo/${mezzoId}`);
-  }
-
-  getMockPrenotazioneFromId(prenotazioneId: number): Observable<any> {
-    let index = _.findIndex(mockPrenotazioni,function (o) {
-      return o.id == prenotazioneId;
-    });
-    return of(mockPrenotazioni[index]);
   }
 
   getPrenotazioni() : Observable<Prenotazione[]>{

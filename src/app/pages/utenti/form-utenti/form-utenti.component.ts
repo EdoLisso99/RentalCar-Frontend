@@ -15,6 +15,7 @@ import {emptyUser} from "../../../util/MockData";
 })
 export class FormUtentiComponent implements OnInit {
 
+  ruoli = ['Customer', 'SuperUser'];
   loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   data: any;
   action !: string | null;
@@ -54,7 +55,7 @@ export class FormUtentiComponent implements OnInit {
 
   onSubmit(formData:Utente) {
     console.log("Form Data:");
-    console.log(formData.dataDiNascita);
+    console.log(formData);
     console.log("====================");
     //Devo convertire esplicitamente la data, altrimenti mi da Bad Request nella chiamata
     formData.dataDiNascita = new Date(formData.dataDiNascita);
@@ -88,17 +89,9 @@ export class FormUtentiComponent implements OnInit {
     this.location.back();
   }
 
-  roleSelected() : boolean {
-    if(this.action !== null && this.action !== undefined){
-      if(this.action == 'edit'){
-        return  this.data['ruolo'] == 'Customer';
-      }
-      else {
-        return true;
-      }
-    }
-    else {
-      return true;
-    }
+  changeRole(e: Event) {
+    console.log(this.formGroup);
+    // @ts-ignore
+    this.formGroup.controls['ruolo'].setValue( e.target.value, {onlySelf: true});
   }
 }

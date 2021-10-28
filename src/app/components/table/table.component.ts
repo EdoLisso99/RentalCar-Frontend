@@ -120,4 +120,5 @@ export class TableComponent implements OnInit, OnChanges {
   getDelete() {
     return MyTableActionEnum.DELETE;
   }
+
 }

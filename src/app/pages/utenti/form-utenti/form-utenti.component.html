@@ -3,18 +3,18 @@
   <div class="form-group col-12" >
     <label for="nome">Nome</label>
     <input type="text" class="form-control col-3" id="nome" formControlName="nome"
-           placeholder="Inserisci il nome" value="{{data['nome'] }}">
+           placeholder="Inserisci il nome" value="{{data['nome']}}">
     <label for="cognome">Cognome</label>
     <input type="text" class="form-control col-3" id="cognome" formControlName="cognome"
            placeholder="Inserisci il cognome" value="{{data['cognome'] }}">
     <label for="nome">Data di nascita</label>
     <input type="date" class="form-control col-3" id="dataDiNascita" formControlName="dataDiNascita"
            placeholder="Inserisci la data di nascita" [ngModel]="data.dataDiNascita | date:'yyyy-MM-dd'">
-    <span *ngIf="userId !== -1 && loggedUser !== null && loggedUser.id !== userId && loggedUser.ruolo == 'SuperUser'">
+    <span *ngIf="action !== 'edit' && loggedUser !== null && loggedUser.id !== userId && loggedUser.ruolo == 'SuperUser'">
       <label for="ruolo">Ruolo</label>
       <select formControlName="ruolo" id="ruolo" class="form-control col-3">
-        <option value="Customer" [selected]="roleSelected()">Customer</option>
-        <option value="SuperUser" [selected]="!roleSelected()">SuperUser</option>
+        <option value="Customer" selected>Customer</option>
+        <option value="SuperUser" >SuperUser</option>
       </select>
     </span>
   </div>
