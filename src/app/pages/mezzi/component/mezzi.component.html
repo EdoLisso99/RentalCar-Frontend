@@ -1,10 +1,13 @@
 <br />
 <h1>Mezzi</h1>
 <app-button [buttonConfig]="btnConfig" (click)="sendTableAction({data: '', action:'new'})"></app-button>
-<div class="col-12 form-group filter d-flex flex-row mt-2 justify-content-center align-items-baseline">
-  <input type="date" [(ngModel)]="inizio" class="form-control col-3 ml-2 col-3" placeholder="Inserisci data di inizio" />
-  <input type="date" [(ngModel)]="fine" class="form-control col-3 ml-2 col-3" placeholder="Inserisci data di fine" />
-  <app-button class="d-flex align-self-baseline ml-2 col-5" [buttonConfig]="filterBtnConfig" (click)="filterMezzi()"></app-button>
+<div class="form-group filter d-flex flex-row mt-2 align-items-baseline">
+  <input (change)="print()" type="date" [(ngModel)]="inizio" class="form-control col-3 ml-2 col-3" placeholder="Inserisci data di inizio" />
+  <input (change)="print()" type="date" [(ngModel)]="fine" class="form-control col-3 ml-2 col-3" placeholder="Inserisci data di fine" />
+  <ng-container *ngIf="inizio !== null && fine !== null">
+    <app-button class="d-flex align-self-baseline ml-2 col-5"
+                [buttonConfig]="filterBtnConfig" (click)="filterMezzi()"></app-button>
+  </ng-container>
   <div [hidden]="filteredMezzi" class="col-1">
     <app-button class="d-flex align-self-baseline ml-2" [buttonConfig]="restoreBtnConfig" (click)="restoreMezzi()"></app-button>
   </div>

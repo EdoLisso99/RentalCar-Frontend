@@ -23,13 +23,14 @@ export class MezziComponent implements OnInit {
   mezziConfig = this.loggedUser.ruolo == 'Customer' ? mezziTableConfigUser :mezziTableConfig;
   filterBtnConfig: any = filterBtn;
   restoreBtnConfig: any = restoreBtn;
-  inizio: any;
-  fine: any;
+  inizio: any = null;
+  fine: any = null;
 
   constructor(private mockService : MockDataService, private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getMezzi();
+    this.print();
   }
 
   filterMezzi() {
@@ -46,6 +47,13 @@ export class MezziComponent implements OnInit {
       alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
       console.log(error);
     }));
+  }
+
+  print(){
+    console.log("Inizio:  " + this.inizio + " - Fine: " + this.fine);
+    console.log(this.inizio === null);
+    console.log(this.fine === null);
+    console.log("===========================");
   }
 
   restoreMezzi() {
