@@ -1,3 +1,5 @@
+import {MyTableActionEnum} from "./MyTableConfig";
+
 export interface MyButtonConfig{
   customCssClass : string,
   text : string,
@@ -46,3 +48,19 @@ export const emptyBtn : MyButtonConfig = {
   icon : '',
   color: "",
 }
+
+export const approveBtnConfig = {
+  action: MyTableActionEnum.APPROVE,
+  customCssClass : 'btn-success',
+  text : 'Approve',
+  icon : 'fas fa-heart',
+  color: "",
+};
+
+export const rejectBtnConfig = {
+  action: MyTableActionEnum.REJECT,
+  customCssClass : 'btn-danger',
+  text : 'Decline',
+  icon : 'fas fa-skull',
+  color: "",
+};

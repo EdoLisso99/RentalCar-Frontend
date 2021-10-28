@@ -57,7 +57,7 @@
           <app-button class="ml-2" [buttonConfig]="rejectBtnConfig" (click)="sendOnClickEvent(data, rejectBtnConfig.action)"></app-button>
         </span>
       <span class="ml-2" *ngFor="let action of tableConfig.actions">
-        <app-button [buttonConfig]="action" (click)="sendOnClickEvent(data, action.action)"></app-button>
+        <app-button [hidden]="loggedUser !== null && loggedUser.id == data['id'] && action.action == getDelete()" [buttonConfig]="action" (click)="sendOnClickEvent(data, action.action)"></app-button>
       </span>
       </td>
     </tr>

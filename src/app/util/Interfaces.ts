@@ -1,26 +1,51 @@
-export interface Utente {
-  id: number,
-  nome: string,
-  cognome: string,
-  dataDiNascita: any,
+export class Utente {
+
+  id: number;
+  nome: string;
+  cognome: string;
+  dataDiNascita: any;
   ruolo: string
+
+  constructor() {
+    this.id = -1;
+    this.nome = '';
+    this.cognome = '';
+    this.ruolo = '';
+    this.dataDiNascita = new Date();
+  }
+
 }
 
-export interface Mezzo {
-  id: number,
-  annoDiImmatricolazione: any,
-  casaCostruttrice: string,
-  modello: string,
-  targa: string,
-  tipo: string,
+export class Mezzo {
+  id: number;
+  annoDiImmatricolazione: any;
+  casaCostruttrice: string;
+  modello: string;
+  targa: string;
+  tipo: string;
+
+  constructor() {
+    this.id = -1;
+    this.annoDiImmatricolazione = new Date();
+    this.casaCostruttrice = '';
+    this.modello = '';
+    this.targa = '';
+    this.tipo = '';
+  }
 }
 
-export interface Prenotazione {
-  id: number,
-  dataDiInizio: any,
-  dataDiFine: any,
-  accettata: boolean,
-  auto: any,
+export class Prenotazione {
+
+  id: number;
+  dataDiInizio: any;
+  dataDiFine: any;
+  accettata ?: boolean;
+  auto: any;
   utente: any
+
+  constructor() {
+    this.id = -1;
+  }
+
 
 }

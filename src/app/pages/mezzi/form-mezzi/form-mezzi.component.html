@@ -1,9 +1,21 @@
-<h2 class="card-title">{{action}} mezzo</h2>
+<h2 class="card-title">{{action | titlecase}} mezzo</h2>
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-  <div class="form-group col-12" *ngFor="let dataNames of getKey(keyObj); let i = index" >
-    <label for="{{dataNames}}">{{keyObj[i].label}}</label>
-    <input type="text" class="form-control" id="{{dataNames}}" formControlName="{{dataNames}}"
-           placeholder="Enter {{keyObj[i].label}}" value="{{data[dataNames] | showData}}">
+  <div class="form-group col-12">
+    <label for="casaCostruttrice">Casa Costruttrice</label>
+    <input type="text" class="form-control col-3" id="casaCostruttrice" formControlName="casaCostruttrice"
+           placeholder="Inserisci il casaCostruttrice" value="{{data['casaCostruttrice'] }}">
+    <label for="modello">Modello</label>
+    <input type="text" class="form-control col-3" id="modello" formControlName="modello"
+           placeholder="Inserisci il modello" value="{{data['modello'] }}">
+    <label for="targa">Targa</label>
+    <input type="text" class="form-control col-3" id="targa" formControlName="targa"
+           placeholder="Inserisci il targa" value="{{data['targa'] }}">
+    <label for="tipo">Tipo</label>
+    <input type="text" class="form-control col-3" id="tipo" formControlName="tipo"
+           placeholder="Inserisci il tipo" value="{{data['tipo'] }}">
+    <label for="annoDiImmatricolazione">Anno di immatricolazione</label>
+    <input type="date" class="form-control col-3" id="annoDiImmatricolazione" formControlName="annoDiImmatricolazione"
+           placeholder="Inserisci il annoDiImmatricolazione" [ngModel]="data.annoDiImmatricolazione | date:'yyyy-MM-dd'">
   </div>
   <button class="btn btn-success" type="submit">Submit</button>
 </form>

@@ -1,9 +1,22 @@
-<h2 class="card-title">{{action}} utente</h2>
+<h2 class="card-title">{{action | titlecase}} utente</h2>
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
-  <div class="form-group col-12" *ngFor="let dataNames of getKey(keyObj); let i = index" >
-    <label for="{{dataNames}}">{{keyObj[i].label}}</label>
-    <input type="text" class="form-control" id="{{dataNames}}" formControlName="{{dataNames}}"
-           placeholder="Enter {{keyObj[i].label}}" value="{{data[dataNames] | showData}}">
+  <div class="form-group col-12" >
+    <label for="nome">Nome</label>
+    <input type="text" class="form-control col-3" id="nome" formControlName="nome"
+           placeholder="Inserisci il nome" value="{{data['nome'] }}">
+    <label for="cognome">Cognome</label>
+    <input type="text" class="form-control col-3" id="cognome" formControlName="cognome"
+           placeholder="Inserisci il cognome" value="{{data['cognome'] }}">
+    <label for="nome">Data di nascita</label>
+    <input type="date" class="form-control col-3" id="dataDiNascita" formControlName="dataDiNascita"
+           placeholder="Inserisci la data di nascita" [ngModel]="data.dataDiNascita | date:'yyyy-MM-dd'">
+    <span *ngIf="userId !== -1 && loggedUser !== null && loggedUser.id !== userId && loggedUser.ruolo == 'SuperUser'">
+      <label for="ruolo">Ruolo</label>
+      <select formControlName="ruolo" id="ruolo" class="form-control col-3">
+        <option value="Customer" [selected]="roleSelected()">Customer</option>
+        <option value="SuperUser" [selected]="!roleSelected()">SuperUser</option>
+      </select>
+    </span>
   </div>
   <button class="btn btn-success" type="submit">Submit</button>
 </form>

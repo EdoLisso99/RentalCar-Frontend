@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {mezziTableConfig, MyHeaders} from "../../../config/MyTableConfig";
+import {MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -16,7 +16,6 @@ export class FormMezziComponent implements OnInit {
 
   data: any;
   action !: string | null;
-  keyObj : MyHeaders[] = mezziTableConfig.headers;
   formGroup: any;
   mezzoId : number = -1;
 

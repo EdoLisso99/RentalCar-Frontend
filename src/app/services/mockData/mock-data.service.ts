@@ -84,20 +84,12 @@ export class MockDataService {
     return this.http.get<Prenotazione[]>(`${this.prenotazioniUrl}/prenotazione/all`);
   }
 
+  getPrenotazioneFromId(prenotazioneId: number) : Observable<Prenotazione>{
+    return this.http.get<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/${prenotazioneId}`);
+  }
+
   deletePrenotazione(prenotazioneId : number) : Observable<Prenotazione>{
     // @ts-ignore
-    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
-  }
-
-  deletePrenotazioneFromMezzoId(mezzoId : number) : Observable<Prenotazione>{
-    // @ts-ignore
-    //TODO Da fare
-    return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
-  }
-
-  deletePrenotazioneFromUtenteId(utenteId : number) : Observable<Prenotazione>{
-    // @ts-ignore
-    //TODO Da fare
     return this.http.post<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/delete/${prenotazioneId}`);
   }
 

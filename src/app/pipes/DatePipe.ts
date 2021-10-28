@@ -12,11 +12,19 @@ export class DatePipe implements PipeTransform{
           return (obj.casaCostruttrice + " " + obj.modello + " " + obj.targa);
         }
       }
-      let y = Date.parse(obj);
       if(!isNaN(Date.parse(obj))){
         let x = new Date(obj);
         return x.toISOString().split('T')[0];
       }
+      if(obj == true){
+        return "Accettata";
+      }
+      if(obj == false){
+        return "Rifiutata";
+      }
+    }
+    else{
+      return "In attesa di conferma...";
     }
     return obj;
 

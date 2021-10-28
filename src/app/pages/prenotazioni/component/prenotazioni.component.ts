@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Prenotazione, Utente} from "../../../util/Interfaces";
 import {MyTableActionEnum, prenotazioniTableConfig, prenotazioniTableConfigUser} from "../../../config/MyTableConfig";
-import * as _ from 'lodash';
 import {emptyBtn} from "../../../config/MyButtonConfig";
 import {Router} from "@angular/router";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-prenotazioni',
@@ -27,24 +25,6 @@ export class PrenotazioniComponent implements OnInit {
   }
 
   getPrenotazioni() {
-    // if (this.loggedUser.ruolo == 'SuperUser') {
-    //   this.mockService.getPrenotazioni().subscribe(prenotazione => {
-    //     this.prenotazioni = prenotazione
-    //   }, (error => {
-    //     alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
-    //     console.log(error);
-    //   }));
-    // } else {
-    //   this.mockService.getPrenotazioni()
-    //     .subscribe(object => {
-    //       this.prenotazioni = _.filter(object, (obj) => {
-    //         return obj.utente == this.loggedUser.id
-    //       })
-    //     }, (error => {
-    //       alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
-    //       console.log(error);
-    //     }));
-    // }
     this.mockService.getPrenotazioni().subscribe(prenotazione => {
           this.prenotazioni = prenotazione
         }, (error => {
@@ -57,8 +37,8 @@ export class PrenotazioniComponent implements OnInit {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         let mezzoId = -1;
-        this.mockService.getMockPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
-          mezzoId = prenotazione.auto;
+        this.mockService.getPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
+          mezzoId = prenotazione.auto.id;
           this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/edit/" + data.data.id]);
         });
         break;

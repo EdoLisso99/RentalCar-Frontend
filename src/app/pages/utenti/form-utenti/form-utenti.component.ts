@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MyHeaders, userTableConfig} from "../../../config/MyTableConfig";
+import { MyHeaders} from "../../../config/MyTableConfig";
 import { FormBuilder } from '@angular/forms';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Utente} from "../../../util/Interfaces";
@@ -15,9 +15,9 @@ import {emptyUser} from "../../../util/MockData";
 })
 export class FormUtentiComponent implements OnInit {
 
+  loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   data: any;
   action !: string | null;
-  keyObj : MyHeaders[] = userTableConfig.headers;
   formGroup: any;
   userId : number = -1;
 
@@ -53,6 +53,9 @@ export class FormUtentiComponent implements OnInit {
   }
 
   onSubmit(formData:Utente) {
+    console.log("Form Data:");
+    console.log(formData.dataDiNascita);
+    console.log("====================");
     //Devo convertire esplicitamente la data, altrimenti mi da Bad Request nella chiamata
     formData.dataDiNascita = new Date(formData.dataDiNascita);
     this.mockService.updateUtente(formData).subscribe((x) => {
@@ -83,5 +86,19 @@ export class FormUtentiComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  roleSelected() : boolean {
+    if(this.action !== null && this.action !== undefined){
+      if(this.action == 'edit'){
+        return  this.data['ruolo'] == 'Customer';
+      }
+      else {
+        return true;
+      }
+    }
+    else {
+      return true;
+    }
   }
 }

@@ -5,8 +5,6 @@ import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Prenotazione} from "../../../util/Interfaces";
-import {emptyPrenotazione} from "../../../util/MockData";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-form-prenotazioni',
@@ -32,21 +30,29 @@ export class FormPrenotazioniComponent implements OnInit {
     this.userId = parseInt(this.route.snapshot.paramMap.get('user')!);
     this.action = this.route.snapshot.paramMap.get('action');
     if(this.prenotazioneId !== -1){
-      this.mockService.getMockPrenotazioneFromId(this.prenotazioneId).subscribe(prenotazione => {
+      this.mockService.getPrenotazioneFromId(this.prenotazioneId).subscribe(prenotazione => {
         this.data = prenotazione;
+        this.formGroup = this.formBuilder.group({
+          id: this.data['id'],
+          dataDiInizio: this.data['dataDiInizio'],
+          dataDiFine: this.data['dataDiFine'],
+          accettata: this.data['accettata'],
+          auto: this.data['auto'],
+          utente: this.data['utente']
+        });
       });
     }
     else {
-      this.data = emptyPrenotazione;
+      this.data = new Prenotazione();
+      this.formGroup = this.formBuilder.group({
+        id: this.data['id'],
+        dataDiInizio: this.data['dataDiInizio'],
+        dataDiFine: this.data['dataDiFine'],
+        accettata: this.data['accettata'],
+        auto: this.data['auto'],
+        utente: this.data['utente']
+      });
     }
-    this.formGroup = this.formBuilder.group({
-      id: this.data['id'],
-      dataDiInizio: this.data['dataDiInizio'],
-      dataDiFine: this.data['dataDiFine'],
-      accettata: this.data['accettata'],
-      auto: this.data['auto'],
-      utente: this.data['utente']
-    });
   }
 
   //Restituisce i nomi dei parametri di un array di oggetti
@@ -64,15 +70,6 @@ export class FormPrenotazioniComponent implements OnInit {
   }
 
   onSubmit(formData: Prenotazione) {
-    // formData.auto = this.vehicleId;
-    // formData.utente = this.userId;
-    // this.mockService.updatePrenotazione(formData).subscribe((x) => {
-    //   this.router.navigate(['home/prenotazioni']);
-    // }, (error => {
-    //   alert("Si è verificato un errore con " + this.action + " della Prenotazione");
-    //   console.log(error);
-    // }));
-
     //Decommentare quando si sarà risolto il problema della visualizzazione delle prenotazioni
     this.mockService.getMezzoFromId(this.vehicleId).subscribe(mezzo => {
       formData.auto = mezzo;
@@ -94,4 +91,9 @@ export class FormPrenotazioniComponent implements OnInit {
     }));
   }
 
+  getData(dataDiNascita: any) {
+    let x = dataDiNascita;
+    return new Date(dataDiNascita);
+
+  }
 }
