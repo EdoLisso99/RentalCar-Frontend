@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
-import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Mezzo} from "../../../util/Interfaces";
-import {emptyMezzo} from "../../../util/MockData";
+import {MezziService} from "../../../services/mezzi/mezzi.service";
 
 @Component({
   selector: 'app-form-mezzi',
@@ -19,7 +18,7 @@ export class FormMezziComponent implements OnInit {
   formGroup: any;
   mezzoId : number = -1;
 
-  constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
+  constructor(private formBuilder: FormBuilder, private mezzoService: MezziService,
               private readonly router : Router, private location: Location,
               private route : ActivatedRoute) { }
 
@@ -27,7 +26,7 @@ export class FormMezziComponent implements OnInit {
     this.mezzoId = parseInt(this.route.snapshot.paramMap.get('id')!);
     this.action = this.route.snapshot.paramMap.get('action');
     if(this.mezzoId !== -1){
-      this.mockService.getMezzoFromId(this.mezzoId).subscribe(mezzo => {
+      this.mezzoService.getMezzoFromId(this.mezzoId).subscribe(mezzo => {
         this.data = mezzo;
         this.formGroup = this.formBuilder.group({
           id: this.data['id'],
@@ -43,7 +42,7 @@ export class FormMezziComponent implements OnInit {
       }));
     }
     else {
-      this.data = emptyMezzo;
+      this.data = new Mezzo();
       this.formGroup = this.formBuilder.group({
         id: this.data['id'],
         annoDiImmatricolazione: this.data['annoDiImmatricolazione'],
@@ -71,7 +70,7 @@ export class FormMezziComponent implements OnInit {
 
   onSubmit(formData:Mezzo) {
     formData.annoDiImmatricolazione = new Date(formData.annoDiImmatricolazione);
-    this.mockService.updateMezzo(formData).subscribe((x) => {
+    this.mezzoService.updateMezzo(formData).subscribe((x) => {
       this.router.navigate(['home/mezzi']);
     }, (error => {
       alert("Si è verificato un errore nel " + this.action + " del Mezzo");

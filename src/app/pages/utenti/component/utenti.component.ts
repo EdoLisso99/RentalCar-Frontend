@@ -2,10 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MyTableActionEnum, userTableConfig} from "../../../config/MyTableConfig";
 import {Utente} from "../../../util/Interfaces";
 import {Router} from "@angular/router";
-import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {createBtn, emptyBtn} from "../../../config/MyButtonConfig";
 import {HttpErrorResponse} from "@angular/common/http";
-import {hideBtn} from "../../../util/Functions";
+import {UtentiService} from "../../../services/utenti/utenti.service";
 
 @Component({
   selector: 'app-utenti',
@@ -19,10 +18,9 @@ export class UtentiComponent implements OnInit {
   loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   userConfig = userTableConfig;
   users: Utente[] = [];
-  hideBtns : boolean[] = [];
   btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
 
-  constructor(private readonly router : Router, private mockService : MockDataService) { }
+  constructor(private readonly router : Router, private utenteService : UtentiService) { }
 
   ngOnInit(): void {
     this.getUtenti();
@@ -30,7 +28,7 @@ export class UtentiComponent implements OnInit {
 
   getUtenti(){
     if(this.loggedUser.ruolo == 'SuperUser'){
-      this.mockService.getUtenti().subscribe(user => {
+      this.utenteService.getUtenti().subscribe(user => {
         this.users = user;
 
       }, ((error : HttpErrorResponse) => {
@@ -43,20 +41,16 @@ export class UtentiComponent implements OnInit {
   }
 
   sendTableAction(data: any) {
-    // data.data.dataDiNascita = new Date(data.data.dataDiNascita);
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-          this.mockService.deleteUtente(data.data.id).subscribe((y) => this.getUtenti());
+          this.utenteService.deleteUtente(data.data.id).subscribe((y) => this.getUtenti());
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
         this.router.navigate(["home/utenti/create/-1"]);
-        break;
-      case "showBtn":
-        hideBtn(data.condition, data.data, data.loggedUser);
         break;
       default:
         break;

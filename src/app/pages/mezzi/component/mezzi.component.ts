@@ -4,10 +4,9 @@ import {
   mezziTableConfig,
   MyTableActionEnum
 } from "../../../config/MyTableConfig";
-import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
 import {createBtn, emptyBtn, filterBtn, restoreBtn} from "../../../config/MyButtonConfig";
-import {hideBtn} from "../../../util/Functions";
+import {MezziService} from "../../../services/mezzi/mezzi.service";
 
 @Component({
   selector: 'app-mezzi',
@@ -26,7 +25,7 @@ export class MezziComponent implements OnInit {
   inizio: any = null;
   fine: any = null;
 
-  constructor(private mockService : MockDataService, private readonly router : Router) { }
+  constructor(private mezzoService : MezziService, private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getMezzi();
@@ -34,14 +33,14 @@ export class MezziComponent implements OnInit {
   }
 
   filterMezzi() {
-    this.mockService.getAvailableMezzi(new DateExample(this.inizio, this.fine)).subscribe(mezziDisponibili => {
+    this.mezzoService.getAvailableMezzi(new DateExample(this.inizio, this.fine)).subscribe(mezziDisponibili => {
       this.mezzi = mezziDisponibili;
       this.filteredMezzi = false;
     })
   }
 
   getMezzi(){
-    this.mockService.getMezzi().subscribe(mezzo => {
+    this.mezzoService.getMezzi().subscribe(mezzo => {
       this.mezzi = mezzo
     }, (error => {
       alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
@@ -58,7 +57,7 @@ export class MezziComponent implements OnInit {
 
   restoreMezzi() {
     this.filteredMezzi = true;
-    this.mockService.getMezzi().subscribe(mezzi => {
+    this.mezzoService.getMezzi().subscribe(mezzi => {
       this.mezzi = mezzi;
     }, (error => {
       alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
@@ -72,7 +71,7 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-          this.mockService.deleteMezzo(data.data.id).subscribe((y) => {
+          this.mezzoService.deleteMezzo(data.data.id).subscribe((y) => {
             this.getMezzi();
           }, (error => {
             alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
@@ -86,9 +85,6 @@ export class MezziComponent implements OnInit {
       case MyTableActionEnum.BOOK:
         let mezzoId = data.data.id;
         this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/create/-1"]);
-        break;
-      case "showBtn":
-        hideBtn(data.condition, data.data, data.loggedUser);
         break;
       default:
         break;

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MockDataService} from "../../services/mockData/mock-data.service";
 import {Utente} from "../../util/Interfaces";
 import {logoutBtn} from "../../config/MyButtonConfig";
 import {Router} from "@angular/router";
@@ -14,7 +13,7 @@ export class HomeComponent implements OnInit {
   loggedUser : Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   logoutBtnConfig = logoutBtn;
 
-  constructor(private mockService : MockDataService, private readonly router : Router) { }
+  constructor(private readonly router : Router) { }
 
   ngOnInit(): void {
   }

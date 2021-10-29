@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {loginTableConfig} from "../../config/MyTableConfig";
 import {Utente} from "../../util/Interfaces";
-import {MockDataService} from "../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
-import {hideBtn} from "../../util/Functions";
+import {UtentiService} from "../../services/utenti/utenti.service";
 
 @Component({
   selector: 'app-login',
@@ -15,28 +14,19 @@ export class LoginComponent implements OnInit {
   users: Utente[] = [];
   tableConfig = loginTableConfig;
 
-  constructor(private mockService : MockDataService, private readonly router : Router) { }
+  constructor(private utenteService: UtentiService, private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getUtenti();
   }
 
   getUtenti(){
-    this.mockService.getUtenti().subscribe((user: Utente[]) => {
+    this.utenteService.getUtenti().subscribe((user: Utente[]) => {
       this.users = user
     }, ((error : any) => {
       alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
       console.log(error);
       }));
-  }
-
-  getEventFromTable(obj:any){
-    if(obj.action === "showBtn"){
-      hideBtn(obj.condition, obj.data, obj.loggedUser);
-    }
-    else {
-      this.login(obj);
-    }
   }
 
   login(obj:any){

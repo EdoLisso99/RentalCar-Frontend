@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Prenotazione, Utente} from "../../../util/Interfaces";
 import {MyTableActionEnum, prenotazioniTableConfig} from "../../../config/MyTableConfig";
 import {emptyBtn} from "../../../config/MyButtonConfig";
 import {Router} from "@angular/router";
-import {hideBtn} from "../../../util/Functions";
+import {PrenotazioniService} from "../../../services/prenotazioni/prenotazioni.service";
 
 @Component({
   selector: 'app-prenotazioni',
@@ -18,7 +17,7 @@ export class PrenotazioniComponent implements OnInit {
   prenotazioniConfig = prenotazioniTableConfig;
   btnConfig = emptyBtn;
 
-  constructor(private mockService: MockDataService, private readonly router: Router) {
+  constructor(private prenotazioneService: PrenotazioniService, private readonly router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,7 +25,7 @@ export class PrenotazioniComponent implements OnInit {
   }
 
   getPrenotazioni() {
-    this.mockService.getPrenotazioni().subscribe(prenotazione => {
+    this.prenotazioneService.getPrenotazioni().subscribe(prenotazione => {
           this.prenotazioni = prenotazione
         }, (error => {
           alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
@@ -38,13 +37,13 @@ export class PrenotazioniComponent implements OnInit {
     switch (data.action) {
       case MyTableActionEnum.EDIT:
         let mezzoId = -1;
-        this.mockService.getPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
+        this.prenotazioneService.getPrenotazioneFromId(data.data.id).subscribe(prenotazione => {
           mezzoId = prenotazione.auto.id;
           this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/edit/" + data.data.id]);
         });
         break;
       case MyTableActionEnum.DELETE:
-        this.mockService.deletePrenotazione(data.data.id).subscribe((x) => {
+        this.prenotazioneService.deletePrenotazione(data.data.id).subscribe((x) => {
           this.getPrenotazioni()
         }, (error => {
           alert("Si è verificato un errore con l'eliminazione della Prenotazione");
@@ -53,7 +52,7 @@ export class PrenotazioniComponent implements OnInit {
         break;
       case MyTableActionEnum.APPROVE:
         data.data.accettata = true;
-        this.mockService.updatePrenotazione(data.data).subscribe((x) => {
+        this.prenotazioneService.updatePrenotazione(data.data).subscribe((x) => {
           this.getPrenotazioni();
         }, (error => {
           alert("Si è verificato un errore con l'approvazione della Prenotazione!");
@@ -62,15 +61,12 @@ export class PrenotazioniComponent implements OnInit {
         break;
       case MyTableActionEnum.REJECT:
         data.data.accettata = false;
-        this.mockService.updatePrenotazione(data.data).subscribe((x) => {
+        this.prenotazioneService.updatePrenotazione(data.data).subscribe((x) => {
           this.getPrenotazioni();
         }, (error => {
           alert("Si è verificato un errore con il rifiuto della Prenotazione!");
           console.log(error);
         }));
-        break;
-      case "showBtn":
-        hideBtn(data.condition, data.data, data.loggedUser);
         break;
       default:
         break;

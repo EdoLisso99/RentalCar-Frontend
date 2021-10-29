@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {MyHeaders} from "../../../config/MyTableConfig";
 import {FormBuilder} from "@angular/forms";
-import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {Prenotazione} from "../../../util/Interfaces";
+import {PrenotazioniService} from "../../../services/prenotazioni/prenotazioni.service";
+import {MezziService} from "../../../services/mezzi/mezzi.service";
+import {UtentiService} from "../../../services/utenti/utenti.service";
 
 @Component({
   selector: 'app-form-prenotazioni',
@@ -20,7 +22,8 @@ export class FormPrenotazioniComponent implements OnInit {
   vehicleId !: number;
   userId !: number;
 
-  constructor(private formBuilder: FormBuilder, private mockService: MockDataService,
+  constructor(private formBuilder: FormBuilder, private prenotazioneService: PrenotazioniService,
+              private mezzoService: MezziService, private utenteService: UtentiService,
               private readonly router : Router, private location: Location,
               private route : ActivatedRoute) { }
 
@@ -30,7 +33,7 @@ export class FormPrenotazioniComponent implements OnInit {
     this.userId = parseInt(this.route.snapshot.paramMap.get('user')!);
     this.action = this.route.snapshot.paramMap.get('action');
     if(this.prenotazioneId !== -1){
-      this.mockService.getPrenotazioneFromId(this.prenotazioneId).subscribe(prenotazione => {
+      this.prenotazioneService.getPrenotazioneFromId(this.prenotazioneId).subscribe(prenotazione => {
         this.data = prenotazione;
         this.formGroup = this.formBuilder.group({
           id: this.data['id'],
@@ -70,11 +73,11 @@ export class FormPrenotazioniComponent implements OnInit {
   }
 
   onSubmit(formData: Prenotazione) {
-    this.mockService.getMezzoFromId(this.vehicleId).subscribe(mezzo => {
+    this.mezzoService.getMezzoFromId(this.vehicleId).subscribe(mezzo => {
       formData.auto = mezzo;
-      this.mockService.getUtenteFromId(this.userId).subscribe(utente => {
+      this.utenteService.getUtenteFromId(this.userId).subscribe(utente => {
         formData.utente = utente;
-        this.mockService.updatePrenotazione(formData).subscribe((x) => {
+        this.prenotazioneService.updatePrenotazione(formData).subscribe((x) => {
           this.router.navigate(['home/prenotazioni']);
         }, (error => {
           alert("Si è verificato un errore con " + this.action + " della Prenotazione");
