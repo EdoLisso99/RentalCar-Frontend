@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Prenotazione, Utente} from "../../../util/Interfaces";
-import {MyTableActionEnum, prenotazioniTableConfig, prenotazioniTableConfigUser} from "../../../config/MyTableConfig";
+import {MyTableActionEnum, prenotazioniTableConfig} from "../../../config/MyTableConfig";
 import {emptyBtn} from "../../../config/MyButtonConfig";
 import {Router} from "@angular/router";
+import {hideBtn} from "../../../util/Functions";
 
 @Component({
   selector: 'app-prenotazioni',
@@ -14,7 +15,7 @@ export class PrenotazioniComponent implements OnInit {
 
   loggedUser: Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
   prenotazioni: Prenotazione[] = [];
-  prenotazioniConfig = this.loggedUser.ruolo == 'Customer' ? prenotazioniTableConfigUser : prenotazioniTableConfig;
+  prenotazioniConfig = prenotazioniTableConfig;
   btnConfig = emptyBtn;
 
   constructor(private mockService: MockDataService, private readonly router: Router) {
@@ -67,6 +68,9 @@ export class PrenotazioniComponent implements OnInit {
           alert("Si è verificato un errore con il rifiuto della Prenotazione!");
           console.log(error);
         }));
+        break;
+      case "showBtn":
+        hideBtn(data.condition, data.data, data.loggedUser);
         break;
       default:
         break;

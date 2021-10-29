@@ -3,6 +3,7 @@ import {loginTableConfig} from "../../config/MyTableConfig";
 import {Utente} from "../../util/Interfaces";
 import {MockDataService} from "../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
+import {hideBtn} from "../../util/Functions";
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,15 @@ export class LoginComponent implements OnInit {
       alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
       console.log(error);
       }));
+  }
+
+  getEventFromTable(obj:any){
+    if(obj.action === "showBtn"){
+      hideBtn(obj.condition, obj.data, obj.loggedUser);
+    }
+    else {
+      this.login(obj);
+    }
   }
 
   login(obj:any){

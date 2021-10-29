@@ -70,7 +70,6 @@ export class FormPrenotazioniComponent implements OnInit {
   }
 
   onSubmit(formData: Prenotazione) {
-    //Decommentare quando si sarà risolto il problema della visualizzazione delle prenotazioni
     this.mockService.getMezzoFromId(this.vehicleId).subscribe(mezzo => {
       formData.auto = mezzo;
       this.mockService.getUtenteFromId(this.userId).subscribe(utente => {

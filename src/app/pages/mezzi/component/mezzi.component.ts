@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {DateExample, Mezzo, Utente} from "../../../util/Interfaces";
 import {
   mezziTableConfig,
-  mezziTableConfigUser,
   MyTableActionEnum
 } from "../../../config/MyTableConfig";
 import {MockDataService} from "../../../services/mockData/mock-data.service";
 import {Router} from "@angular/router";
 import {createBtn, emptyBtn, filterBtn, restoreBtn} from "../../../config/MyButtonConfig";
+import {hideBtn} from "../../../util/Functions";
 
 @Component({
   selector: 'app-mezzi',
@@ -20,7 +20,7 @@ export class MezziComponent implements OnInit {
   filteredMezzi = true;
   btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
   mezzi: Mezzo[] = [];
-  mezziConfig = this.loggedUser.ruolo == 'Customer' ? mezziTableConfigUser :mezziTableConfig;
+  mezziConfig = mezziTableConfig;
   filterBtnConfig: any = filterBtn;
   restoreBtnConfig: any = restoreBtn;
   inizio: any = null;
@@ -86,6 +86,9 @@ export class MezziComponent implements OnInit {
       case MyTableActionEnum.BOOK:
         let mezzoId = data.data.id;
         this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/create/-1"]);
+        break;
+      case "showBtn":
+        hideBtn(data.condition, data.data, data.loggedUser);
         break;
       default:
         break;

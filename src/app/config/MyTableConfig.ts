@@ -26,7 +26,8 @@ export interface Actions {
   action: MyTableActionEnum,
   text?: string,
   color?: string,
-  customCssClass?: string
+  customCssClass?: string,
+  hidden: any
 }
 
 export interface MySearch {
@@ -66,10 +67,10 @@ export const loginTableConfig: MyTableConfig = {
       text : 'Sono io! ',
       icon : 'fas fa-check',
       color: "",
+      hidden: () => false
     }
   ],
   type: 'Utente'
-
 }
 
 export const userTableConfig: MyTableConfig = {
@@ -99,6 +100,10 @@ export const userTableConfig: MyTableConfig = {
     text : '',
     icon : 'fas fa-pencil-alt',
     color: "mediumslateblue",
+    hidden: (data: any, loggedUser: any) => {
+      return loggedUser.ruolo === 'Customer';
+
+    }
   },
     {
       action: MyTableActionEnum.DELETE,
@@ -106,40 +111,12 @@ export const userTableConfig: MyTableConfig = {
       text : '',
       icon : 'fas fa-trash',
       color: "tomato",
-    }
-
-  ],
-  type: 'Utente'
-}
-
-export const userTableConfigCustomer: MyTableConfig = {
-  headers: [
-    {key: 'nome', label: 'Nome'},
-    {key: 'cognome', label: 'Cognome'},
-    {key: 'dataDiNascita', label: 'Data di Nascita'},
-    {key: 'ruolo', label: 'Ruolo'},
-  ],
-  order:
-    {
-      defaultColumn: 'nome',
-      orderType: 'up'
-    },
-  search:
-    {
-      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
-    },
-  pagination:
-    {
-      itemPerPage: 3,
-      itemPerPageOptions: [3, 5, 10, 15]
-    },
-  actions: [
-    {
-      action: MyTableActionEnum.EDIT,
-      customCssClass : 'btn-light',
-      text : '',
-      icon : 'fas fa-pencil-alt',
-      color: "mediumslateblue",
+      hidden: (data: any, loggedUser: any) => {
+        if(loggedUser.ruolo !== 'Customer'){
+          return data.id === loggedUser.id;
+        }
+        return true;
+      }
     }
   ],
   type: 'Utente'
@@ -174,6 +151,10 @@ export const mezziTableConfig: MyTableConfig = {
       text : '',
       icon : 'fas fa-pencil-alt',
       color: "mediumslateblue",
+      hidden: (data: any, loggedUser: any) => {
+        return loggedUser.ruolo === 'Customer';
+
+      }
     },
     {
       action: MyTableActionEnum.DELETE,
@@ -181,41 +162,23 @@ export const mezziTableConfig: MyTableConfig = {
       text : '',
       icon : 'fas fa-trash',
       color: "tomato",
-    }
-  ],
-  type: 'Mezzo'
+      hidden: (data: any, loggedUser: any) => {
+        return loggedUser.ruolo === 'Customer';
 
-}
+      }
+    },
+    {
+      action: MyTableActionEnum.BOOK,
+      customCssClass : 'btn-info',
+      text : 'Book',
+      icon : 'fas fa-car',
+      color: "",
+      hidden: (data: any, loggedUser: any) => {
+        return loggedUser.ruolo === 'SuperUser';
 
-export const mezziTableConfigUser: MyTableConfig = {
-  headers: [
-    {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
-    {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
-    {key: 'modello', label: 'Modello'},
-    {key: 'targa', label: 'Targa'},
-    {key: 'tipo', label: 'Tipo'},
+      }
+    },
   ],
-  order:
-    {
-      defaultColumn: 'nome',
-      orderType: 'up'
-    },
-  search:
-    {
-      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione']
-    },
-  pagination:
-    {
-      itemPerPage: 3,
-      itemPerPageOptions: [3, 5, 10, 15]
-    },
-  actions: [{
-    action: MyTableActionEnum.BOOK,
-    customCssClass : 'btn-info',
-    text : 'Book',
-    icon : 'fas fa-car',
-    color: "",
-  }],
   type: 'Mezzo'
 
 }
@@ -243,49 +206,61 @@ export const prenotazioniTableConfig: MyTableConfig = {
       itemPerPageOptions: [3, 5, 10, 15]
     },
   actions: [{
-    action: MyTableActionEnum.DELETE,
-    customCssClass : 'btn-light',
-    text : '',
-    icon : 'fas fa-trash',
-    color: "tomato",
-  }],
-  type: 'Prenotazione'
-}
-
-export const prenotazioniTableConfigUser: MyTableConfig = {
-  headers: [
-    {key: 'dataDiInizio', label: 'Data di Inizio'},
-    {key: 'dataDiFine', label: 'Data di Fine'},
-    {key: 'accettata', label: 'Accettata'},
-    {key: 'auto', label: 'Auto'},
-    {key: 'utente', label: 'Utente'},
-  ],
-  order:
-    {
-      defaultColumn: 'nome',
-      orderType: 'up'
-    },
-  search:
-    {
-      columns: ['dataDiInizio', 'dataDiFine', 'accettata', 'auto', 'utente']
-    },
-  pagination:
-    {
-      itemPerPage: 3,
-      itemPerPageOptions: [3, 5, 10, 15]
-    },
-  actions: [{
     action: MyTableActionEnum.EDIT,
     customCssClass : 'btn-light',
     text : '',
     icon : 'fas fa-pencil-alt',
     color: "mediumslateblue",
-  }, {
-    action: MyTableActionEnum.DELETE,
-    customCssClass : 'btn-light',
-    text : '',
-    icon : 'fas fa-trash',
-    color: "tomato",
-  }],
+    hidden: (data: any, loggedUser: any) => {
+      if(loggedUser.ruolo == 'Customer'){
+        let x = new Date();
+        x.setDate(x.getDate() + 2);
+        return new Date(data.dataDiInizio) < x;
+      }
+      return true;
+    }
+  },
+    {
+      action: MyTableActionEnum.APPROVE,
+      customCssClass : 'btn-success',
+      text : 'Approve',
+      icon : 'fas fa-heart',
+      color: "",
+      hidden: (data: any, loggedUser: any) => {
+        if(loggedUser.ruolo == 'SuperUser'){
+          return data.accettata !== null;
+        }
+        return true;
+      }
+    },
+    {
+      action: MyTableActionEnum.REJECT,
+      customCssClass : 'btn-danger',
+      text : 'Decline',
+      icon : 'fas fa-skull',
+      color: "",
+      hidden: (data: any, loggedUser: any) => {
+        if(loggedUser.ruolo == 'SuperUser'){
+          return data.accettata === null;
+        }
+        return true;
+      }
+    },
+    {
+      action: MyTableActionEnum.DELETE,
+      customCssClass: 'btn-light',
+      text: '',
+      icon: 'fas fa-trash',
+      color: "tomato",
+      hidden: (data: any, loggedUser: any) => {
+        if(loggedUser.ruolo == 'Customer'){
+          let x = new Date();
+          x.setDate(x.getDate() + 2);
+          return new Date(data.dataDiInizio) < x;
+        }
+        return true;
+      }
+    }
+  ],
   type: 'Prenotazione'
 }

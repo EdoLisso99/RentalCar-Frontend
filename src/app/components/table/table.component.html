@@ -52,13 +52,9 @@
       <td *ngFor="let dataNames of getKey(tableConfig.headers)">
         {{data[dataNames] | showData}}</td>
       <td>
-        <span *ngIf="loggedUser !== null && loggedUser.ruolo !== 'Customer' && data['accettata'] !== undefined && data['accettata'] == null">
-          <app-button class="ml-2" [buttonConfig]="approveBtnConfig" (click)="sendOnClickEvent(data, approveBtnConfig.action)"></app-button>
-          <app-button class="ml-2" [buttonConfig]="rejectBtnConfig" (click)="sendOnClickEvent(data, rejectBtnConfig.action)"></app-button>
-        </span>
-      <span class="ml-2" *ngFor="let action of tableConfig.actions">
-        <app-button [hidden]="loggedUser !== null && loggedUser.id == data['id'] && action.action == getDelete()" [buttonConfig]="action" (click)="sendOnClickEvent(data, action.action)"></app-button>
-      </span>
+      <ng-container class="ml-2" *ngFor="let action of tableConfig.actions">
+        <app-button [hidden]="action.hidden(data, loggedUser)" [buttonConfig]="action" (click)="sendOnClickEvent(data, action.action)"></app-button>
+      </ng-container>
       </td>
     </tr>
   </tbody>

@@ -13,6 +13,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   @Input () tableConfig !: MyTableConfig ;
   @Input() mockData !: any[];
+
   @Output() onClickEvent = new EventEmitter<any>();
 
   isColumnSelected = false;
@@ -115,10 +116,6 @@ export class TableComponent implements OnInit, OnChanges {
     this.tableConfig.pagination.itemPerPage = option;
     this.dropdownHidden = !this.dropdownHidden;
     this.changePages();
-  }
-
-  getDelete() {
-    return MyTableActionEnum.DELETE;
   }
 
 }
