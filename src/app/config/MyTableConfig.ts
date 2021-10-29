@@ -228,7 +228,11 @@ export const prenotazioniTableConfig: MyTableConfig = {
       color: "",
       hidden: (data: any, loggedUser: any) => {
         if(loggedUser.ruolo == 'SuperUser'){
-          return data.accettata !== null;
+          if(data.accettata !== null){
+            return true;
+          }else {
+            return false;
+          }
         }
         return true;
       }
@@ -241,7 +245,11 @@ export const prenotazioniTableConfig: MyTableConfig = {
       color: "",
       hidden: (data: any, loggedUser: any) => {
         if(loggedUser.ruolo == 'SuperUser'){
-          return data.accettata === null;
+          if(data.accettata !== null){
+            return true;
+          }else {
+            return false;
+          }
         }
         return true;
       }
