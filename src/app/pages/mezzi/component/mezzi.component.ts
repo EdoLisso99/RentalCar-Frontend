@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DateExample, Mezzo, Prenotazione, Utente} from "../../../util/Interfaces";
+import {Mezzo, Prenotazione, Utente} from "../../../util/Interfaces";
 import {
   altMezziTableConfig,
   mezziTableConfig,
@@ -39,7 +39,7 @@ export class MezziComponent implements OnInit {
   }
 
   filterMezzi() {
-    this.mezzoService.getAvailableMezzi(new DateExample(this.inizio, this.fine)).subscribe(mezziDisponibili => {
+    this.mezzoService.getAvailableMezzi(this.inizio, this.fine).subscribe(mezziDisponibili => {
       this.mezzi = mezziDisponibili;
       this.filteredMezzi = false;
     })

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {DateExample, Mezzo} from "../../util/Interfaces";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Mezzo} from "../../util/Interfaces";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -13,8 +13,11 @@ export class MezziService {
   constructor(private http: HttpClient) {
   }
 
-  getAvailableMezzi(dateExample: DateExample) : Observable<Mezzo[]>{
-    return this.http.post<Mezzo[]>(`${this.mezziUrl}/mezzo/available`, dateExample);
+  getAvailableMezzi(inizio: string, fine: string) : Observable<Mezzo[]>{
+    let params = new HttpParams();
+    params = params.append("inizio", inizio);
+    params = params.append("fine", fine);
+    return this.http.get<Mezzo[]>(`${this.mezziUrl}/mezzo/available`, {params: params});
   }
 
   updateMezzo(mezzo : Mezzo) : Observable<Mezzo>{

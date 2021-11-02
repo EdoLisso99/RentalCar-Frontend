@@ -54,13 +54,3 @@ export class Prenotazione {
 
 
 }
-
-export class DateExample {
-  inizio: Date;
-  fine: Date;
-
-  constructor(a:Date, b:Date) {
-    this.inizio = a;
-    this.fine = b;
-  }
-}
