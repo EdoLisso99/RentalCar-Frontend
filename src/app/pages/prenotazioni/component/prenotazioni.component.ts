@@ -43,8 +43,9 @@ export class PrenotazioniComponent implements OnInit {
         });
         break;
       case MyTableActionEnum.DELETE:
-        this.prenotazioneService.deletePrenotazione(data.data.id).subscribe((x) => {
-          this.getPrenotazioni()
+        this.prenotazioneService.deletePrenotazione(data.data.id).subscribe((prenotazione) => {
+          alert("Eliminazione della prenotazione avvenuta con successo!");
+          this.getPrenotazioni();
         }, (error => {
           alert("Si è verificato un errore con l'eliminazione della Prenotazione");
           console.log(error);

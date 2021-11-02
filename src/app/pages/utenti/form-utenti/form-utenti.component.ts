@@ -64,6 +64,7 @@ export class FormUtentiComponent implements OnInit {
         sessionStorage.removeItem('loggedUser');
         sessionStorage.setItem('loggedUser', JSON.stringify(formData));
       }
+      alert(this.action + " dell'utente " + formData.nome + " " + formData.cognome + " effettuato con successo!");
       this.router.navigate(['home/utenti']);
     }, (error => {
         alert("Errore! C'è stato qualche problema con il " + this.action + " dell' Utente");

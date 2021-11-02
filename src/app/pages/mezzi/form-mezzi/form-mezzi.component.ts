@@ -72,6 +72,7 @@ export class FormMezziComponent implements OnInit {
     formData.annoDiImmatricolazione = new Date(formData.annoDiImmatricolazione);
     this.mezzoService.updateMezzo(formData).subscribe((x) => {
       this.router.navigate(['home/mezzi']);
+      alert(this.action + " del mezzo " + formData.casaCostruttrice + " " + formData.modello + " effettuato con successo!");
     }, (error => {
       alert("Si è verificato un errore nel " + this.action + " del Mezzo");
       console.log(error);

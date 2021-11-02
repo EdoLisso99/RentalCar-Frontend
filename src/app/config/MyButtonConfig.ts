@@ -25,7 +25,7 @@ export const restoreBtn : MyButtonConfig = {
 
 export const filterBtn : MyButtonConfig = {
   customCssClass : 'btn-info',
-  text : 'Filter available vehicles',
+  text : 'Filtra mezzi disponibili',
   icon : 'fas fa-calendar-day',
   color: "",
 }

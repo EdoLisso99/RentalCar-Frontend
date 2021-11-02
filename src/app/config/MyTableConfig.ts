@@ -153,7 +153,6 @@ export const mezziTableConfig: MyTableConfig = {
       color: "mediumslateblue",
       hidden: (data: any, loggedUser: any) => {
         return loggedUser.ruolo === 'Customer';
-
       }
     },
     {
@@ -174,13 +173,58 @@ export const mezziTableConfig: MyTableConfig = {
       icon : 'fas fa-car',
       color: "",
       hidden: (data: any, loggedUser: any) => {
-        return loggedUser.ruolo === 'SuperUser';
+        return (loggedUser.ruolo === 'SuperUser');
+      }
+    },
+  ],
+  type: 'Mezzo'
+}
+export const altMezziTableConfig: MyTableConfig = {
+  headers: [
+    {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
+    {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
+    {key: 'modello', label: 'Modello'},
+    {key: 'targa', label: 'Targa'},
+    {key: 'tipo', label: 'Tipo'},
+  ],
+  order:
+    {
+      defaultColumn: 'nome',
+      orderType: 'up'
+    },
+  search:
+    {
+      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione']
+    },
+  pagination:
+    {
+      itemPerPage: 3,
+      itemPerPageOptions: [3, 5, 10, 15]
+    },
+  actions: [
+    {
+      action: MyTableActionEnum.EDIT,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-pencil-alt',
+      color: "mediumslateblue",
+      hidden: (data: any, loggedUser: any) => {
+        return loggedUser.ruolo === 'Customer';
+      }
+    },
+    {
+      action: MyTableActionEnum.DELETE,
+      customCssClass : 'btn-light',
+      text : '',
+      icon : 'fas fa-trash',
+      color: "tomato",
+      hidden: (data: any, loggedUser: any) => {
+        return loggedUser.ruolo === 'Customer';
 
       }
     },
   ],
   type: 'Mezzo'
-
 }
 
 export const prenotazioniTableConfig: MyTableConfig = {
@@ -266,7 +310,7 @@ export const prenotazioniTableConfig: MyTableConfig = {
           x.setDate(x.getDate() + 2);
           return new Date(data.dataDiInizio) < x;
         }
-        return true;
+        return false;
       }
     }
   ],

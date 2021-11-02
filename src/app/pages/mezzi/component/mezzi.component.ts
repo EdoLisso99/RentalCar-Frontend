@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {DateExample, Mezzo, Utente} from "../../../util/Interfaces";
+import {DateExample, Mezzo, Prenotazione, Utente} from "../../../util/Interfaces";
 import {
+  altMezziTableConfig,
   mezziTableConfig,
   MyTableActionEnum
 } from "../../../config/MyTableConfig";
 import {Router} from "@angular/router";
 import {createBtn, emptyBtn, filterBtn, restoreBtn} from "../../../config/MyButtonConfig";
 import {MezziService} from "../../../services/mezzi/mezzi.service";
+import {UtentiService} from "../../../services/utenti/utenti.service";
+import {PrenotazioniService} from "../../../services/prenotazioni/prenotazioni.service";
 
 @Component({
   selector: 'app-mezzi',
@@ -20,16 +23,19 @@ export class MezziComponent implements OnInit {
   btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
   mezzi: Mezzo[] = [];
   mezziConfig = mezziTableConfig;
+  altMezziConfig = altMezziTableConfig;
   filterBtnConfig: any = filterBtn;
   restoreBtnConfig: any = restoreBtn;
   inizio: any = null;
   fine: any = null;
 
-  constructor(private mezzoService : MezziService, private readonly router : Router) { }
+  constructor(private mezzoService : MezziService,
+              private utenteService : UtentiService,
+              private prenotazioneService : PrenotazioniService,
+              private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getMezzi();
-    this.print();
   }
 
   filterMezzi() {
@@ -57,6 +63,8 @@ export class MezziComponent implements OnInit {
 
   restoreMezzi() {
     this.filteredMezzi = true;
+    this.inizio = null;
+    this.fine = null;
     this.mezzoService.getMezzi().subscribe(mezzi => {
       this.mezzi = mezzi;
     }, (error => {
@@ -71,8 +79,9 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-          this.mezzoService.deleteMezzo(data.data.id).subscribe((y) => {
+          this.mezzoService.deleteMezzo(data.data.id).subscribe((mezzo) => {
             this.getMezzi();
+            alert("Eliminazione del mezzo " + mezzo.casaCostruttrice + " " + mezzo.modello + " effettuata con successo!");
           }, (error => {
             alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
             console.log(error);
@@ -83,8 +92,22 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/create/-1"]);
         break;
       case MyTableActionEnum.BOOK:
-        let mezzoId = data.data.id;
-        this.router.navigate(["home/prenotazioni/" + mezzoId + "/" + this.loggedUser.id + "/create/-1"]);
+        let tmpMezzo : Mezzo;
+        let tmpUtente : Utente;
+        this.mezzoService.getMezzoFromId(data.data.id).subscribe(mezzo => {
+          tmpMezzo = mezzo;
+          this.utenteService.getUtenteFromId(this.loggedUser.id).subscribe(utente => {
+            tmpUtente = utente;
+            let tmpPrenotazione = new Prenotazione({inizio: new Date(this.inizio),
+            fine: new Date(this.fine), auto: tmpMezzo, utente: tmpUtente});
+            this.prenotazioneService.updatePrenotazione(tmpPrenotazione).subscribe(prenotazione => {
+              alert("Il veicolo " + tmpMezzo.casaCostruttrice + " " + tmpMezzo.modello + " è stato prenotato con successo!");
+              this.filteredMezzi = true;
+              this.inizio = null;
+              this.fine = null;
+            });
+          });
+        });
         break;
       default:
         break;

@@ -43,9 +43,15 @@ export class Prenotazione {
   auto: any;
   utente: any
 
-  constructor() {
+  constructor(obj ?: any) {
     this.id = -1;
+    this.accettata = undefined;
+    this.dataDiInizio = obj.inizio;
+    this.dataDiFine = obj.fine;
+    this.auto = obj.auto;
+    this.utente = obj.utente;
   }
+
 
 }
 

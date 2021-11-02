@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {MyHeaders, MyTableActionEnum, MyTableConfig} from "../../config/MyTableConfig";
 import * as _ from 'lodash';
 import {Utente} from "../../util/Interfaces";
-import {approveBtnConfig, rejectBtnConfig} from "../../config/MyButtonConfig";
 
 @Component({
   selector: 'app-table',
@@ -24,8 +23,6 @@ export class TableComponent implements OnInit, OnChanges {
   pageArrayOptions : number[] = [];
   backupData: any[] = [];
   loggedUser: Utente = JSON.parse(sessionStorage.getItem('loggedUser')!);
-  approveBtnConfig = approveBtnConfig;
-  rejectBtnConfig = rejectBtnConfig;
 
   constructor() {
   }

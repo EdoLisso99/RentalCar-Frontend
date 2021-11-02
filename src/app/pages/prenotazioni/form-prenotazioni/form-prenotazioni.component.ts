@@ -78,6 +78,7 @@ export class FormPrenotazioniComponent implements OnInit {
       this.utenteService.getUtenteFromId(this.userId).subscribe(utente => {
         formData.utente = utente;
         this.prenotazioneService.updatePrenotazione(formData).subscribe((x) => {
+          alert("Prenotazione aggiornata con successo!");
           this.router.navigate(['home/prenotazioni']);
         }, (error => {
           alert("Si è verificato un errore con " + this.action + " della Prenotazione");
@@ -94,8 +95,6 @@ export class FormPrenotazioniComponent implements OnInit {
   }
 
   getData(dataDiNascita: any) {
-    let x = dataDiNascita;
     return new Date(dataDiNascita);
-
   }
 }

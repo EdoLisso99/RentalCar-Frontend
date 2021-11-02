@@ -46,7 +46,10 @@ export class UtentiComponent implements OnInit {
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
-          this.utenteService.deleteUtente(data.data.id).subscribe((y) => this.getUtenti());
+          this.utenteService.deleteUtente(data.data.id).subscribe((utente) => {
+            this.getUtenti();
+            alert("Eliminazione dell'utente " + utente.nome + " " + utente.cognome + " effettuata con successo!");
+          });
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
