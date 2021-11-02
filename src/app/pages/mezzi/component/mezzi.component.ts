@@ -54,13 +54,6 @@ export class MezziComponent implements OnInit {
     }));
   }
 
-  print(){
-    console.log("Inizio:  " + this.inizio + " - Fine: " + this.fine);
-    console.log(this.inizio === null);
-    console.log(this.fine === null);
-    console.log("===========================");
-  }
-
   restoreMezzi() {
     this.filteredMezzi = true;
     this.inizio = null;

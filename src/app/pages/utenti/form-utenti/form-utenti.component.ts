@@ -52,9 +52,6 @@ export class FormUtentiComponent implements OnInit {
   }
 
   onSubmit(formData:Utente) {
-    console.log("Form Data:");
-    console.log(formData);
-    console.log("====================");
     formData.dataDiNascita = new Date(formData.dataDiNascita);
     this.utenteService.updateUtente(formData).subscribe((x) => {
       //Se un customer si modifica devo aggiornare i suoi valori, dato che nella
@@ -88,7 +85,6 @@ export class FormUtentiComponent implements OnInit {
   }
 
   changeRole(e: Event) {
-    console.log(this.formGroup);
     // @ts-ignore
     this.formGroup.controls['ruolo'].setValue( e.target.value, {onlySelf: true});
   }

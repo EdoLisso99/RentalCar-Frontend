@@ -76,7 +76,6 @@ export class TableComponent implements OnInit, OnChanges {
       let container : any[] = [];
       this.tableConfig.search.columns.map(value => {
         container = [...container, _.filter(this.backupData, {[value] : appliedFilter})];
-        console.log(container);
       });
       this.mockData = container.filter(x => x.length !== 0)[0];
       this.isFilterApplied = true;
