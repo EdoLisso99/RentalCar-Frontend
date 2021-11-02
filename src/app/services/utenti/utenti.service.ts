@@ -21,13 +21,9 @@ export class UtentiService {
     return this.http.put<Utente>(`${this.userUrl}/utente/update`, utente);
   }
 
-
-
   deleteUtente(utenteId : number) : Observable<Utente>{
     return this.http.delete<Utente>(`${this.userUrl}/utente/delete/${utenteId}`);
   }
-
-
 
   getUtenteFromId(utenteId: number) : Observable<Utente> {
     return this.http.get<Utente>(`${this.userUrl}/utente/${utenteId}`);

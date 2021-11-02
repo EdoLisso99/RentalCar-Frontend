@@ -30,7 +30,9 @@ export class UtentiComponent implements OnInit {
     if(this.loggedUser.ruolo == 'SuperUser'){
       this.utenteService.getUtenti().subscribe(user => {
         this.users = user;
-
+        this.users.forEach(user => {
+          user.loggedUser = this.loggedUser;
+        })
       }, ((error : HttpErrorResponse) => {
         alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
       }));

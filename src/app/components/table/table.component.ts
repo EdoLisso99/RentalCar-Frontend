@@ -75,9 +75,13 @@ export class TableComponent implements OnInit, OnChanges {
     if(appliedFilter.trim() !== ''){
       let container : any[] = [];
       this.tableConfig.search.columns.map(value => {
-        container = [...container, _.filter(this.backupData, {[value] : appliedFilter})];
+        this.backupData.forEach(obj => {
+          if(_.get(obj, value) == appliedFilter){
+            container = [...container, obj];
+          }
+        })
       });
-      this.mockData = container.filter(x => x.length !== 0)[0];
+      this.mockData = container.filter(x => x.length !== 0);
       this.isFilterApplied = true;
     }
     else {
@@ -85,6 +89,44 @@ export class TableComponent implements OnInit, OnChanges {
       this.isFilterApplied = false;
     }
     this.changePages();
+  }
+
+  prova (data: any, filter: string, container: any[]){
+    if(Array.isArray(data)){
+      data.forEach((elem: any) => {
+        for(const prop in elem){
+          if(typeof elem[prop] == 'object'){
+            this.prova(elem[prop], filter, container);
+          }
+          else {
+            if(elem[prop] == filter){
+              container.push(elem);
+            }
+          }
+        }
+      })
+    }
+    else {
+      for(const prop in data){
+        if(typeof data[prop] == 'object'){
+          this.prova(data[prop], filter, container);
+        }
+        else {
+          if(data[prop] == filter){
+            container.push(data);
+          }
+        }
+      }
+    }
+  }
+
+  getDepthOfArray(array: any) : number{
+    if(!Array.isArray(array)){
+      return 0;
+    }
+    else {
+      return this.getDepthOfArray(array[0]) + 1;
+    }
   }
 
   //Restituisce i nomi dei parametri di un array di oggetti

@@ -5,6 +5,7 @@ export class Utente {
   cognome: string;
   dataDiNascita: any;
   ruolo: string
+  loggedUser ?: Utente;
 
   constructor() {
     this.id = -1;

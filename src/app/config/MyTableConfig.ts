@@ -31,7 +31,7 @@ export interface Actions {
 }
 
 export interface MySearch {
-  columns: string[];
+  columns: any[];
 }
 
 export interface MyPagination {
@@ -179,6 +179,7 @@ export const mezziTableConfig: MyTableConfig = {
   ],
   type: 'Mezzo'
 }
+
 export const altMezziTableConfig: MyTableConfig = {
   headers: [
     {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
@@ -242,7 +243,7 @@ export const prenotazioniTableConfig: MyTableConfig = {
     },
   search:
     {
-      columns: ['dataDiInizio', 'dataDiFine', 'accettata', 'auto', 'utente']
+      columns: ['dataDiInizio', 'dataDiFine', 'accettata', 'auto.modello', 'auto.casaCostruttrice', 'utente.nome', 'utente.cognome']
     },
   pagination:
     {
