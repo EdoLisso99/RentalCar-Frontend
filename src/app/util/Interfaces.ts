@@ -42,7 +42,10 @@ export class Prenotazione {
   dataDiFine: any;
   accettata ?: boolean;
   auto: any;
-  utente: any
+  utente: any;
+  status ?: any;
+  user ?: any;
+  mezzo ?: any;
 
   constructor(obj ?: any) {
     this.id = -1;

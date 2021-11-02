@@ -26,8 +26,15 @@ export class PrenotazioniComponent implements OnInit {
 
   getPrenotazioni() {
     this.prenotazioneService.getPrenotazioni().subscribe(prenotazione => {
-          this.prenotazioni = prenotazione
-        }, (error => {
+
+      prenotazione.forEach(tmpPrenotazione => {
+        tmpPrenotazione.status = tmpPrenotazione.accettata ? "Accettata" : tmpPrenotazione.accettata == null ?
+          "In attesa di conferma..." : "Rifiutata";
+        tmpPrenotazione.user = tmpPrenotazione.utente.nome + " " + tmpPrenotazione.utente.cognome;
+        tmpPrenotazione.mezzo = tmpPrenotazione.auto.casaCostruttrice + " " + tmpPrenotazione.auto.modello;
+      });
+
+      this.prenotazioni = prenotazione}, (error => {
           alert("Si è verificato un errore nel recupero delle Prenotazioni dal DB!");
           console.log(error);
         }));

@@ -137,7 +137,7 @@ export const mezziTableConfig: MyTableConfig = {
     },
   search:
     {
-      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione']
+      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione', 'targa']
     },
   pagination:
     {
@@ -195,7 +195,7 @@ export const altMezziTableConfig: MyTableConfig = {
     },
   search:
     {
-      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione']
+      columns: ['casaCostruttrice', 'modello', 'tipo', 'annoDiImmatricolazione', 'targa']
     },
   pagination:
     {
@@ -232,9 +232,9 @@ export const prenotazioniTableConfig: MyTableConfig = {
   headers: [
     {key: 'dataDiInizio', label: 'Data di Inizio'},
     {key: 'dataDiFine', label: 'Data di Fine'},
-    {key: 'accettata', label: 'Accettata'},
-    {key: 'auto', label: 'Auto'},
-    {key: 'utente', label: 'Utente'},
+    {key: 'status', label: 'Accettata'},
+    {key: 'mezzo', label: 'Auto'},
+    {key: 'user', label: 'Utente'},
   ],
   order:
     {
