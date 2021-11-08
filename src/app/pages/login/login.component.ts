@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {loginTableConfig} from "../../config/MyTableConfig";
-import {Utente} from "../../util/Interfaces";
 import {Router} from "@angular/router";
 import {UtentiService} from "../../services/utenti/utenti.service";
+import {LoginService} from "../../services/login/login.service";
+import {Utente} from "../../util/Interfaces";
 
 @Component({
   selector: 'app-login',
@@ -11,27 +11,33 @@ import {UtentiService} from "../../services/utenti/utenti.service";
 })
 export class LoginComponent implements OnInit {
 
-  users: Utente[] = [];
-  tableConfig = loginTableConfig;
+  username: string = '';
+  password: string = '';
 
-  constructor(private utenteService: UtentiService, private readonly router : Router) { }
+  constructor(private loginService : LoginService,
+    private readonly router : Router, private utenteService: UtentiService) { }
 
   ngOnInit(): void {
-    this.getUtenti();
   }
 
-  getUtenti(){
-    this.utenteService.getUtenti().subscribe((user: Utente[]) => {
-      this.users = user
-    }, ((error : any) => {
-      alert("Si è verificato un errore nel recupero degli Utenti dal database. \n" + error.message);
-      console.log(error);
-      }));
-  }
-
-  login(obj:any){
-    sessionStorage.setItem('loggedUser', JSON.stringify(obj.data));
+  login(obj:Utente){
+    sessionStorage.setItem('loggedUser', JSON.stringify(obj));
     this.router.navigate(['home']);
   }
 
+  showAll() {
+    this.loginService.login(this.username, this.password).subscribe(response => {
+      sessionStorage.setItem("token", response.access_token);
+      let utente : Utente = new Utente();
+      this.utenteService.getUtenteFromUsername(this.username).subscribe(resp => {
+        utente = resp;
+        this.login(resp);
+      })
+      console.log("====================");
+    })
+  }
+
+  lostPw() {
+    alert("Aumentate lo stipendio a tutti i componenti della caverna Java per avere questa feature");
+  }
 }

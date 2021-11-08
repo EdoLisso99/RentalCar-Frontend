@@ -35,7 +35,9 @@ export class FormUtentiComponent implements OnInit {
           nome: this.data['nome'],
           cognome: this.data['cognome'],
           dataDiNascita: this.data['dataDiNascita'],
-          ruolo: this.data['ruolo']
+          ruolo: this.data['ruolo'],
+          username: this.data['username'],
+          password: this.data['password']
         });
       });
     }
@@ -46,7 +48,9 @@ export class FormUtentiComponent implements OnInit {
         nome: this.data['nome'],
         cognome: this.data['cognome'],
         dataDiNascita: this.data['dataDiNascita'],
-        ruolo: this.data['ruolo']
+        ruolo: this.data['ruolo'],
+        username: this.data['username'],
+        password: this.data['password']
       });
     }
   }

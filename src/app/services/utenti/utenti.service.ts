@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Utente} from "../../util/Interfaces";
 
@@ -28,4 +28,9 @@ export class UtentiService {
   getUtenteFromId(utenteId: number) : Observable<Utente> {
     return this.http.get<Utente>(`${this.userUrl}/utente/${utenteId}`);
   }
+
+  getUtenteFromUsername(username: string) : Observable<Utente> {
+    return this.http.get<Utente>(`${this.userUrl}/utente/username/${username}`)
+  }
+
 }

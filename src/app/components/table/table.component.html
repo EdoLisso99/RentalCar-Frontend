@@ -6,7 +6,8 @@
 
 <div class="col-12 d-flex flex-row">
   <div class="col-4">
-    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden" style="z-index: 1">
+    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="dropdownHidden = !dropdownHidden"
+            style="z-index: 1">
       Item per page: {{tableConfig.pagination.itemPerPage}}
     </button>
     <div class="" [hidden]="dropdownHidden">
@@ -53,7 +54,8 @@
         {{data[dataNames] | showData}}</td>
       <td>
       <ng-container class="ml-2" *ngFor="let action of tableConfig.actions">
-        <app-button [hidden]="action.hidden(data, loggedUser)" [buttonConfig]="action" (click)="sendOnClickEvent(data, action.action)"></app-button>
+        <app-button [hidden]="action.hidden(data, loggedUser)" [buttonConfig]="action"
+                    (click)="sendOnClickEvent(data, action.action)"></app-button>
       </ng-container>
       </td>
     </tr>

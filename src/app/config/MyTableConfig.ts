@@ -39,42 +39,9 @@ export interface MyPagination {
   itemPerPageOptions: number[];
 }
 
-export const loginTableConfig: MyTableConfig = {
-  headers: [
-    {key: 'nome', label: 'Nome'},
-    {key: 'cognome', label: 'Cognome'},
-    {key: 'dataDiNascita', label: 'Data di Nascita'},
-    {key: 'ruolo', label: 'Ruolo'},
-  ],
-  order:
-    {
-      defaultColumn: 'nome',
-      orderType: 'up'
-    },
-  search:
-    {
-      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
-    },
-  pagination:
-    {
-      itemPerPage: 3,
-      itemPerPageOptions: [3, 5, 10, 15]
-    },
-  actions: [
-    {
-      action: MyTableActionEnum.SELECT,
-      customCssClass : 'btn-success',
-      text : 'Sono io! ',
-      icon : 'fas fa-check',
-      color: "",
-      hidden: () => false
-    }
-  ],
-  type: 'Utente'
-}
-
 export const userTableConfig: MyTableConfig = {
   headers: [
+    {key: 'username', label: 'Username'},
     {key: 'nome', label: 'Nome'},
     {key: 'cognome', label: 'Cognome'},
     {key: 'dataDiNascita', label: 'Data di Nascita'},
@@ -82,12 +49,12 @@ export const userTableConfig: MyTableConfig = {
   ],
   order:
     {
-      defaultColumn: 'nome',
+      defaultColumn: 'username',
       orderType: 'up'
     },
   search:
     {
-      columns: ['nome', 'cognome', 'dataDiNascita', 'ruolo']
+      columns: ['username', 'nome', 'cognome', 'dataDiNascita', 'ruolo']
     },
   pagination:
     {
