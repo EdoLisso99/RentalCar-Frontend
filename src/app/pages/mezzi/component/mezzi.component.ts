@@ -47,7 +47,10 @@ export class MezziComponent implements OnInit {
 
   getMezzi(){
     this.mezzoService.getMezzi().subscribe(mezzo => {
-      this.mezzi = mezzo
+      this.mezzi = mezzo;
+      mezzo.forEach(tmpMezzo => {
+        tmpMezzo.immatricolazione = new Date(tmpMezzo.annoDiImmatricolazione).toISOString().split('T')[0];
+      })
     }, (error => {
       alert("Si è verificato un errore nel recuperare i Mezzi dal DB!");
       console.log(error);

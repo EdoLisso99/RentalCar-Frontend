@@ -51,7 +51,7 @@
     <tr *ngFor="let data of mockData | slice:(tableConfig.pagination.itemPerPage * pageSelected):
           (tableConfig.pagination.itemPerPage * pageSelected + tableConfig.pagination.itemPerPage)">
       <td *ngFor="let dataNames of getKey(tableConfig.headers)">
-        {{data[dataNames] | showData}}</td>
+        {{data[dataNames]}}</td>
       <td>
       <ng-container class="ml-2" *ngFor="let action of tableConfig.actions">
         <app-button [hidden]="action.hidden(data, loggedUser)" [buttonConfig]="action"

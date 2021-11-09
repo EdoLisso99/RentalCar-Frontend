@@ -6,6 +6,7 @@ export class Utente {
   dataDiNascita: any;
   ruolo: string
   loggedUser ?: Utente;
+  nascita ?: string;
 
   constructor() {
     this.id = -1;
@@ -24,6 +25,7 @@ export class Mezzo {
   modello: string;
   targa: string;
   tipo: string;
+  immatricolazione ?: string;
 
   constructor() {
     this.id = -1;
@@ -46,6 +48,8 @@ export class Prenotazione {
   status ?: any;
   user ?: any;
   mezzo ?: any;
+  inizio ?: string;
+  fine ?: string;
 
   constructor(obj ?: any) {
     this.id = -1;

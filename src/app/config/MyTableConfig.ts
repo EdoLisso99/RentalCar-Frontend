@@ -44,7 +44,7 @@ export const userTableConfig: MyTableConfig = {
     {key: 'username', label: 'Username'},
     {key: 'nome', label: 'Nome'},
     {key: 'cognome', label: 'Cognome'},
-    {key: 'dataDiNascita', label: 'Data di Nascita'},
+    {key: 'nascita', label: 'Data di Nascita'},
     {key: 'ruolo', label: 'Ruolo'},
   ],
   order:
@@ -91,7 +91,7 @@ export const userTableConfig: MyTableConfig = {
 
 export const mezziTableConfig: MyTableConfig = {
   headers: [
-    {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
+    {key: 'immatricolazione', label: 'Anno di Immatricolazione'},
     {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
     {key: 'modello', label: 'Modello'},
     {key: 'targa', label: 'Targa'},
@@ -149,7 +149,7 @@ export const mezziTableConfig: MyTableConfig = {
 
 export const altMezziTableConfig: MyTableConfig = {
   headers: [
-    {key: 'annoDiImmatricolazione', label: 'Anno di Immatricolazione'},
+    {key: 'immatricolazione', label: 'Anno di Immatricolazione'},
     {key: 'casaCostruttrice', label: 'Casa Costruttrice'},
     {key: 'modello', label: 'Modello'},
     {key: 'targa', label: 'Targa'},
@@ -197,8 +197,8 @@ export const altMezziTableConfig: MyTableConfig = {
 
 export const prenotazioniTableConfig: MyTableConfig = {
   headers: [
-    {key: 'dataDiInizio', label: 'Data di Inizio'},
-    {key: 'dataDiFine', label: 'Data di Fine'},
+    {key: 'inizio', label: 'Data di Inizio'},
+    {key: 'fine', label: 'Data di Fine'},
     {key: 'status', label: 'Accettata'},
     {key: 'mezzo', label: 'Auto'},
     {key: 'user', label: 'Utente'},

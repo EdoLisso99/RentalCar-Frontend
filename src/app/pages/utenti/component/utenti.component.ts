@@ -29,6 +29,9 @@ export class UtentiComponent implements OnInit {
   getUtenti(){
     if(this.loggedUser.ruolo == 'SuperUser'){
       this.utenteService.getUtenti().subscribe(user => {
+        user.forEach(tmpUtente => {
+          tmpUtente.nascita = new Date(tmpUtente.dataDiNascita).toISOString().split('T')[0];
+        })
         this.users = user;
         this.users.forEach(user => {
           user.loggedUser = this.loggedUser;
