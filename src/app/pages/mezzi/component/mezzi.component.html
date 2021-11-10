@@ -12,7 +12,6 @@
   <div [hidden]="filteredMezzi" class="col-1">
     <app-button class="d-flex align-self-baseline ml-2" [buttonConfig]="restoreBtnConfig" (click)="restoreMezzi()"></app-button>
   </div>
-
 </div>
 <app-table
   [tableConfig]="!filteredMezzi ? mezziConfig : altMezziConfig"

@@ -19,6 +19,7 @@ export class FormUtentiComponent implements OnInit {
   action !: string | null;
   formGroup: any;
   userId : number = -1;
+  tmpPw : string = '';
 
   constructor(private formBuilder: FormBuilder, private utenteService: UtentiService,
               private readonly router : Router, private location: Location,
@@ -37,8 +38,9 @@ export class FormUtentiComponent implements OnInit {
           dataDiNascita: this.data['dataDiNascita'],
           ruolo: this.data['ruolo'],
           username: this.data['username'],
-          password: this.data['password']
+          password: "Manuel"
         });
+        this.tmpPw = this.data['password'];
       });
     }
     else {
@@ -50,14 +52,19 @@ export class FormUtentiComponent implements OnInit {
         dataDiNascita: this.data['dataDiNascita'],
         ruolo: this.data['ruolo'],
         username: this.data['username'],
-        password: this.data['password']
+        password: "Manuel"
       });
+      this.tmpPw = this.data['password'];
     }
   }
 
   onSubmit(formData:Utente) {
     formData.dataDiNascita = new Date(formData.dataDiNascita);
-    this.utenteService.updateUtente(formData).subscribe((x) => {
+    let flag = formData.password !== "Manuel";
+    if(!flag){
+      formData.password = this.tmpPw;
+    }
+    this.utenteService.updateUtente(formData, flag).subscribe((x) => {
       //Se un customer si modifica devo aggiornare i suoi valori, dato che nella
       //tabella prendo i suoi valori direttamente dalla session storage
       if (formData.ruolo == 'Customer' &&

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Utente} from "../../util/Interfaces";
 
@@ -14,11 +14,13 @@ export class UtentiService {
   }
 
   getUtenti() : Observable<Utente[]>{
-    return this.http.get<Utente[]>(`${this.userUrl}/utente/all`);
+    return this.http.get<any[]>(`${this.userUrl}/utente/all`);
   }
 
-  updateUtente(utente : Utente) : Observable<Utente>{
-    return this.http.put<Utente>(`${this.userUrl}/utente/update`, utente);
+  updateUtente(utente : Utente, flag : boolean) : Observable<Utente>{
+    let params = new HttpParams();
+    params = params.append("updatePw", flag);
+    return this.http.put<any>(`${this.userUrl+'/utente/update'}`, utente, {params: params});
   }
 
   deleteUtente(utenteId : number) : Observable<Utente>{

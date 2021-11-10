@@ -7,6 +7,8 @@ export class Utente {
   ruolo: string
   loggedUser ?: Utente;
   nascita ?: string;
+  username ?: string;
+  password ?: string;
 
   constructor() {
     this.id = -1;

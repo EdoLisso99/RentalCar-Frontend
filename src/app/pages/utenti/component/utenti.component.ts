@@ -30,10 +30,11 @@ export class UtentiComponent implements OnInit {
     if(this.loggedUser.ruolo == 'SuperUser'){
       this.utenteService.getUtenti().subscribe(user => {
         user.forEach(tmpUtente => {
+          console.log(tmpUtente)
           tmpUtente.nascita = new Date(tmpUtente.dataDiNascita).toISOString().split('T')[0];
         })
         this.users = user;
-        this.users.forEach(user => {
+        this.users.forEach(user =>  {
           user.loggedUser = this.loggedUser;
         })
       }, ((error : HttpErrorResponse) => {
@@ -42,6 +43,7 @@ export class UtentiComponent implements OnInit {
     }
     else {
       this.users = [this.loggedUser];
+      this.users[0].nascita = new Date(this.users[0].dataDiNascita).toISOString().split('T')[0];
     }
   }
 

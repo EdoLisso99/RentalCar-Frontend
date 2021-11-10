@@ -67,9 +67,8 @@ export const userTableConfig: MyTableConfig = {
     text : '',
     icon : 'fas fa-pencil-alt',
     color: "mediumslateblue",
-    hidden: (data: any, loggedUser: any) => {
-      return loggedUser.ruolo === 'Customer';
-
+    hidden: () => {
+      return false;
     }
   },
     {
