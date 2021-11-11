@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {createBtn, emptyBtn} from "../../../config/MyButtonConfig";
 import {HttpErrorResponse} from "@angular/common/http";
 import {UtentiService} from "../../../services/utenti/utenti.service";
+import {PrenotazioniService} from "../../../services/prenotazioni/prenotazioni.service";
 
 @Component({
   selector: 'app-utenti',
@@ -20,7 +21,8 @@ export class UtentiComponent implements OnInit {
   users: Utente[] = [];
   btnConfig = this.loggedUser.ruolo == 'SuperUser' ? createBtn : emptyBtn;
 
-  constructor(private readonly router : Router, private utenteService : UtentiService) { }
+  constructor(private readonly router : Router, private utenteService : UtentiService,
+              private prenotazioneService : PrenotazioniService) { }
 
   ngOnInit(): void {
     this.getUtenti();
@@ -53,10 +55,23 @@ export class UtentiComponent implements OnInit {
         this.router.navigate(["home/utenti/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
+        this.prenotazioneService.getPrenotazioni().subscribe(prenotazioni => {
+          let idPrenotazioni : number[] = [];
+          prenotazioni.forEach(prenotazione => {
+            if(prenotazione.utente.id == data.data.id){
+              idPrenotazioni.push(prenotazione.id);
+            }
+          })
+          if(idPrenotazioni.length > 0){
+            idPrenotazioni.forEach(id => {
+              this.prenotazioneService.deletePrenotazione(id).subscribe(x => {});
+            })
+          }
           this.utenteService.deleteUtente(data.data.id).subscribe((utente) => {
             this.getUtenti();
             alert("Eliminazione dell'utente " + utente.nome + " " + utente.cognome + " effettuata con successo!");
-          });
+          })
+        });
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:

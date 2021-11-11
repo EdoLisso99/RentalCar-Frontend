@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
         utente = resp;
         this.login(resp);
       })
-      console.log("====================");
     })
   }
 

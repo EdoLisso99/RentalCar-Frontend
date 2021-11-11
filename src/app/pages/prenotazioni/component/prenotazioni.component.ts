@@ -65,8 +65,11 @@ export class PrenotazioniComponent implements OnInit {
         this.prenotazioneService.updatePrenotazione(data.data).subscribe((x) => {
           this.getPrenotazioni();
           this.prenotazioni.forEach(prenotazione => {
-            if(prenotazione.id !== data.data.id && dateOverlaps(data.data.inizio, data.data.fine, prenotazione.dataDiInizio, prenotazione.dataDiFine)){
-              prenotazione.accettata = false;
+            if(prenotazione.id !== data.data.id && prenotazione.auto.id === data.data.auto.id){
+              if(dateOverlaps(data.data.inizio, data.data.fine, prenotazione.dataDiInizio, prenotazione.dataDiFine)){
+                prenotazione.accettata = false;
+                this.prenotazioneService.updatePrenotazione(prenotazione).subscribe(x => {});
+              }
             }
           })
         }, (error => {

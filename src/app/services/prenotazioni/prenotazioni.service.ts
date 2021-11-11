@@ -14,6 +14,7 @@ export class PrenotazioniService {
   }
 
   getPrenotazioni() : Observable<Prenotazione[]>{
+    let x = `${this.prenotazioniUrl}/prenotazione/all`;
     return this.http.get<Prenotazione[]>(`${this.prenotazioniUrl}/prenotazione/all`);
   }
 
@@ -26,6 +27,7 @@ export class PrenotazioniService {
   }
 
   updatePrenotazione(prenotazione : Prenotazione) : Observable<Prenotazione>{
+    let x = `${this.prenotazioniUrl}/prenotazione/update`;
     return this.http.put<Prenotazione>(`${this.prenotazioniUrl}/prenotazione/update`, prenotazione);
   }
 

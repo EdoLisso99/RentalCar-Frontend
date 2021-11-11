@@ -78,6 +78,18 @@ export class MezziComponent implements OnInit {
         this.router.navigate(["home/mezzi/edit/" + data.data.id]);
         break;
       case MyTableActionEnum.DELETE:
+        this.prenotazioneService.getPrenotazioni().subscribe(prenotazioni => {
+          let idPrenotazioni : number[] = [];
+          prenotazioni.forEach(prenotazione => {
+            if(prenotazione.mezzo.id == data.data.id){
+              idPrenotazioni.push(prenotazione.id);
+            }
+          })
+          if(idPrenotazioni.length > 0){
+            idPrenotazioni.forEach(id => {
+              this.prenotazioneService.deletePrenotazione(id).subscribe(x => {});
+            })
+          }
           this.mezzoService.deleteMezzo(data.data.id).subscribe((mezzo) => {
             this.getMezzi();
             alert("Eliminazione del mezzo " + mezzo.casaCostruttrice + " " + mezzo.modello + " effettuata con successo!");
@@ -85,6 +97,7 @@ export class MezziComponent implements OnInit {
             alert("Si è verificato un errore nella rimozione del Mezzo " + data.data.casaCostruttrice + " " + data.data.modello);
             console.log(error);
           }));
+        });
         break;
       case 'new':
       case MyTableActionEnum.NEW_ROW:
