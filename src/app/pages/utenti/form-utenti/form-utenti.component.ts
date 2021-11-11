@@ -59,7 +59,6 @@ export class FormUtentiComponent implements OnInit {
   }
 
   onSubmit(formData:Utente) {
-    formData.dataDiNascita = new Date(formData.dataDiNascita);
     let flag = formData.password !== "Manuel";
     if(!flag){
       formData.password = this.tmpPw;

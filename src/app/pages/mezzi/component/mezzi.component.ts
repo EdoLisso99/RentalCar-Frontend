@@ -42,6 +42,9 @@ export class MezziComponent implements OnInit {
     this.mezzoService.getAvailableMezzi(this.inizio, this.fine).subscribe(mezziDisponibili => {
       this.mezzi = mezziDisponibili;
       this.filteredMezzi = false;
+      this.mezzi.forEach(tmpMezzo => {
+        tmpMezzo.immatricolazione = tmpMezzo.annoDiImmatricolazione;
+      })
     })
   }
 

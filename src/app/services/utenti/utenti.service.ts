@@ -20,7 +20,7 @@ export class UtentiService {
   updateUtente(utente : Utente, flag : boolean) : Observable<Utente>{
     let params = new HttpParams();
     params = params.append("updatePw", flag);
-    return this.http.put<any>(`${this.userUrl+'/utente/update'}`, utente, {params: params});
+    return this.http.put<Utente>(`${this.userUrl}/utente/update`, utente, {params: params});
   }
 
   deleteUtente(utenteId : number) : Observable<Utente>{
