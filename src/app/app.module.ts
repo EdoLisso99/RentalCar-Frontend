@@ -16,7 +16,6 @@ import { PrenotazioniComponent} from "./pages/prenotazioni/component/prenotazion
 import { FormMezziComponent } from './pages/mezzi/form-mezzi/form-mezzi.component';
 import { FormUtentiComponent } from './pages/utenti/form-utenti/form-utenti.component';
 import { FormPrenotazioniComponent } from './pages/prenotazioni/form-prenotazioni/form-prenotazioni.component';
-import {DatePipe} from "./pipes/DatePipe";
 import {InterceptorService} from "./services/interceptor/interceptor.service";
 
 @NgModule({
@@ -32,7 +31,6 @@ import {InterceptorService} from "./services/interceptor/interceptor.service";
     FormMezziComponent,
     FormUtentiComponent,
     FormPrenotazioniComponent,
-    DatePipe
   ],
   imports: [
     BrowserModule,
